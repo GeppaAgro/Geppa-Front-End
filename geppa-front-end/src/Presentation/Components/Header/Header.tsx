@@ -1,21 +1,23 @@
 import "./StyleHeader.css"
+import { NavLink} from "react-router-dom";
 
 
 
 export default function Header() {
     return(
         <>
-            <div className="headerDiv">
-                <img src="src/Data/Images/Logos/LogoHorizontal.png" alt="Logo_Horizontal"/>
-                <div className="linksHeader">
-                    <a href="#">Inicial</a>
-                    <a href="#">Boletins</a>
-                    <a href="#">Conteúdos</a>
-                    <a href="#">Indicadores</a>
-                    <a href="#">Sobre</a>
-                </div>
-            </div>
-
+            <header className="header">
+                <img className="headerlogo" src="src/Data/Images/Logos/LogoHorizontal.png" alt="Logo_Horizontal"/>
+                <nav className="headernavigation">
+                    <ul className="headernavigation-list">
+                        <li className="headernavigation-item"><NavLink to="/">Inicial</NavLink></li>
+                        <li className="headernavigation-item"><NavLink to="/boletins">Boletins</NavLink></li>
+                        <li className="headernavigation-item"><NavLink to="/conteudos">Conteúdos</NavLink></li>
+                        <li className="headernavigation-item"><NavLink to="/indicadores">Indicadores</NavLink></li>
+                        <li className="headernavigation-item"><NavLink to="/sobre">Sobre</NavLink></li>
+                    </ul>
+                </nav>
+            </header>
         </>
     )
 }
