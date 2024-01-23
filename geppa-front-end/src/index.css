@@ -1,5 +1,7 @@
 
 :root {
+    --fonte-principal: 'Poppins', sans-serif;
+
     --VerdeOliva: #556B2F;
     --VerdeCampo: #4CAF50;
     --AzulCéu: #87CEEB;
@@ -7,6 +9,14 @@
     --LaranjaSol:#FFA500;
     --MarromChocolate:#D2691E;
     --MarromTerra:#8D6E63;
+
+   /*Variaveis personalizadas Bootstrap*/
+    --headings-font-family: var(--fonte-principal);
+    --body-font-family: var(--fonte-principal);
+    --bs-body-font-family: var(--fonte-principal);
+    --bs-body-color: var(--MarromTerra);
 }
 
-
+.navbar{
+    --bs-navbar-toggler-transition: none;
+}
