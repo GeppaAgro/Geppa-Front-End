@@ -10,21 +10,20 @@ import PaginaIndicadores from "./Presentation/Pages/CommonUser/Indicadores/Pagin
 
 function App() {
 
-  return (
-    <>
-
-        <Router>
-            <Header/>
-            <Routes>
-                <Route path="/" element={<PaginaInicial/>} />
-                <Route path="/boletins" element={<PaginaListaBoletins/>} />
-                <Route path="/conteudos" element={<PaginaListaConteudos/>} />
-                <Route path="/indicadores" element={<PaginaIndicadores/>} />
-                <Route path="/sobre" element={<PaginaSobre/>} />
-            </Routes>
-        </Router>
-    </>
-  )
+    return (
+        <>
+            <Router>
+                <Header/>
+                <Routes>
+                    <Route path="/" element={<PaginaInicial/>}/>
+                    <Route path="/boletins" element={<PaginaListaBoletins/>}/>
+                    <Route path="/conteudos" element={<PaginaListaConteudos/>}/>
+                    <Route path="/indicadores" element={<PaginaIndicadores/>}/>
+                    <Route path="/sobre" element={<PaginaSobre/>}/>
+                </Routes>
+            </Router>
+        </>
+    )
 }
 
 export default App
