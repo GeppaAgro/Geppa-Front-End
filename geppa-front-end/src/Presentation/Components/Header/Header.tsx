@@ -9,8 +9,8 @@ const Header = () => {
             <nav className="navbar navbar-expand-lg bg-white shadow-sm">
                 <div className="container-fluid px-5">
                     <div className="d-flex justify-content-between">
-                        <NavLink to={"/"}>
-                            <Image className="navbar-brand img-fluid nav-img" role="button"
+                        <NavLink to={"/"} className="nav-img">
+                            <Image className="navbar-brand img-fluid " role="button"
                                    src={LogoHorizontal}/>
                         </NavLink>
                         <button className="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
