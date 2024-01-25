@@ -6,6 +6,7 @@ import PaginaSobre from "./Presentation/Pages/CommonUser/Sobre/Sobre.tsx";
 import PaginaListaBoletins from "./Presentation/Pages/CommonUser/ListaDeBoletins/PaginaListaBoletins.tsx";
 import PaginaListaConteudos from "./Presentation/Pages/CommonUser/ListaDeConteudos/PaginaListaConteudos.tsx";
 import PaginaIndicadores from "./Presentation/Pages/CommonUser/Indicadores/PaginaIndicadores.tsx";
+import Footer from "./Presentation/Components/Footer/Footer.tsx";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
                     <Route path="/indicadores" element={<PaginaIndicadores/>}/>
                     <Route path="/sobre" element={<PaginaSobre/>}/>
                 </Routes>
+                <Footer/>
             </Router>
         </>
     )
