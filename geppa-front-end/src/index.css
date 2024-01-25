@@ -6,17 +6,19 @@
     --VerdeCampo: #4CAF50;
     --AzulCéu: #87CEEB;
     --AmareloGirassol: #FFD700;
-    --LaranjaSol:#FFA500;
-    --MarromChocolate:#D2691E;
-    --MarromTerra:#8D6E63;
+    --LaranjaSol: #FFA500;
+    --MarromChocolate: #D2691E;
+    --MarromEscuro: #614848;
+    --MarromTerra: #8D6E63;
+    --Branco: #FFFFFF;
 
-   /*Variaveis personalizadas Bootstrap*/
+    /*Variaveis personalizadas Bootstrap*/
     --headings-font-family: var(--fonte-principal);
     --body-font-family: var(--fonte-principal);
     --bs-body-font-family: var(--fonte-principal);
     --bs-body-color: var(--MarromTerra);
 }
 
-.navbar{
+.navbar {
     --bs-navbar-toggler-transition: none;
 }
