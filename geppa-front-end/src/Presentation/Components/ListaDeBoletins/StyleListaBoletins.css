@@ -1,0 +1,8 @@
+.tabela-boletins thead th, td{
+    color: var(--MarromTerra);
+}
+
+.linha-tabela-boletim td a{
+    text-decoration: none;
+    color: var(--MarromTerra);
+}
