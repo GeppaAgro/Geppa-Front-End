@@ -1,0 +1,89 @@
+.footer{
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 100vw;
+    padding-right: 5%;
+    padding-left: 5%;
+    padding-top: 20px;
+    border-radius: 15px 15px 0 0 ;
+    bottom: 0;
+}
+
+.footer-img-desc{
+    height: 150px ;
+}
+
+.footer-img{
+    width: 50%;
+    min-width: 250px;
+}
+
+.footer-describe{
+    font-size: 18px;
+    text-align: justify;
+    color: var(--MarromTerra);
+}
+
+.footer a{
+    text-decoration: none;
+    color: var(--MarromTerra);
+    font-weight: 500;
+}
+
+.footer h5{
+    font-weight: 700;
+    color: var(--MarromEscuro);
+}
+
+.footer a:hover{
+    text-decoration: underline;
+    color: var(--MarromTerra);
+}
+
+.footer a.active{
+    color: var(--MarromTerra);
+}
+
+.footer-input-newslleter input{
+    border-radius: 20px ;
+    border: 3px solid var(--MarromEscuro);
+}
+
+.footer-input-newslleter input::placeholder{
+    font-family: var(--fonte-principal);
+    color: var(--MarromTerra);
+
+}
+
+.footer-input-newslleter input:focus{
+    border-radius: 20px;
+    border: 4px solid var(--MarromTerra);
+    box-shadow:1px 1px 5px var(--MarromTerra);
+}
+
+.titulo-inscricao-newslleter{
+    font-weight: 700;
+}
+
+.footer-buttons a{
+    border-color: var(--VerdeOliva);
+    color: var(--VerdeOliva);
+    font-weight: bold;
+    border-radius: 15px;
+}
+
+.footer-buttons a:hover{
+    background: var(--Branco);
+    border-color: var(--VerdeOliva);
+    color: var(--VerdeOliva);
+}
+
+.footer-buttons button{
+    background:var(--VerdeOliva);
+    border-radius: 15px;
+}
+
+.footer-buttons button:hover{
+    background: var(--VerdeOliva);
+    color: var(--Branco);
+    text-decoration: underline;
+}
