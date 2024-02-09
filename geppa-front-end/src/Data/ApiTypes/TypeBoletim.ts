@@ -1,6 +1,6 @@
 export type Boletim = {
-    id:string;
-    edicao: number;
+    id:number;
+    edicao: string;
     dataPublicacao: string;
 };
 
