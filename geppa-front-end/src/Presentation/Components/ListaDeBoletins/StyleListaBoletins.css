@@ -20,9 +20,19 @@
     color: var(--MarromTerra);
     background-color: white;
     border-color: var(--MarromChocolate);
+    outline: none;
+    box-shadow: none;
+        border: 1px solid #ccc;
 }
 
 .page-item span:focus{
+    outline: none;
+    box-shadow: none;
+    color:var(--MarromTerra);
+    background-color: white;
+}
+
+.page-item span:focus-visible{
     outline: none;
     box-shadow: none;
     color:var(--MarromTerra);
@@ -48,3 +58,4 @@
     color:var(--MarromTerra);
     background-color: white;
 }
+
