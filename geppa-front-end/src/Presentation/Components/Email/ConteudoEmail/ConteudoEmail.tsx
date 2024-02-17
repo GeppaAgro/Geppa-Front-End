@@ -46,7 +46,7 @@ const ConteudoEmail: React.FC<ConteudoEmailProps> = ({
                     {texto}
                 </p>
             </div>
-            <div className='d-flex justify-content-end align-items-center'>
+            <div className='d-flex justify-content-start align-items-center mb-3'>
                 <a className='fw-semibold' href={link} target='_blank' style={{color: 'var(--VerdeOliva)'}}>
                     {video ? 'Assistir ao vídeo' : 'Leia Mais'}
                 </a>
