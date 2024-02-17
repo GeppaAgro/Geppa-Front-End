@@ -1,14 +1,11 @@
 import React from "react";
 
-interface TituloEmailProps {
-    titulo: string;
-}
-
-export const TituloEmail: React.FC<TituloEmailProps> = ({titulo}) => {
+const TituloEmail: React.FC<{ children: React.ReactNode }> = ({children}) => {
     return (
         <div>
-            <h2 className='fs-1 fw-bold m-0' style={{color:'var(--MarromEscuro)'}}>{titulo}</h2>
+            <h2 className='fs-1 fw-bold m-0' style={{color: 'var(--MarromEscuro)'}}>{children}</h2>
         </div>
     );
 };
 
+export default TituloEmail;

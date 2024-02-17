@@ -1,5 +1,5 @@
 import React from "react";
-import {TituloEmail} from "../TituloEmail.tsx";
+import TituloEmail from "../TituloEmail.tsx";
 import cores from "../../Utils/Cores.tsx";
 
 type InfoBoletimEmailProps = {
@@ -12,7 +12,7 @@ const InfoBoletimEmail: React.FC<InfoBoletimEmailProps> = ({dataPublicacao, edic
         <>
             <div className="container">
                 <div className="text-center p-4 ">
-                    <TituloEmail titulo={"Boletim Informativo"}/>
+                    <TituloEmail>Boletim Informativo</TituloEmail>
                 </div>
                 <div className="d-flex flex-column justify-content-between flex-sm-row px-4">
                     <p className='fw-semibold'>Edição: Nº{edicao}</p>
