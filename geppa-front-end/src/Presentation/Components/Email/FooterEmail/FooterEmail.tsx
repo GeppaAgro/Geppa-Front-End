@@ -53,7 +53,7 @@ export const FooterEmail = () => {
                             </a>
                         </div>
                     </div>
-                    <p className='mb-0 mt-3' style={{fontSize: '13px', color: cores.brancoTransparente}}>
+                    <p className='mb-0 mt-3' style={{fontSize: '13px', color: cores.branco}}>
                         © 2024 GEPPA - Grupo de Estudo e Pesquisa em Produção Animal. Todos os direitos reservados.
                     </p>
                 </footer>
