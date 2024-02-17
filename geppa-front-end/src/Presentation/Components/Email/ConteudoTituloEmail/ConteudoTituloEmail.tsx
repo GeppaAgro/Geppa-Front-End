@@ -1,4 +1,5 @@
 import {TituloEmail} from "../TituloEmail.tsx";
+import cores from "../../Utils/Cores.tsx";
 
 interface ConteudoTituloEmailProps {
     titulo: string;
@@ -12,10 +13,10 @@ const ConteudoTituloEmail: React.FC<ConteudoTituloEmailProps> = ({titulo, link, 
     return (
         <div className='d-flex justify-content-between align-items-center px-4 my-4'>
             <div className='d-flex gap-3 align-items-center'>
-                <i className={iconeClasses} style={{color: 'var(--MarromEscuro)'}}></i>
+                <i className={iconeClasses} style={{color: cores.marromEscuro}}></i>
                 <TituloEmail titulo={titulo}/>
             </div>
-            <a className='fw-semibold' style={{color: 'var(--MarromEscuro)'}}
+            <a className='fw-semibold' style={{color: cores.marromEscuro}}
                target='_blank' href={link}>Veja mais {titulo}</a>
         </div>
     );

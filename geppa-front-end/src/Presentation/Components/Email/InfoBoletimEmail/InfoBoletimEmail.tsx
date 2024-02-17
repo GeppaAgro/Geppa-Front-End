@@ -1,5 +1,6 @@
 import React from "react";
 import {TituloEmail} from "../TituloEmail.tsx";
+import cores from "../../Utils/Cores.tsx";
 
 type InfoBoletimEmailProps = {
     dataPublicacao: Date;
@@ -19,7 +20,7 @@ const InfoBoletimEmail: React.FC<InfoBoletimEmailProps> = ({dataPublicacao, edic
                         Publicação: {dataPublicacao.toLocaleDateString()}</p>
                 </div>
 
-                <hr style={{border: '1px solid var(--MarromTerra)', opacity: '1'}}/>
+                <hr style={{border: '1px solid',borderColor: cores.marromTerra, opacity: '1'}}/>
             </div>
         </>
     );
