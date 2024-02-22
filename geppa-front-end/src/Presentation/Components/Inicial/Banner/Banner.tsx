@@ -6,7 +6,7 @@ import {Link} from "react-router-dom";
 export const Banner = () => {
     return (
         <>
-            <Container className="banner-home">
+            <Container className="banner-home mt-3 mb-3">
                 <Row className="p-4 align-items-center text-center justify-content-center">
                     <Col xs={5} lg={2} className="ps-lg-4">
                         <Image src={Logo} className="banner-home__container-img mt-2 h-50" fluid/>

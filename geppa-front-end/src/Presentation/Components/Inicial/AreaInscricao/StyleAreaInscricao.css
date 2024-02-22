@@ -1,0 +1,66 @@
+.area-inscricao{
+    background-image:
+            url('../../../../Data/Images/Logos/Assests/AreaInscricao DS.svg'),
+            url('../../../../Data/Images/Logos/Assests/AreaInscricao DI.svg'),
+            url('../../../../Data/Images/Logos/Assests/AreaInscricao EI.svg');
+    background-position: right top, right bottom, left bottom;
+    background-repeat: no-repeat, no-repeat, no-repeat;
+    border-radius: 15px 15px 25px 25px;
+    box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.12);
+    height: 475px ;
+}
+
+/*input do email*/
+.area-inscricao-email{
+    border: 3px solid var(--MarromTerra);
+    border-radius: 20px;
+    color: var(--MarromTerra);
+}
+
+.area-inscricao-email::placeholder{
+    font-weight: normal;
+    color: var(--MarromTerra);
+}
+.area-inscricao-email:focus{
+
+}
+
+
+/*botoes cadastrar e saiba mais*/
+.area-inscricao-saiba-mais{
+    border-radius: 15px;
+    border: 3px solid var(--VerdeOliva);
+    color: var(--VerdeOliva);
+    text-align: center;
+    text-decoration: none;
+    background: none;
+    transition: border-color 0.3s;
+}
+
+.area-inscricao-cadastrar{
+    border-radius: 15px;
+    border: 3px solid var(--VerdeOliva);
+    text-align: center;
+    background-color: var(--VerdeOliva);
+    color: var(--Branco);
+    transition: border-color 0.3s;
+}
+
+.area-inscricao-cadastrar:active, .area-inscricao-saiba-mais:active {
+    border-color: var(--AmareloGirassol);
+}
+
+
+@media screen and (max-width: 600px) {
+    .area-inscricao {
+        background-image:
+                url('../../../../Data/Images/Logos/Assests/AreaInscricao DS.svg'),
+                url('../../../../Data/Images/Logos/Assests/AreaInscricao EI.svg');
+        background-position: right top, left bottom;
+        background-repeat: no-repeat, no-repeat, no-repeat;
+        border-radius: 0px 0px 25px 25px;
+        box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.12);
+        background-size: 30%, 45%;
+        height: 475px ;
+    }
+}

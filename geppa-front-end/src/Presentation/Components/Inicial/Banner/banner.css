@@ -35,3 +35,10 @@
     text-align: justify;
     color: var(--MarromEscuro);
 }
+
+/*Se quiser tirar esse media screen tira o texto do banner*/
+@media screen and (max-width: 600px) {
+    .banner-home__container-text {
+        display: none;
+    }
+}
