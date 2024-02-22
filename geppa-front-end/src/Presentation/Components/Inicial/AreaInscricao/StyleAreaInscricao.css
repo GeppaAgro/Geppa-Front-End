@@ -6,7 +6,7 @@
     background-position: right top, right bottom, left bottom;
     background-repeat: no-repeat, no-repeat, no-repeat;
     border-radius: 15px 15px 25px 25px;
-    box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.12);
     height: 475px ;
 }
 
@@ -58,8 +58,8 @@
                 url('../../../../Data/Images/Logos/Assests/AreaInscricao EI.svg');
         background-position: right top, left bottom;
         background-repeat: no-repeat, no-repeat, no-repeat;
-        border-radius: 0px 0px 25px 25px;
-        box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.12);
+        border-radius: 0 0px 25px 25px;
+        box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.12);
         background-size: 30%, 45%;
         height: 475px ;
     }
