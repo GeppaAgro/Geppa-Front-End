@@ -10,7 +10,6 @@
     height: 475px ;
 }
 
-/*input do email*/
 .area-inscricao-email{
     border: 3px solid var(--MarromTerra);
     border-radius: 20px;
@@ -21,13 +20,8 @@
     font-weight: normal;
     color: var(--MarromTerra);
 }
-.area-inscricao-email:focus{
 
-}
-
-
-/*botoes cadastrar e saiba mais*/
-.area-inscricao-saiba-mais{
+.area-inscricao-saiba-mais-btn{
     border-radius: 15px;
     border: 3px solid var(--VerdeOliva);
     color: var(--VerdeOliva);
@@ -37,7 +31,7 @@
     transition: border-color 0.3s;
 }
 
-.area-inscricao-cadastrar{
+.area-inscricao-cadastrar-btn{
     border-radius: 15px;
     border: 3px solid var(--VerdeOliva);
     text-align: center;
@@ -46,10 +40,9 @@
     transition: border-color 0.3s;
 }
 
-.area-inscricao-cadastrar:active, .area-inscricao-saiba-mais:active {
+.area-inscricao-cadastrar-btn:active, .area-inscricao-saiba-mais-btn:active {
     border-color: var(--AmareloGirassol);
 }
-
 
 @media screen and (max-width: 600px) {
     .area-inscricao {
@@ -58,7 +51,7 @@
                 url('../../../../Data/Images/Logos/Assests/AreaInscricao EI.svg');
         background-position: right top, left bottom;
         background-repeat: no-repeat, no-repeat, no-repeat;
-        border-radius: 0 0px 25px 25px;
+        border-radius: 0 0 25px 25px;
         box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.12);
         background-size: 30%, 45%;
         height: 475px ;

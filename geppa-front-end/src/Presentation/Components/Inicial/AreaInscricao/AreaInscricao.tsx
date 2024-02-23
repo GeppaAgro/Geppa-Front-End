@@ -17,10 +17,10 @@ export default function AreaInscricao ()  {
                            className="area-inscricao-email mt-3 col-6 p-3 fs-4 fw-semibold"/>
                 <div
                     className="area-inscricao-botoes d-md-flex flex-md-row flex-column justify-content-between align-items-center px-5 mt-3 text-center gap-5">
-                    <button className="area-inscricao-saiba-mais me-0 mb-2 mb-md-0 fs-5  fw-semibold px-4 py-2">
+                    <button className="area-inscricao-saiba-mais-btn me-0 mb-2 mb-md-0 fs-5  fw-semibold px-4 py-2">
                         Saiba mais
                     </button>
-                    <button className="area-inscricao-cadastrar fs-5 fw-semibold px-4 py-2">
+                    <button className="area-inscricao-cadastrar-btn fs-5 fw-semibold px-4 py-2">
                         Cadastrar
                     </button>
                 </div>
