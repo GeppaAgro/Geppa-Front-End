@@ -44,7 +44,7 @@
     border-color: var(--AmareloGirassol);
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 950px) {
     .area-inscricao {
         background-image:
                 url('../../../../Data/Images/Logos/Assests/AreaInscricao DS.svg'),
