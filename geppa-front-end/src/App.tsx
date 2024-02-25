@@ -7,6 +7,7 @@ import PaginaListaConteudos from "./Presentation/Pages/CommonUser/ListaDeConteud
 import PaginaIndicadores from "./Presentation/Pages/CommonUser/Indicadores/PaginaIndicadores.tsx";
 import Footer from "./Presentation/Components/Footer/Footer.tsx";
 import PaginaListaBoletins from "./Presentation/Pages/CommonUser/ListaDeBoletins/PaginaListaBoletins.tsx";
+import PaginaBoletim from "./Presentation/Pages/CommonUser/Boletim/PaginaBoletim.tsx";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
                     <Route path="/conteudos" element={<PaginaListaConteudos/>}/>
                     <Route path="/indicadores" element={<PaginaIndicadores/>}/>
                     <Route path="/sobre" element={<PaginaSobre/>}/>
+                    <Route path="/testeBoletim" element={<PaginaBoletim/>}/>
                 </Routes>
                 <Footer/>
             </Router>
