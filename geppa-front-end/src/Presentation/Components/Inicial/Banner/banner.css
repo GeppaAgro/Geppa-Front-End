@@ -1,0 +1,44 @@
+.banner-home {
+    background-image: url('../../../../Data/Images/Logos/Assests/asset-001.svg'),
+    url('../../../../Data/Images/Logos/Assests/asset-002.svg');
+    background-position: left top, right bottom;
+    background-repeat: no-repeat, no-repeat;
+    border-radius: 25px;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.25);
+}
+
+.banner-home__container-img {
+    max-height: 250px;
+}
+
+.banner-home__container-titulo {
+    color: var(--VerdeOliva);
+    font-weight: 700;
+}
+
+.banner-home__container-link {
+    border-radius: 15px;
+    border: 3px solid var(--VerdeOliva);
+    padding: 11px 24px;
+    color: var(--VerdeOliva);
+    text-align: center;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.link__maisgeppa {
+    background-color: var(--VerdeOliva);
+    color: var(--Branco);
+}
+
+.banner-home__container-text {
+    text-align: justify;
+    color: var(--MarromEscuro);
+}
+
+/*Se quiser tirar esse media screen tira o texto do banner*/
+@media screen and (max-width: 600px) {
+    .banner-home__container-text {
+        display: none;
+    }
+}
