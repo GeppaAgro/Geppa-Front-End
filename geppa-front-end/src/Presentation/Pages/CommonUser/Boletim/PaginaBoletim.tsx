@@ -10,6 +10,8 @@ import CardCursoBoletim from "../../../Components/ComponentesBoletim/CardCursoBo
 import CardEventoBoletim from "../../../Components/ComponentesBoletim/CardEventoBoletim.tsx";
 import CardNoticiaBoletim from "../../../Components/ComponentesBoletim/CardNoticiasBoletim.tsx";
 import CardVideoBoletim from "../../../Components/ComponentesBoletim/CardVideoBoletim.tsx";
+import BoletimBanner from "../../../Components/BoletimBanner/BoletimBanner.tsx";
+import TabelaIndicadores from "../../../Components/Utils/TabelaIndicadores/TabelaIndicadores.tsx";
 
 export default function PaginaBoletim() {
 
@@ -68,27 +70,19 @@ export default function PaginaBoletim() {
         buscaObjetosBoletim();
     }, []);
 
-    /*useEffect(() => {
-        console.log(cursos);
-        console.log(eventos);
-        console.log(noticias);
-        console.log(videos);
-    }, [cursos, eventos, noticias, videos]);
-    */
-
-
     return (
         <>
-            <Container className="d-flex justify-content-between mt-3">
-                <h3>Edição é: {edicao}</h3>
-                <h3>A data é: {dataPublicacao.toLocaleDateString()}</h3>
-                <h3><i className="ri-download-2-line fw-bold"></i> .PDF</h3>
+            <BoletimBanner/>
+            <Container className="d-flex justify-content-between mt-5">
+                <h4>Edição: {edicao}</h4>
+                <h4> Data de Publicação: {dataPublicacao.toLocaleDateString()}</h4>
+                <h4><i className="ri-download-2-line fw-bold"></i> .PDF</h4>
             </Container>
 
             {artigos.length > 0 && (
                 <Container>
                     <div className="d-flex justify-content-between mt-5 align-items-baseline">
-                        <h2><i className="ri-article-line"></i> Artigos</h2>
+                        <h2 className="fw-bold"><i className="ri-article-line"></i> Artigos</h2>
                         <Link to="#" className="pagina-boletim-btn-clique-para-mais text-decoration-underline fw-medium"> Clique para ver mais artigos</Link>
                     </div>
                     {artigos.map((artigo) => (
@@ -100,7 +94,7 @@ export default function PaginaBoletim() {
             {cursos.length > 0 && (
                 <Container>
                     <div className="d-flex justify-content-between mt-5 align-items-baseline">
-                        <h2><i className="ri-graduation-cap-line"/> Cursos</h2>
+                        <h2 className="fw-bold"><i className="ri-graduation-cap-line"/> Cursos</h2>
                         <Link to="#" className="pagina-boletim-btn-clique-para-mais text-decoration-underline fw-medium"> Clique para ver mais cursos</Link>
                     </div>
                     {cursos.map((curso) => (
@@ -112,7 +106,7 @@ export default function PaginaBoletim() {
             {eventos.length > 0 && (
                 <Container>
                     <div className="d-flex justify-content-between mt-5 align-items-baseline">
-                        <h2><i className="ri-graduation-cap-line"/> Eventos</h2>
+                        <h2 className="fw-bold"><i className="ri-graduation-cap-line"/> Eventos</h2>
                         <Link to="#" className="pagina-boletim-btn-clique-para-mais text-decoration-underline fw-medium"> Clique para ver mais cursos</Link>
                     </div>
                         {eventos.map((evento) => (
@@ -124,7 +118,7 @@ export default function PaginaBoletim() {
             {noticias.length > 0 && (
                 <Container>
                     <div className="d-flex justify-content-between mt-5 align-items-baseline">
-                        <h2><i className="ri-graduation-cap-line"/> Noticias</h2>
+                        <h2 className="fw-bold"><i className="ri-graduation-cap-line"/> Noticias</h2>
                         <Link to="#" className="pagina-boletim-btn-clique-para-mais text-decoration-underline fw-medium"> Clique para ver mais noticias</Link>
                     </div>
                     {noticias.map((noticia) => (
@@ -136,7 +130,7 @@ export default function PaginaBoletim() {
             {videos.length > 0 && (
                 <Container>
                     <div className="d-flex justify-content-between mt-5 align-items-baseline">
-                        <h2><i className="ri-graduation-cap-line"/> Videos</h2>
+                        <h2 className="fw-bold"><i className="ri-graduation-cap-line"/> Videos</h2>
                         <Link to="#" className="pagina-boletim-btn-clique-para-mais text-decoration-underline fw-medium"> Clique para mais videos</Link>
                     </div>
                     {videos.map((video) => (
@@ -144,6 +138,12 @@ export default function PaginaBoletim() {
                     ))}
                 </Container>
             )}
+
+
+            <Container className="text-center my-5 ">
+                <h2 className="fw-bold">Indicadores</h2>
+                <TabelaIndicadores/>
+            </Container>
 
 
         </>

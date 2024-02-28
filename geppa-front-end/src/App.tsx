@@ -21,7 +21,6 @@ function App() {
                     <Route path="/conteudos" element={<PaginaListaConteudos/>}/>
                     <Route path="/indicadores" element={<PaginaIndicadores/>}/>
                     <Route path="/sobre" element={<PaginaSobre/>}/>
-                    <Route path="/testeBoletim" element={<PaginaBoletim/>}/>
                     <Route path="/boletim" element={<PaginaBoletim/>}/>
                 </Routes>
                 <Footer/>
