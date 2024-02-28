@@ -1,0 +1,10 @@
+.bannerBoletim{
+    background-color: var(--VerdeOliva);
+    color: white;
+}
+.logo-banner-boletim{
+    max-height: 180px;
+    min-height: 125px;
+    min-width: 91px;
+}
+
