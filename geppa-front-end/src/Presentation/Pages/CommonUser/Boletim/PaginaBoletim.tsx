@@ -4,78 +4,57 @@ import axios from "axios"
 import {useEffect, useState} from "react";
 import CardArtigoBoletim from "../../../Components/ComponentesBoletim/CardArtigoBoletim.tsx";
 import {Container} from "react-bootstrap";
-import {ArtigoTeste,CursoTeste,EventoTeste,NoticiaTeste,VideoTeste} from "./TypesForTest.ts";
 import {Link} from "react-router-dom";
 import CardCursoBoletim from "../../../Components/ComponentesBoletim/CardCursoBoletim.tsx";
-import CardEventoBoletim from "../../../Components/ComponentesBoletim/CardEventoBoletim.tsx";
-import CardNoticiaBoletim from "../../../Components/ComponentesBoletim/CardNoticiasBoletim.tsx";
 import CardVideoBoletim from "../../../Components/ComponentesBoletim/CardVideoBoletim.tsx";
 import BoletimBanner from "../../../Components/BoletimBanner/BoletimBanner.tsx";
 import TabelaIndicadores from "../../../Components/Utils/TabelaIndicadores/TabelaIndicadores.tsx";
+import {Artigo, Curso, Evento, Noticia, Video} from "../../../../Domain/TypesConteudos/TypesConteudos.ts";
+//import {Boletim} from "./TypeBoletim.ts";
+import CardEventoBoletim from "../../../Components/ComponentesBoletim/CardEventoBoletim.tsx";
+import CardNoticiaBoletim from "../../../Components/ComponentesBoletim/CardNoticiasBoletim.tsx";
 
 export default function PaginaBoletim() {
 
-    const [edicao] = useState<string>(`AA88J`);
-    const [dataPublicacao] = useState<Date>(new Date(`2022-01-01`));
+    const [edicao,setEdicao] = useState<string>(`AA88J`);
+    const [dataPublicacao, setDataPublicacao] = useState<Date>()
+    const [linkBoletim] = useState<string>(`http://localhost/boletins/462024`);
 
-    const [linkAPI] = useState<string>(`src/Presentation/Pages/CommonUser/Boletim/ValoresTestComponenteBoletim.json`);
-    const artigos: ArtigoTeste[] = [
-        {
-            id: "001",
-            titulo: "titulo do artigo 1",
-            dataPublicacao: new Date("2022-01-01"),
-            descricao: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed facilisis metus nec erat laoreet, vel malesuada ligula rhoncus. Praesent sed massa in purus suscipit tristique. Sed nec diam at augue euismod fermentum id ac ante. Aenean dignissim, elit ac hendrerit lacinia, quam tellus blandit urna, nec faucibus ipsum ex in ex.",
-            autores: ["Autor 1", "Autor 2"],
-            tags: ["Tag 1", "Tag 2"],
-            link: "#"
-        },
-        {
-            id: "002",
-            titulo: "titulo do artigo 2",
-            dataPublicacao: new Date("2022-02-01"),
-            descricao: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed facilisis metus nec erat laoreet, vel malesuada ligula rhoncus. Praesent sed massa in purus suscipit tristique. Sed nec diam at augue euismod fermentum id ac ante. Aenean dignissim, elit ac hendrerit lacinia, quam tellus blandit urna, nec faucibus ipsum ex in ex.",
-            autores: ["Autor 3", "Autor 4"],
-            tags: ["Tag 3", "Tag 4"],
-            link: "#"
-        },
-        {
-            id: "003",
-            titulo: "titulo do artigo 3",
-            dataPublicacao: new Date("2022-03-01"),
-            descricao: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed facilisis metus nec erat laoreet, vel malesuada ligula rhoncus. Praesent sed massa in purus suscipit tristique. Sed nec diam at augue euismod fermentum id ac ante. Aenean dignissim, elit ac hendrerit lacinia, quam tellus blandit urna, nec faucibus ipsum ex in ex.",
-            autores: ["Autor 5", "Autor 6"],
-            tags: ["Tag 5", "Tag 6", "Tag 7"],
-            link: "#"
-        }
-    ];
+    //const [dadosBoletim, setDadosBoletim] = useState<Boletim>()
+    const [artigos, setArtigos] = useState<Artigo[]> ([]);
+    const [cursos, setCursos] = useState<Curso[]>([]);
+    const [eventos, setEventos] = useState<Evento[]>([]);
+    const [noticias, setNoticias] = useState<Noticia[]>([]);
+    const [videos, setVideos] = useState<Video[]>([]);
 
-    //const [artigos, setArtigos] = useState<ArtigoTeste[]>([])
-    const [cursos, setCursos] = useState<CursoTeste[]>([]);
-    const [eventos, setEventos] = useState<EventoTeste[]>([]);
-    const [noticias, setNoticias] = useState<NoticiaTeste[]>([]);
-    const[videos, setVideos] = useState<VideoTeste[]>([]);
 
     useEffect(() => {
-        const buscaObjetosBoletim = async () => {
+        const buscarBoletim = async () => {
             try {
-                const res = await axios.get(linkAPI);
-                setCursos(res.data.cursos);
-                setEventos(res.data.eventos);
-                setNoticias(res.data.noticias);
-                setVideos(res.data.videos);
-            } catch (error) {
-                console.log(`Deu Ruim`, error);
+                const response = await axios.get(linkBoletim);
+                setEdicao(response.data.dados.edicao)
+                setDataPublicacao(new Date(response.data.dados.dataPublicacao))
+                setArtigos(response.data.dados.artigos)
+                setCursos(response.data.dados.cursos)
+                setEventos(response.data.dados.eventos)
+                setNoticias(response.data.dados.noticias)
+                setVideos(response.data.dados.videos)
+                //console.log(response.data.dados)
+            }
+            catch(error){
+                console.log("Boletim não encontrado")
             }
         };
-        buscaObjetosBoletim();
+        buscarBoletim()
     }, []);
+
 
     return (
         <>
             <BoletimBanner/>
             <Container className="d-flex justify-content-between mt-5">
                 <h4>Edição: {edicao}</h4>
-                <h4> Data de Publicação: {dataPublicacao.toLocaleDateString()}</h4>
+                <h4> Data de Publicação: {dataPublicacao?.toLocaleDateString()}</h4>
                 <h4><i className="ri-download-2-line fw-bold"></i> .PDF</h4>
             </Container>
 
@@ -85,9 +64,14 @@ export default function PaginaBoletim() {
                         <h2 className="fw-bold"><i className="ri-article-line"></i> Artigos</h2>
                         <Link to="#" className="pagina-boletim-btn-clique-para-mais text-decoration-underline fw-medium"> Clique para ver mais artigos</Link>
                     </div>
-                    {artigos.map((artigo) => (
-                        <CardArtigoBoletim key={artigo.id} artigo={artigo}/>
-                    ))}
+                    {
+                        artigos.map((artigo) => (
+                            <div key={artigo.id}>
+                                <CardArtigoBoletim artigo={artigo}/>
+                            </div>
+                        ))
+                    }
+
                 </Container>
             )}
 
@@ -97,45 +81,61 @@ export default function PaginaBoletim() {
                         <h2 className="fw-bold"><i className="ri-graduation-cap-line"/> Cursos</h2>
                         <Link to="#" className="pagina-boletim-btn-clique-para-mais text-decoration-underline fw-medium"> Clique para ver mais cursos</Link>
                     </div>
-                    {cursos.map((curso) => (
-                        <CardCursoBoletim key={curso.id} curso={curso}/>
-                    ))}
+                    {
+                        cursos.map((curso)=>(
+                            <div key={curso.id}>
+                                <CardCursoBoletim curso={curso}/>
+                            </div>
+                        ))
+                    }
                 </Container>
             )}
 
             {eventos.length > 0 && (
                 <Container>
                     <div className="d-flex justify-content-between mt-5 align-items-baseline">
-                        <h2 className="fw-bold"><i className="ri-graduation-cap-line"/> Eventos</h2>
+                        <h2 className="fw-bold"><i className="ri-calendar-line"></i> Eventos</h2>
                         <Link to="#" className="pagina-boletim-btn-clique-para-mais text-decoration-underline fw-medium"> Clique para ver mais cursos</Link>
                     </div>
-                        {eventos.map((evento) => (
-                        <CardEventoBoletim key={evento.id} evento={evento}/>
-                    ))}
+                    {
+                        eventos.map((evento)=>(
+                            <div key={evento.id}>
+                                <CardEventoBoletim evento={evento}/>
+                            </div>
+                        ))
+                    }
                 </Container>
             )}
 
             {noticias.length > 0 && (
                 <Container>
                     <div className="d-flex justify-content-between mt-5 align-items-baseline">
-                        <h2 className="fw-bold"><i className="ri-graduation-cap-line"/> Noticias</h2>
+                        <h2 className="fw-bold"><i className="ri-news-line"></i> Noticias</h2>
                         <Link to="#" className="pagina-boletim-btn-clique-para-mais text-decoration-underline fw-medium"> Clique para ver mais noticias</Link>
                     </div>
-                    {noticias.map((noticia) => (
-                        <CardNoticiaBoletim key={noticia.id} noticia={noticia}/>
-                    ))}
+                    {
+                        noticias.map((noticia)=> (
+                            <div key={noticia.id}>
+                                <CardNoticiaBoletim noticia={noticia}/>
+                            </div>
+                        ))
+                    }
                 </Container>
             )}
 
             {videos.length > 0 && (
                 <Container>
                     <div className="d-flex justify-content-between mt-5 align-items-baseline">
-                        <h2 className="fw-bold"><i className="ri-graduation-cap-line"/> Videos</h2>
+                        <h2 className="fw-bold"><i className="ri-video-line"></i> Videos</h2>
                         <Link to="#" className="pagina-boletim-btn-clique-para-mais text-decoration-underline fw-medium"> Clique para mais videos</Link>
                     </div>
-                    {videos.map((video) => (
-                        <CardVideoBoletim key={video.id} video={video}/>
-                    ))}
+                    {
+                        videos.map((video)=>(
+                            <div key={video.id}>
+                                <CardVideoBoletim video={video}/>
+                            </div>
+                        ))
+                    }
                 </Container>
             )}
 

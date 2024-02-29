@@ -1,9 +1,9 @@
 import "./StyleCardBoletim.css"
 import {Container} from "react-bootstrap";
-import {ArtigoTeste} from "../../Pages/CommonUser/Boletim/TypesForTest.ts";
+import{Artigo} from "../../../Domain/TypesConteudos/TypeArtigo.ts";
 import {Link} from "react-router-dom";
 
-const CardArtigoBoletim: React.FC<{ artigo: ArtigoTeste }> = ({artigo}) =>{
+const CardArtigoBoletim: React.FC<{ artigo: Artigo }> = ({artigo}) =>{
 
     return (
         <>
@@ -13,11 +13,11 @@ const CardArtigoBoletim: React.FC<{ artigo: ArtigoTeste }> = ({artigo}) =>{
                 </p>
                 <div className="card-boletim-informacoes fw-semibold fs-5">
                     <p>
-                        Data de publicacao: {artigo.dataPublicacao.toLocaleDateString()}
+                        Data de publicação: {new Date (artigo.dataPublicacao).toLocaleDateString()}
                     </p>
-                    <p>
-                        Autores: {artigo.autores.join(', ')}
-                    </p>
+                     <p>
+                         Autores: {artigo.autores.map((autor) => autor.nome).join(', ')}
+                     </p>
                 </div>
                 <p className="card-boletim-descricao mt-2 mt-lg-0 fs-5 fw-medium">
                     {artigo.descricao}
@@ -28,7 +28,7 @@ const CardArtigoBoletim: React.FC<{ artigo: ArtigoTeste }> = ({artigo}) =>{
                         className="tags-boletim d-flex flex-wrap justify-content-start justify-content-md-end mb-2 mb-md-0">
                         {
                             artigo.tags.map(tag => (
-                                <span className="card-boletim-tags p-3 fs-6 fw-semibold me-3" key={tag}> {tag} </span>
+                                <span className="card-boletim-tags p-3 fs-6 fw-semibold me-3" key={tag.id}> {tag.nome} </span>
                             ))
                         }
                     </div>

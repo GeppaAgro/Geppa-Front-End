@@ -1,9 +1,9 @@
 import "./StyleCardBoletim.css"
 import {Container} from "react-bootstrap";
-import {CursoTeste} from "../../Pages/CommonUser/Boletim/TypesForTest.ts";
 import {Link} from "react-router-dom";
+import {Curso} from "../../../Domain/TypesConteudos/TypesConteudos.ts";
 
-const CardCursoBoletim: React.FC <{curso : CursoTeste}> = ({curso}) => {
+const CardCursoBoletim: React.FC <{curso : Curso}> = ({curso}) => {
     return(
         <>
             <Container className="card-boletim p-5 mt-3 mb-3 d-flex flex-column justify-content-start p-3">
@@ -13,10 +13,10 @@ const CardCursoBoletim: React.FC <{curso : CursoTeste}> = ({curso}) => {
                 <div className="card-boletim-informacoes fw-semibold fs-5">
                     <div className="d-flex flex-column flex-sm-row gap-3 gap-sm-5">
                         <p>
-                            Duração: {curso.duracao} horas
+                            Duração em horas: {curso.duracaoEmHoras} horas
                         </p>
                         <p>
-                            Prazo de inscrição: {curso.prazoInscricao}
+                            Prazo para inscrição: {new Date(curso.prazoInscricao).toLocaleDateString()}
                         </p>
                     </div>
                     {
@@ -36,7 +36,7 @@ const CardCursoBoletim: React.FC <{curso : CursoTeste}> = ({curso}) => {
                         className="tags-boletim d-flex flex-wrap justify-content-start justify-content-md-end mb-2 mb-md-0">
                         {
                             curso.tags.map(tag => (
-                                <span className="card-boletim-tags p-3 fs-6 fw-semibold me-3" key={tag}> {tag} </span>
+                                <span className="card-boletim-tags p-3 fs-6 fw-semibold me-3" key={tag.id}> {tag.nome} </span>
                             ))
                         }
                     </div>

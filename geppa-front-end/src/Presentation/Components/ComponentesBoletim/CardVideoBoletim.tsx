@@ -1,10 +1,10 @@
 import "./StyleCardBoletim.css"
 import {Container} from "react-bootstrap";
-import {VideoTeste} from "../../Pages/CommonUser/Boletim/TypesForTest.ts";
 import {Link} from "react-router-dom";
 import {useState} from "react";
+import {Video} from "../../../Domain/TypesConteudos/TypeVideo.ts";
 
-const CardVideoBoletim: React.FC <{video : VideoTeste}> = ({video}) => {
+const CardVideoBoletim: React.FC <{video : Video}> = ({video}) => {
 
     const [videoVisivel, setVideoVisivel] = useState(false);
 
@@ -31,7 +31,7 @@ const CardVideoBoletim: React.FC <{video : VideoTeste}> = ({video}) => {
                     className="tags-boletim d-flex flex-wrap justify-content-start justify-content-md-end mb-2 mb-md-0">
                     {
                         video.tags.map(tag => (
-                            <span className="card-boletim-tags p-3 fs-6 fw-semibold me-3" key={tag}> {tag} </span>
+                            <span className="card-boletim-tags p-3 fs-6 fw-semibold me-3" key={tag.id}> {tag.nome} </span>
                         ))
                     }
                 </div>
