@@ -10,7 +10,6 @@ import CardVideoBoletim from "../../../Components/ComponentesBoletim/CardVideoBo
 import BoletimBanner from "../../../Components/BoletimBanner/BoletimBanner.tsx";
 import TabelaIndicadores from "../../../Components/Utils/TabelaIndicadores/TabelaIndicadores.tsx";
 import {Artigo, Curso, Evento, Noticia, Video} from "../../../../Domain/TypesConteudos/TypesConteudos.ts";
-//import {Boletim} from "./TypeBoletim.ts";
 import CardEventoBoletim from "../../../Components/ComponentesBoletim/CardEventoBoletim.tsx";
 import CardNoticiaBoletim from "../../../Components/ComponentesBoletim/CardNoticiasBoletim.tsx";
 
@@ -18,9 +17,8 @@ export default function PaginaBoletim() {
 
     const [edicao,setEdicao] = useState<string>(`AA88J`);
     const [dataPublicacao, setDataPublicacao] = useState<Date>()
-    const [linkBoletim] = useState<string>(`http://localhost/boletins/462024`);
+    const [linkBoletim] = useState<string>(`http://localhost/boletins/472025`);
 
-    //const [dadosBoletim, setDadosBoletim] = useState<Boletim>()
     const [artigos, setArtigos] = useState<Artigo[]> ([]);
     const [cursos, setCursos] = useState<Curso[]>([]);
     const [eventos, setEventos] = useState<Evento[]>([]);
@@ -39,7 +37,6 @@ export default function PaginaBoletim() {
                 setEventos(response.data.dados.eventos)
                 setNoticias(response.data.dados.noticias)
                 setVideos(response.data.dados.videos)
-                //console.log(response.data.dados)
             }
             catch(error){
                 console.log("Boletim não encontrado")
