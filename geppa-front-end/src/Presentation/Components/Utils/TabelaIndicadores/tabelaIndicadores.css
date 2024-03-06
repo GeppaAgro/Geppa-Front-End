@@ -1,0 +1,15 @@
+.table{
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+}
+
+.table > thead > tr > th {
+    background-color: var(--VerdeOliva);
+    color: white;
+    padding: 12px;
+}
+
+.table > tbody > tr > td {
+    color: var(--MarromEscuro);
+    font-weight: 600;
+}
+

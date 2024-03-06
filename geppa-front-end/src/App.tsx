@@ -9,7 +9,6 @@ import PaginaBoletim from "./Presentation/Pages/CommonUser/Boletim/PaginaBoletim
 import Footer from "./Presentation/Components/Footer/Footer.tsx";
 import PaginaListaBoletins from "./Presentation/Pages/CommonUser/ListaDeBoletins/PaginaListaBoletins.tsx";
 
-
 function App() {
 
     return (
