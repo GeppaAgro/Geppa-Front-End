@@ -1,27 +1,26 @@
-.area-inscricao{
-    background-image:
-            url('../../../../Data/Images/Logos/Assests/AreaInscricao DS.svg'),
-            url('../../../../Data/Images/Logos/Assests/AreaInscricao DI.svg'),
-            url('../../../../Data/Images/Logos/Assests/AreaInscricao EI.svg');
-    background-position: right top, right bottom, left bottom;
-    background-repeat: no-repeat, no-repeat, no-repeat;
+.area-inscricao {
+    background-image: url('../../../../Data/Images/Logos/Assests/AreaInscricao DS.svg'),
+    url('../../../../Data/Images/Logos/Assests/AreaInscricao EI.svg');
+    background-position: right top, left bottom;
+    background-size: 12%, 16%;
+    background-repeat: no-repeat, no-repeat;
     border-radius: 15px 15px 25px 25px;
     box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.12);
-    height: 475px ;
+    height: 260px;
 }
 
-.area-inscricao-email{
+.area-inscricao-email {
     border: 3px solid var(--MarromTerra);
     border-radius: 20px;
     color: var(--MarromTerra);
 }
 
-.area-inscricao-email::placeholder{
+.area-inscricao-email::placeholder {
     font-weight: normal;
     color: var(--MarromTerra);
 }
 
-.area-inscricao-saiba-mais-btn{
+.area-inscricao-saiba-mais-btn {
     border-radius: 15px;
     border: 3px solid var(--VerdeOliva);
     color: var(--VerdeOliva);
@@ -31,7 +30,7 @@
     transition: border-color 0.3s;
 }
 
-.area-inscricao-cadastrar-btn{
+.area-inscricao-cadastrar-btn {
     border-radius: 15px;
     border: 3px solid var(--VerdeOliva);
     text-align: center;
@@ -46,14 +45,20 @@
 
 @media screen and (max-width: 950px) {
     .area-inscricao {
-        background-image:
-                url('../../../../Data/Images/Logos/Assests/AreaInscricao DS.svg'),
-                url('../../../../Data/Images/Logos/Assests/AreaInscricao EI.svg');
-        background-position: right top, left bottom;
-        background-repeat: no-repeat, no-repeat, no-repeat;
+        background-image: url('../../../../Data/Images/Logos/Assests/AreaInscricao DS.svg'),
+        url('../../../../Data/Images/Logos/Assests/AreaInscricao EI.svg');
+        background-position: right, left bottom;
+        background-repeat: no-repeat, no-repeat;
         border-radius: 0 0 25px 25px;
         box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.12);
-        background-size: 30%, 45%;
-        height: 475px ;
+        background-size: 17%, 30%;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .area-inscricao {
+        background-image: url('../../../../Data/Images/Logos/Assests/AreaInscricao EI.svg');
+        background-position: left bottom;
+        background-size: 30%;
     }
 }
