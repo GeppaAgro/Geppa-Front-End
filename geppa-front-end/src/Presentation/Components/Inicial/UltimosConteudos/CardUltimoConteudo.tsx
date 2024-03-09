@@ -1,19 +1,19 @@
 import "./StyleUltimosConteudos.css"
 import {Container} from "react-bootstrap";
 
-const CardUltimoConteudo: React.FC <{descricao: string, dataPublicacao: Date}> = ({descricao, dataPublicacao}) => {
+const CardUltimoConteudo: React.FC<{ descricao: string, dataPublicacao: Date }> = ({descricao, dataPublicacao}) => {
 
 
     return (
-        <Container className="card-ultimos-conteudos d-flex justify-content-between ">
+        <Container className="card-ultimos-conteudos align-items-center d-flex gap-4 p-2">
             <div className="d-flex align-items-center">
-                    <p className="me-4 text-start">
-                        {dataPublicacao.toLocaleDateString('pt-BR', { month: 'numeric', year: 'numeric' })}
-                    </p>
+                <p className="m-0">
+                    {dataPublicacao.toLocaleDateString('pt-BR', {month: 'numeric', year: 'numeric'})}
+                </p>
             </div>
-                    <p>
-                        {descricao}
-                    </p>
+            <p className={'m-0'}>
+                {descricao}
+            </p>
         </Container>
     )
 }
