@@ -21,7 +21,7 @@ export const Banner = () => {
                         </div>
                     </Col>
                     <Col lg={6}>
-                        <p className=" m-0 pe-lg-5 banner-home__container-text fs-5 mt-3 mt-lg-0">
+                        <p className="m-0 pe-lg-5 banner-home__container-text fs-6 mt-3 mt-lg-0">
                             O boletim informativo GEPPA é uma publicação semanal sobre notícias, eventos, tecnologias e
                             estatísticas de preços relacionados ao agronegócio animal. Todo material é produzido e
                             elaborado por Alunos e Professores integrantes deste grupo de pesquisa atuante desde 2010.
