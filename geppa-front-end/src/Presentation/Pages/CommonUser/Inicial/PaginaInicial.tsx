@@ -5,6 +5,8 @@ import {useEffect, useState} from "react";
 import BASE_URL from "../../../../Core/AxiosClient/AxiosClient.ts";
 import axios from "axios"
 import {TypeConteudoGenerico} from "../../../Components/Inicial/UltimosConteudos/TypeConteudoGenerico.ts";
+import {Container} from "react-bootstrap";
+
 export default function PaginaInicial() {
     const [urlUltimosConteudos] = useState<string>(`${BASE_URL}/conteudos/ultimos-por-conteudo?quantidade=4`)
     const [artigos, setArtigos] = useState<TypeConteudoGenerico[]>([])
@@ -24,7 +26,7 @@ export default function PaginaInicial() {
                 setVideos(res.data.dados.Video)
 
                 console.log(res)
-            } catch(error) {
+            } catch (error) {
                 console.log("Algo deu errado:", error);
             }
         }
@@ -33,15 +35,17 @@ export default function PaginaInicial() {
 
     return (
         <>
-            <Banner/>
-            <AreaInscricao/>
-            <div className="mt-5">
-                <UltimosConteudos tipo={"Artigos"} conteudoGenerico={artigos}/>
-                <UltimosConteudos tipo={"Cursos"} conteudoGenerico={cursos}/>
-                <UltimosConteudos tipo={"Eventos"} conteudoGenerico={eventos}/>
-                <UltimosConteudos tipo={"Noticias"} conteudoGenerico={noticias}/>
-                <UltimosConteudos tipo={"Videos"} conteudoGenerico={videos}/>
-            </div>
+            <Container>
+                <Banner/>
+                <AreaInscricao/>
+                <div className="mt-5">
+                    <UltimosConteudos tipo={"Artigos"} conteudoGenerico={artigos}/>
+                    <UltimosConteudos tipo={"Cursos"} conteudoGenerico={cursos}/>
+                    <UltimosConteudos tipo={"Eventos"} conteudoGenerico={eventos}/>
+                    <UltimosConteudos tipo={"Noticias"} conteudoGenerico={noticias}/>
+                    <UltimosConteudos tipo={"Videos"} conteudoGenerico={videos}/>
+                </div>
+            </Container>
 
         </>
     )

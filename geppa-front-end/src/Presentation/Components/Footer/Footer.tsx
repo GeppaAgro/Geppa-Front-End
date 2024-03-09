@@ -15,13 +15,7 @@ export default function Footer() {
 
                 <div className="d-flex align-items-center gap-3 flex-column py-4 flex-sm-row">
                     <div className=" d-sm-flex justify-content-sm-start text-center">
-                        <Image src={LogoHorizontal} className="footer-img w-50" fluid/>
-                    </div>
-                    <div>
-                        <p className="footer-describe">
-                            Lorem ipsum dolor sit amet consectetur. Id mi amet faucibus magna mattis purus ultrices at
-                            tortor...
-                        </p>
+                        <Image src={LogoHorizontal} className="footer-img" fluid/>
                     </div>
                 </div>
                 <Row>
@@ -90,17 +84,17 @@ export default function Footer() {
                 </Row>
                 <div>
                     <Row className="d-flex align-items-center justify-content-center">
-                        <Col xs={6} md={3} className="d-flex align-items-center justify-content-center">
-                            <Image src={LogoFatec} className="w-50" fluid/>
+                        <Col xs={6} sm={3} className="d-flex align-items-center justify-content-center">
+                            <Image src={LogoFatec} className="footer-logos-img"/>
                         </Col>
-                        <Col xs={6} md={3} className="d-flex align-items-center justify-content-center">
-                            <Image src={LogoCps} className="w-50" fluid/>
+                        <Col xs={6} sm={3} className="d-flex align-items-center justify-content-center">
+                            <Image src={LogoCps} className="footer-logos-img"/>
                         </Col>
-                        <Col xs={6} md={3} className="d-flex align-items-center justify-content-center">
-                            <Image src={LogoGovernoSaoPaulo} className="w-50" fluid/>
+                        <Col xs={6} sm={3} className="d-flex align-items-center justify-content-center">
+                            <Image src={LogoGovernoSaoPaulo} className="footer-logos-img"/>
                         </Col>
-                        <Col xs={6} md={3} className="d-flex align-items-center justify-content-center">
-                            <Image src={LogoPodAgro} className="w-50" fluid/>
+                        <Col xs={6} sm={3} className="d-flex align-items-center justify-content-center">
+                            <Image src={LogoPodAgro} className="footer-logos-img"/>
                         </Col>
                     </Row>
                 </div>
