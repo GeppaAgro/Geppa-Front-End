@@ -21,7 +21,7 @@ const Header = () => {
                     </div>
                     <div className="collapse navbar-collapse justify-content-end" id="navbarScroll">
                         <ul className="navbar-nav fs-5 navbar-nav-scroll gap-2 align-items-center">
-                            <li className="nav-link teste" aria-current="page">
+                            <li className="nav-link" aria-current="page">
                                 <NavLink className="text-decoration-none nav-link-font" to="/">Inicial</NavLink>
                             </li>
                             <li className="nav-link" aria-current="page">
