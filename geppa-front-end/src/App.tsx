@@ -5,9 +5,9 @@ import PaginaInicial from "./Presentation/Pages/CommonUser/Inicial/PaginaInicial
 import PaginaSobre from "./Presentation/Pages/CommonUser/Sobre/Sobre.tsx";
 import PaginaListaConteudos from "./Presentation/Pages/CommonUser/ListaDeConteudos/PaginaListaConteudos.tsx";
 import PaginaIndicadores from "./Presentation/Pages/CommonUser/Indicadores/PaginaIndicadores.tsx";
+import PaginaBoletim from "./Presentation/Pages/CommonUser/Boletim/PaginaBoletim.tsx";
 import Footer from "./Presentation/Components/Footer/Footer.tsx";
 import PaginaListaBoletins from "./Presentation/Pages/CommonUser/ListaDeBoletins/PaginaListaBoletins.tsx";
-
 
 function App() {
 
@@ -21,6 +21,7 @@ function App() {
                     <Route path="/conteudos" element={<PaginaListaConteudos/>}/>
                     <Route path="/indicadores" element={<PaginaIndicadores/>}/>
                     <Route path="/sobre" element={<PaginaSobre/>}/>
+                    <Route path="/boletim" element={<PaginaBoletim/>}/>
                 </Routes>
                 <Footer/>
             </Router>
