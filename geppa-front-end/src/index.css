@@ -16,7 +16,7 @@
     --headings-font-family: var(--fonte-principal);
     --body-font-family: var(--fonte-principal);
     --bs-body-font-family: var(--fonte-principal);
-    --bs-body-color: var(--MarromTerra);
+    --bs-body-color: var(--MarromEscuro);
 }
 
 .navbar {
