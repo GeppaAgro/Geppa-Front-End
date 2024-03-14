@@ -67,14 +67,14 @@ import { ConsultaBoletim } from "../../../Data/ApiTypes/TypeConsultaBoletim.ts";
                                     <tr key={Boletim.id} className="linha-tabela-boletim fs-4">
                                         <td>
                                             <Link
-                                                to={`/boletim/${Boletim.id}`}
+                                                to={`/boletim/${Boletim.edicao}`}
                                                 className="table-row-link">
                                                 {Boletim.edicao}
                                             </Link>
                                         </td>
                                         <td>
                                             <Link
-                                                to={`/boletim/${Boletim.id}`}
+                                                to={`/boletim/${Boletim.edicao}`}
                                                 className="table-row-link">
                                                 {Boletim.dataPublicacao}
                                             </Link>

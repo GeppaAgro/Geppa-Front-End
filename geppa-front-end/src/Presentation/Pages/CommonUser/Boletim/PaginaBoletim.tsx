@@ -4,7 +4,7 @@ import axios from "axios"
 import {useEffect, useState} from "react";
 import CardArtigoBoletim from "../../../Components/ComponentesBoletim/CardArtigoBoletim.tsx";
 import {Container} from "react-bootstrap";
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import CardCursoBoletim from "../../../Components/ComponentesBoletim/CardCursoBoletim.tsx";
 import CardVideoBoletim from "../../../Components/ComponentesBoletim/CardVideoBoletim.tsx";
 import BoletimBanner from "../../../Components/BoletimBanner/BoletimBanner.tsx";
@@ -14,10 +14,10 @@ import CardEventoBoletim from "../../../Components/ComponentesBoletim/CardEvento
 import CardNoticiaBoletim from "../../../Components/ComponentesBoletim/CardNoticiasBoletim.tsx";
 
 export default function PaginaBoletim() {
-
-    const [edicao,setEdicao] = useState<string>(`AA88J`);
+    const {edicao} = useParams<{ edicao: string }>()
+    //const [edicao,setEdicao] = useState<string>();
     const [dataPublicacao, setDataPublicacao] = useState<Date>()
-    const [linkBoletim] = useState<string>(`http://localhost/boletins/472025`);
+    const [linkBoletim] = useState<string>(`http://localhost/boletins/${edicao}`);
 
     const [artigos, setArtigos] = useState<Artigo[]> ([]);
     const [cursos, setCursos] = useState<Curso[]>([]);
@@ -30,7 +30,7 @@ export default function PaginaBoletim() {
         const buscarBoletim = async () => {
             try {
                 const response = await axios.get(linkBoletim);
-                setEdicao(response.data.dados.edicao)
+                //setEdicao(response.data.dados.edicao)
                 setDataPublicacao(new Date(response.data.dados.dataPublicacao))
                 setArtigos(response.data.dados.artigos)
                 setCursos(response.data.dados.cursos)

@@ -21,7 +21,7 @@ function App() {
                     <Route path="/conteudos" element={<PaginaListaConteudos/>}/>
                     <Route path="/indicadores" element={<PaginaIndicadores/>}/>
                     <Route path="/sobre" element={<PaginaSobre/>}/>
-                    <Route path="/boletim/:id" element={<PaginaBoletim/>}/>
+                    <Route path="/boletim/:edicao" element={<PaginaBoletim/>}/>
                 </Routes>
                 <Footer/>
             </Router>
