@@ -12,7 +12,7 @@ import { ConsultaBoletim } from "../../../Data/ApiTypes/TypeConsultaBoletim.ts";
         useEffect(() => {
             const buscarBoletins = async () => {
                 try {
-                    const response = await axios.get(`http://localhost/boletins?page=${paginaAtual}&sort=edicao,desc&size=${tamanhoPagina}`);
+                    const response = await axios.get(`http://localhost/boletins?page=${paginaAtual}&sort=dataPublicacao,desc&size=${tamanhoPagina}`);
                     setConsultaBoletim(response.data);
                 } catch (error) {
                     console.error('Erro ao buscar boletins:', error);
