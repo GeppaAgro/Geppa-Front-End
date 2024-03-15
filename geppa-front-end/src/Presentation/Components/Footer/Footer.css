@@ -13,8 +13,9 @@
 }
 
 .footer-img{
-    width: 50%;
-    min-width: 250px;
+    width: 18vw;
+    min-width: 200px;
+    max-width: 400px !important;
 }
 
 .footer-describe{
@@ -86,4 +87,20 @@
     background: var(--VerdeOliva);
     color: var(--Branco);
     text-decoration: underline;
+}
+
+.footer-logos-img{
+    width: 40%;
+}
+
+@media screen and (min-width: 1500px) {
+    .footer-logos-img{
+        width: 180px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .footer-logos-img{
+        max-width: 80px !important;
+    }
 }
