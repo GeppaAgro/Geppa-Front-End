@@ -27,8 +27,8 @@ const CardNoticiaBoletim: React.FC <{noticia : Noticia}> = ({noticia}) => {
                         ))
                     }
                 </div>
-                <div className="link-boletim mt-3 mt-md-0">
-                    <Link to={noticia.link} className="card-boletim-btn p-3 fs-5 fw-bold ">
+                <div className="link-boletim mt-3 mt-md-0 card-boletim-btn p-3 ">
+                    <Link to={noticia.link} className="fs-5 fw-bold ">
                         Visitar Noticia
                     </Link>
                 </div>

@@ -37,8 +37,8 @@ const CardVideoBoletim: React.FC <{video : Video}> = ({video}) => {
                 </div>
                 {
                     !video.youtube ? (
-                        <div className="link-boletim mt-3 mt-md-0">
-                            <Link to={video.link} className="card-boletim-btn p-3 fs-5 fw-bold ">
+                        <div className="link-boletim mt-3 mt-md-0 card-boletim-btn p-3 ">
+                            <Link to={video.link} className="fs-5 fw-bold ">
                                 Visitar Video
                             </Link>
                         </div>

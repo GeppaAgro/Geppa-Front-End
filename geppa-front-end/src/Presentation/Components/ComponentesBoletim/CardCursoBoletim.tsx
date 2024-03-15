@@ -40,8 +40,8 @@ const CardCursoBoletim: React.FC <{curso : Curso}> = ({curso}) => {
                             ))
                         }
                     </div>
-                    <div className="link-boletim mt-3 mt-md-0">
-                        <Link to={curso.link} className="card-boletim-btn p-3 fs-5 fw-bold ">
+                    <div className="link-boletim mt-3 mt-md-0 card-boletim-btn p-3 ">
+                        <Link to={curso.link} className="fs-5 fw-bold ">
                             Visitar pagina do curso
                         </Link>
                     </div>

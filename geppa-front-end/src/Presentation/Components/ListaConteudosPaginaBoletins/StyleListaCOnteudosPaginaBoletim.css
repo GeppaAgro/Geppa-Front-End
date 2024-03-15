@@ -1,0 +1,19 @@
+.containerConteudosSimplificado{
+    background-color: white;
+    box-shadow: 5px 5px 5px rgba(141, 110, 99, 0.3);
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 15px;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    text-align: justify;
+    max-height: 110px;
+}
+/*Arrumar o tamanho maximo da div*/
+.containerConteudosSimplificado a{
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--MarromTerra);
+    font-size: 18px;
+}

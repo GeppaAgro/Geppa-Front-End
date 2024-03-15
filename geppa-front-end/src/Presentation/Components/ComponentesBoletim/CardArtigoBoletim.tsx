@@ -32,8 +32,8 @@ const CardArtigoBoletim: React.FC<{ artigo: Artigo }> = ({artigo}) =>{
                             ))
                         }
                     </div>
-                    <div className="link-boletim mt-3 mt-md-0">
-                        <Link to={artigo.link} className="card-boletim-btn p-3 fs-5 fw-bold ">
+                    <div className="card-boletim-btn link-boletim mt-3 mt-md-0 p-3">
+                        <Link to={artigo.link} className="fs-5 fw-bold">
                             Ir para o artigo
                         </Link>
                     </div>
