@@ -10,9 +10,13 @@ const CardNoticiaBoletim: React.FC <{noticia : Noticia}> = ({noticia}) => {
                 {noticia.titulo.toUpperCase()}
             </p>
             <div className="card-boletim-informacoes fw-bold fs-6">
-                <p>
-                    Data de publicação: {new Date(noticia.dataPublicacao).toLocaleDateString()}
-                </p>
+                {
+                    noticia.dataPublicacao !== null && (
+                        <p>
+                            Data de publicação: {new Date(noticia.dataPublicacao).toLocaleDateString()}
+                        </p>
+                    )
+                }
             </div>
             <p className="card-boletim-descricao mt-2 mt-lg-0 fs-6 fw-medium">
                 {noticia.descricao}
@@ -27,11 +31,15 @@ const CardNoticiaBoletim: React.FC <{noticia : Noticia}> = ({noticia}) => {
                         ))
                     }
                 </div>
-                <div className="link-boletim mt-3 mt-md-0 card-boletim-btn p-3 ">
-                    <Link to={noticia.link} className="fs-6 fw-bold ">
-                        Visitar Noticia
-                    </Link>
-                </div>
+                {
+                    noticia.link !== null && (
+                        <div className="link-boletim mt-3 mt-md-0 card-boletim-btn p-3 ">
+                            <Link to={noticia.link} className="fs-6 fw-bold ">
+                                Visitar Noticia
+                            </Link>
+                        </div>
+                    )
+                }
             </div>
         </Container>
     )

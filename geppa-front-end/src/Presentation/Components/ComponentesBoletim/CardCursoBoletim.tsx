@@ -12,9 +12,13 @@ const CardCursoBoletim: React.FC <{curso : Curso}> = ({curso}) => {
                 </p>
                 <div className="card-boletim-informacoes fw-bold fs-6">
                     <div className="d-flex flex-column flex-sm-row gap-3 gap-sm-5">
-                        <p>
-                            Duração em horas: {curso.duracaoEmHoras} horas
-                        </p>
+                        {
+                            curso.duracaoEmHoras !== null && (
+                                <p>
+                                    Duração em horas: {curso.duracaoEmHoras} horas
+                                </p>
+                            )
+                        }
                         {
                             curso.prazoInscricao !== null && (
                                 <p>

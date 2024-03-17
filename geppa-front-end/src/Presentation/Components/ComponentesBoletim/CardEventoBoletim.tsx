@@ -11,12 +11,17 @@ const CardEventoBoletim: React.FC<{ evento: Evento }> = ({evento}) =>{
             </p>
             <div className="card-boletim-informacoes fw-bold fs-6">
                 <div className="d-flex flex-column flex-sm-row gap-3 gap-sm-5">
+
                     <p>
                         Inicio do evento: {new Date(evento.dataHoraInicio).toLocaleDateString()}
                     </p>
-                    <p>
-                        Local: {evento.local}
-                    </p>
+                    {
+                        evento.local !== null && (
+                            <p>
+                                Local: {evento.local}
+                            </p>
+                        )
+                    }
                 </div>
                 <div className="d-flex flex-column flex-sm-row gap-3 gap-sm-5">
                     <p>
