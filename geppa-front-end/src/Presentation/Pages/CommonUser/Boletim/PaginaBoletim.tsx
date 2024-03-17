@@ -30,13 +30,13 @@ export default function PaginaBoletim() {
         const buscarBoletim = async () => {
             try {
                 const response = await axios.get(linkBoletim);
-                //setEdicao(response.data.dados.edicao)
                 setDataPublicacao(new Date(response.data.dados.dataPublicacao))
                 setArtigos(response.data.dados.artigos)
                 setCursos(response.data.dados.cursos)
                 setEventos(response.data.dados.eventos)
                 setNoticias(response.data.dados.noticias)
                 setVideos(response.data.dados.videos)
+                console.log(response)
             }
             catch(error){
                 console.log("Boletim não encontrado")
@@ -58,7 +58,7 @@ export default function PaginaBoletim() {
             {artigos.length > 0 && (
                 <Container>
                     <div className="d-flex justify-content-between mt-5 align-items-baseline">
-                        <h2 className="fw-bold"><i className="ri-article-line"></i> Artigos</h2>
+                        <p className="fs-4 fw-bold"><i className="ri-article-line"></i> Artigos</p>
                         <Link to="#" className="pagina-boletim-btn-clique-para-mais text-decoration-underline fw-medium"> Clique para ver mais artigos</Link>
                     </div>
                     {
@@ -75,7 +75,7 @@ export default function PaginaBoletim() {
             {cursos.length > 0 && (
                 <Container>
                     <div className="d-flex justify-content-between mt-5 align-items-baseline">
-                        <h2 className="fw-bold"><i className="ri-graduation-cap-line"/> Cursos</h2>
+                        <p className="fs-4 fw-bold"><i className="ri-graduation-cap-line"/> Cursos</p>
                         <Link to="#" className="pagina-boletim-btn-clique-para-mais text-decoration-underline fw-medium"> Clique para ver mais cursos</Link>
                     </div>
                     {
@@ -91,7 +91,7 @@ export default function PaginaBoletim() {
             {eventos.length > 0 && (
                 <Container>
                     <div className="d-flex justify-content-between mt-5 align-items-baseline">
-                        <h2 className="fw-bold"><i className="ri-calendar-line"></i> Eventos</h2>
+                        <h2 className="fs-4 fw-bold"><i className="ri-calendar-line"></i> Eventos</h2>
                         <Link to="#" className="pagina-boletim-btn-clique-para-mais text-decoration-underline fw-medium"> Clique para ver mais cursos</Link>
                     </div>
                     {
@@ -107,7 +107,7 @@ export default function PaginaBoletim() {
             {noticias.length > 0 && (
                 <Container>
                     <div className="d-flex justify-content-between mt-5 align-items-baseline">
-                        <h2 className="fw-bold"><i className="ri-news-line"></i> Noticias</h2>
+                        <h2 className="fs-4 fw-bold"><i className="ri-news-line"></i> Noticias</h2>
                         <Link to="#" className="pagina-boletim-btn-clique-para-mais text-decoration-underline fw-medium"> Clique para ver mais noticias</Link>
                     </div>
                     {
@@ -123,7 +123,7 @@ export default function PaginaBoletim() {
             {videos.length > 0 && (
                 <Container>
                     <div className="d-flex justify-content-between mt-5 align-items-baseline">
-                        <h2 className="fw-bold"><i className="ri-video-line"></i> Videos</h2>
+                        <h2 className="fs-4 fw-bold"><i className="ri-video-line"></i> Videos</h2>
                         <Link to="#" className="pagina-boletim-btn-clique-para-mais text-decoration-underline fw-medium"> Clique para mais videos</Link>
                     </div>
                     {
@@ -138,7 +138,7 @@ export default function PaginaBoletim() {
 
 
             <Container className="text-center my-5 ">
-                <h2 className="fw-bold">Indicadores</h2>
+                <h2 className="fs-4 fw-bold">Indicadores</h2>
                 <TabelaIndicadores/>
             </Container>
 
