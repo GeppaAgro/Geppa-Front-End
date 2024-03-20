@@ -76,7 +76,7 @@ import { ConsultaBoletim } from "../../../Data/ApiTypes/TypeConsultaBoletim.ts";
                                             <Link
                                                 to={`/boletim/${Boletim.edicao}`}
                                                 className="table-row-link">
-                                                {Boletim.dataPublicacao}
+                                                {new Date(Boletim.dataPublicacao).toLocaleDateString()}
                                             </Link>
                                         </td>
                                     </tr>
