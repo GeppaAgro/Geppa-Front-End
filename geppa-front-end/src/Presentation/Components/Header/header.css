@@ -1,0 +1,28 @@
+.nav-img{
+    width: 28%;
+    min-width: 200px;
+}
+
+.nav-link-font{
+    color: var(--MarromEscuro);
+    text-decoration: none;
+    font-weight: bold;
+    padding: 7px;
+    border-radius: 5px;
+    transition: background 0.5s ease-in-out;
+}
+
+.nav-link-font.active{
+    color: white;
+    background:var(--MarromEscuro);
+}
+
+.navbar-toggler:active {
+    color: transparent;
+}
+
+.navbar-toggler:focus {
+    color: transparent;
+}
+
+
