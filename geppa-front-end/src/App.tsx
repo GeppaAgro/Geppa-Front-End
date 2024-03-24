@@ -8,6 +8,7 @@ import PaginaIndicadores from "./Presentation/Pages/CommonUser/Indicadores/Pagin
 import PaginaBoletim from "./Presentation/Pages/CommonUser/Boletim/PaginaBoletim.tsx";
 import Footer from "./Presentation/Components/Footer/Footer.tsx";
 import PaginaListaBoletins from "./Presentation/Pages/CommonUser/ListaDeBoletins/PaginaListaBoletins.tsx";
+import PaginaNaoEncontrada from "./Presentation/Pages/CommonUser/NotFound/PaginaNaoEncontrada.tsx";
 
 function App() {
 
@@ -22,6 +23,8 @@ function App() {
                     <Route path="/indicadores" element={<PaginaIndicadores/>}/>
                     <Route path="/sobre" element={<PaginaSobre/>}/>
                     <Route path="/boletim/:edicao" element={<PaginaBoletim/>}/>
+
+                    <Route path="*" element={<PaginaNaoEncontrada/>}/>
                 </Routes>
                 <Footer/>
             </Router>
