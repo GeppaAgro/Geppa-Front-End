@@ -13,19 +13,13 @@ export default function Footer() {
         <>
             <footer className="py-1 footer">
 
-                <div className="d-flex align-items-center gap-3 flex-column py-4 flex-sm-row">
+                <div className="d-flex align-items-center gap-3 flex-column py-3 flex-sm-row">
                     <div className=" d-sm-flex justify-content-sm-start text-center">
-                        <Image src={LogoHorizontal} className="footer-img w-50" fluid/>
-                    </div>
-                    <div>
-                        <p className="footer-describe">
-                            Lorem ipsum dolor sit amet consectetur. Id mi amet faucibus magna mattis purus ultrices at
-                            tortor...
-                        </p>
+                        <Image src={LogoHorizontal} className="footer-img" fluid/>
                     </div>
                 </div>
                 <Row>
-                    <Col xs={6} md={2} className="mb-3">
+                    <Col xs={6} md={2} className="mb-2">
                         <NavLink to="/boletins">
                             <h5>Boletim</h5>
                         </NavLink>
@@ -43,7 +37,7 @@ export default function Footer() {
                         </ul>
                     </Col>
 
-                    <Col xs={6} md={2} className="mb-3">
+                    <Col xs={6} md={2} className="mb-2">
                         <NavLink to="/indicadores">
                             <h5>Indicadores</h5>
                         </NavLink>
@@ -55,7 +49,7 @@ export default function Footer() {
                         </ul>
                     </Col>
 
-                    <Col xs={6} md={2} className="mb-3">
+                    <Col xs={6} md={2} className="mb-2">
                         <NavLink to="/">
                             <h5>PodAgro</h5>
                         </NavLink>
@@ -90,24 +84,24 @@ export default function Footer() {
                 </Row>
                 <div>
                     <Row className="d-flex align-items-center justify-content-center">
-                        <Col xs={6} md={3} className="d-flex align-items-center justify-content-center">
-                            <Image src={LogoFatec} className="w-50" fluid/>
+                        <Col xs={6} sm={3} className="d-flex align-items-center justify-content-center">
+                            <Image src={LogoFatec} className="footer-logos-img"/>
                         </Col>
-                        <Col xs={6} md={3} className="d-flex align-items-center justify-content-center">
-                            <Image src={LogoCps} className="w-50" fluid/>
+                        <Col xs={6} sm={3} className="d-flex align-items-center justify-content-center">
+                            <Image src={LogoCps} className="footer-logos-img"/>
                         </Col>
-                        <Col xs={6} md={3} className="d-flex align-items-center justify-content-center">
-                            <Image src={LogoGovernoSaoPaulo} className="w-50" fluid/>
+                        <Col xs={6} sm={3} className="d-flex align-items-center justify-content-center">
+                            <Image src={LogoGovernoSaoPaulo} className="footer-logos-img"/>
                         </Col>
-                        <Col xs={6} md={3} className="d-flex align-items-center justify-content-center">
-                            <Image src={LogoPodAgro} className="w-50" fluid/>
+                        <Col xs={6} sm={3} className="d-flex align-items-center justify-content-center">
+                            <Image src={LogoPodAgro} className="footer-logos-img"/>
                         </Col>
                     </Row>
                 </div>
-                <div className="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
-                    <p>© 2024 GEPPA, Todos os direitos reservados. Desenvolvido por: <a target="_blank" href="https://www.linkedin.com/in/lucas-henrique-lh/">Lucas Henrique</a>, <a target="_blank" href="https://www.linkedin.com/in/devluanrodrigues/">Luan Rodrigues</a>, <a target="_blank" href="https://github.com/FellipeGodoi">Fellipe Godoi</a>.
+                <div className="d-flex flex-column flex-sm-row align-items-center justify-content-between pt-3 mt-3 mb-0 border-top">
+                    <p className={'m-1'}>© 2024 GEPPA, Todos os direitos reservados. Desenvolvido por: <a target="_blank" href="https://www.linkedin.com/in/lucas-henrique-lh/">Lucas Henrique</a>, <a target="_blank" href="https://www.linkedin.com/in/devluanrodrigues/">Luan Rodrigues</a>, <a target="_blank" href="https://github.com/FellipeGodoi">Fellipe Godoi</a>.
                     </p>
-                    <ul className="list-unstyled d-flex">
+                    <ul className="list-unstyled d-flex m-1">
                         <li className="ms-3"><a className="link-dark" href="#">
                             <i className="ri-instagram-line"></i>
                         </a></li>

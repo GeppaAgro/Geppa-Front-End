@@ -8,7 +8,7 @@
 }
 
 .banner-home__container-img {
-    max-height: 250px;
+    max-height: 200px;
 }
 
 .banner-home__container-titulo {
@@ -34,4 +34,11 @@
 .banner-home__container-text {
     text-align: justify;
     color: var(--MarromEscuro);
+}
+
+/*Se quiser tirar esse media screen tira o texto do banner*/
+@media screen and (max-width: 600px) {
+    .banner-home__container-text {
+        display: none;
+    }
 }

@@ -1,0 +1,13 @@
+.card-ultimos-conteudos{
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    line-height: 1.3em;
+    min-height: 4em;
+}
+
+.card-ultimos-conteudos p{
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}

@@ -1,0 +1,61 @@
+.tabela-boletins thead th, td{
+    color: var(--MarromTerra);
+}
+
+.linha-tabela-boletim td a{
+    text-decoration: none;
+    color: var(--MarromTerra);
+}
+
+.paginationButtons{
+    display: flex;
+    justify-content: center;
+}
+
+.page-item span{
+    color: var(--MarromTerra);
+    padding: 6px 12px;
+}
+.page-item span:hover{
+    color: var(--MarromTerra);
+    background-color: white;
+    border-color: var(--MarromChocolate);
+    outline: none;
+    box-shadow: none;
+        border: 1px solid #ccc;
+}
+
+.page-item span:focus{
+    outline: none;
+    box-shadow: none;
+    color:var(--MarromTerra);
+    background-color: white;
+}
+
+.page-item span:focus-visible{
+    outline: none;
+    box-shadow: none;
+    color:var(--MarromTerra);
+    background-color: white;
+}
+
+.page-item button {
+    color: var(--MarromTerra);
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 6px 12px;
+}
+
+.page-item button:hover{
+    color: var(--MarromTerra);
+    background-color: white;
+    border-color: var(--MarromChocolate);
+}
+
+.page-item button:focus{
+    outline: none;
+    box-shadow: none;
+    color:var(--MarromTerra);
+    background-color: white;
+}
+
