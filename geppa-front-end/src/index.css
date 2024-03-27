@@ -11,12 +11,13 @@
     --MarromEscuro: #614848;
     --MarromTerra: #8D6E63;
     --Branco: #FFFFFF;
+    --BrancoTransparente: #FFFFFF99;
 
     /*Variaveis personalizadas Bootstrap*/
     --headings-font-family: var(--fonte-principal);
     --body-font-family: var(--fonte-principal);
     --bs-body-font-family: var(--fonte-principal);
-    --bs-body-color: var(--MarromTerra);
+    --bs-body-color: var(--MarromEscuro);
 }
 
 .navbar {
