@@ -10,7 +10,7 @@ import {ConteudoEmail} from "./ConteudoEmail.tsx"
 import {FooterEmail} from "./FooterEmail.tsx"
 
 
-export const CodepenChallengersEmail = () => (
+export const Email = () => (
     <Html>
         <Head/>
         <Preview>Booletim Informativo - GEPPA</Preview>
@@ -57,7 +57,7 @@ export const CodepenChallengersEmail = () => (
     </Html>
 )
 
-export default CodepenChallengersEmail;
+export default Email;
 
 const main = {
     fontFamily: '"Google Sans",Roboto,RobotoDraft,Helvetica,Arial,sans-serif',
