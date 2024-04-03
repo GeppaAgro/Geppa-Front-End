@@ -3,13 +3,13 @@ import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import axios from "axios";
 import {ConsultaBoletim} from "../../../Data/ApiTypes/TypeConsultaBoletim.ts";
-import {FiltroDataType} from "../../../Data/ApiTypes/TypeFiltroData.ts";
-import {FiltroData} from "../Filters/FiltroData/FiltroData.tsx";
+import {TypeFiltro} from "../../../Data/ApiTypes/TypeFiltro.ts";
+import {Filtros} from "../Filters/FiltrosListagem/Filtros.tsx";
 
 export default function ListaBoletins() {
     const [consultaBoletim, setConsultaBoletim] = useState<ConsultaBoletim | null>(null);
     const [paginaAtual, setPaginaAtual] = useState<number>(0);
-    const [filtroDataType, setFiltroDataType] = useState<FiltroDataType | null>(null);
+    const [filtroType, setFiltroType] = useState<TypeFiltro | null>(null);
     const tamanhoPagina = 12;
 
     useEffect(() => {
@@ -20,9 +20,9 @@ export default function ListaBoletins() {
                     `http://localhost/boletins?page=${paginaAtual}` +
                     `&sort=dataPublicacao,desc` +
                     `&size=${tamanhoPagina}` +
-                    (filtroDataType ?
-                        `&dataMinima=${filtroDataType.dataMinima}` +
-                        `&dataMaxima=${filtroDataType.dataMaxima}` : '')
+                    (filtroType ?
+                        `&dataMinima=${filtroType.dataMinima}` +
+                        `&dataMaxima=${filtroType.dataMaxima}` : '')
                 );
                 setConsultaBoletim(response.data);
             } catch (error) {
@@ -31,7 +31,7 @@ export default function ListaBoletins() {
         };
 
         buscarBoletins();
-    }, [filtroDataType, paginaAtual]);
+    }, [filtroType, paginaAtual]);
 
     const carregarProximaPagina = () => {
         if (consultaBoletim && consultaBoletim._links && consultaBoletim._links.proximaPagina) {
@@ -63,17 +63,17 @@ export default function ListaBoletins() {
     };
 
     const handleFilterSubmit = (dataMinima: string, dataMaxima: string) => {
-        setFiltroDataType({dataMinima, dataMaxima})
+        setFiltroType({dataMinima, dataMaxima})
         setPaginaAtual(0);
     };
 
     return (
         <div className="row">
-            <div className="col-md-3">
-                <FiltroData onDataSubmit={handleFilterSubmit}/>
+            <div className="col-lg-3 pe-lg-0">
+                <Filtros onDataSubmit={handleFilterSubmit}/>
             </div>
             {consultaBoletim && (
-                <div className="col-md-9">
+                <div className="col-lg-9">
                     <div className="d-flex flex-row align-items-center justify-content-between gap-5">
                         <h3 className="fw-bold">Boletins</h3>
                     </div>

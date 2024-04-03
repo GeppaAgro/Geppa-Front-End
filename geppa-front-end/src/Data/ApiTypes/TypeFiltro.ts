@@ -1,4 +1,4 @@
-export type FiltroDataType = {
+export type TypeFiltro = {
     dataMaxima: string;
     dataMinima: string;
 };
