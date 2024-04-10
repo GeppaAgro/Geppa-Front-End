@@ -19,6 +19,7 @@ function App() {
                     <Route path="/" element={<PaginaInicial/>}/>
                     <Route path="/boletins" element={<PaginaListaBoletins/>}/>
                     <Route path="/conteudos" element={<PaginaListaConteudos/>}/>
+                    <Route path="/conteudos/:filtro" element={<PaginaListaConteudos/>}/>
                     <Route path="/indicadores" element={<PaginaIndicadores/>}/>
                     <Route path="/sobre" element={<PaginaSobre/>}/>
                     <Route path="/boletim/:edicao" element={<PaginaBoletim/>}/>
