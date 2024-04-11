@@ -14,6 +14,7 @@ export default function PaginaListaConteudos() {
     const [filtroSelecionado, setFiltroSelecionado] = useState<string>(filtro || 'artigos');
 
     const [numeroPagina, setNumeroPagina] = useState<number>( 0 )
+    const [qtdPaginas , setQtdPaginas] = useState<number>(1)
 
     const [artigos, setArtigos] = useState<Artigo[]> ([]);
     const [cursos, setCursos] = useState<Curso[]>([]);
@@ -21,7 +22,7 @@ export default function PaginaListaConteudos() {
     const [noticias, setNoticias] = useState<Noticia[]>([]);
     const [videos, setVideos] = useState<Video[]>([]);
 
-    const urlConteudo = `http://localhost/${filtroSelecionado}?page=${numeroPagina}&sort=titulo,desc&size=10`;
+    const urlConteudo = `http://localhost/${filtroSelecionado}?page=${numeroPagina}&sort=titulo,desc&size=5`;
 
     const trocarFiltro = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const novoFiltro = event.target.value;
@@ -37,7 +38,7 @@ export default function PaginaListaConteudos() {
                         try {
                             const response = await axios.get(urlConteudo);
                             setArtigos(response.data.dados)
-                            console.log(response)
+                            setQtdPaginas(response.data.totalPaginas)
                         }
                         catch(error){
                             console.log("tipo de conteudo nao encontrado")
@@ -47,6 +48,7 @@ export default function PaginaListaConteudos() {
                         try {
                             const response = await axios.get(urlConteudo);
                             setCursos(response.data.dados)
+                            setQtdPaginas(response.data.totalPaginas)
                         }
                         catch(error){
                             console.log("tipo de conteudo nao encontrado")
@@ -56,6 +58,7 @@ export default function PaginaListaConteudos() {
                         try {
                             const response = await axios.get(urlConteudo);
                             setEventos(response.data.dados)
+                            setQtdPaginas(response.data.totalPaginas)
                         }
                         catch(error){
                             console.log("tipo de conteudo nao encontrado")
@@ -65,6 +68,7 @@ export default function PaginaListaConteudos() {
                         try {
                             const response = await axios.get(urlConteudo);
                             setNoticias(response.data.dados)
+                            setQtdPaginas(response.data.totalPaginas)
                         }
                         catch(error){
                             console.log("tipo de conteudo nao encontrado")
@@ -74,6 +78,7 @@ export default function PaginaListaConteudos() {
                         try {
                             const response = await axios.get(urlConteudo);
                             setVideos(response.data.dados)
+                            setQtdPaginas(response.data.totalPaginas)
                         }
                         catch(error){
                             console.log("tipo de conteudo nao encontrado")
@@ -93,7 +98,7 @@ export default function PaginaListaConteudos() {
     const renderizarConteudoSelecionado = () => {
         switch (filtroSelecionado){
             case 'artigos' : return (
-                <>
+                <div className="d-flex row justify-content-center mb-3">
                     {
                         artigos.map((artigo) => (
                             <div key={artigo.id}>
@@ -101,52 +106,149 @@ export default function PaginaListaConteudos() {
                             </div>
                         ))
                     }
-                    {
-                        numeroPagina
-                    }
-                </>
+
+                        <ul className="pagination justify-content-center">
+                            <li className="page-item">
+                                <button disabled={numeroPagina <= 0}
+                                        className="page-link"
+                                        onClick={() => setNumeroPagina(numeroPagina-1)}>
+                                    &laquo;
+                                </button>
+                            </li>
+                            <li className="page-item"><button className="page-link">{numeroPagina+1}</button></li>
+                            <li className="page-item">
+                                <button disabled={numeroPagina + 1 >= qtdPaginas}
+                                        className="page-link"
+                                        onClick={() => setNumeroPagina(numeroPagina+1)}>
+                                    &raquo;
+                                </button>
+                            </li>
+                        </ul>
+
+                </div>
             )
-            case 'cursos' : return (
-                <>
-                    {
-                        cursos.map((curso) => (
-                            <div key={curso.id}>
-                                <CardCursoBoletim curso={curso}/>
-                            </div>
-                        ))
-                    }
-                </>
-            )
-            case 'eventos' : return (
-                <>
-                    {
-                        eventos.map((evento)=>(
+            case 'cursos' :
+                return (
+                    <>
+                        {
+                            cursos.map((curso) => (
+                                <div key={curso.id}>
+                                    <CardCursoBoletim curso={curso}/>
+                                </div>
+                            ))
+                        }
+                        {
+                            <ul className="pagination justify-content-center">
+                                <li className="page-item">
+                                    <button disabled={numeroPagina <= 0}
+                                            className="page-link"
+                                            onClick={() => setNumeroPagina(numeroPagina-1)}>
+                                        &laquo;
+                                    </button>
+                                </li>
+                                <li className="page-item"><button className="page-link">{numeroPagina+1}</button></li>
+                                <li className="page-item">
+                                    <button disabled={numeroPagina + 1 >= qtdPaginas}
+                                            className="page-link"
+                                            onClick={() => setNumeroPagina(numeroPagina+1)}>
+                                        &raquo;
+                                    </button>
+                                </li>
+                            </ul>
+                        }
+                    </>
+                )
+            case 'eventos' :
+                return (
+                    <>
+                        {
+                            eventos.map((evento)=>(
                             <div key={evento.id}>
                                 <CardEventoBoletim evento={evento}/>
                             </div>
                         ))
                     }
+                        {
+                            <ul className="pagination justify-content-center">
+                                <li className="page-item">
+                                    <button disabled={numeroPagina <= 0}
+                                            className="page-link"
+                                            onClick={() => setNumeroPagina(numeroPagina-1)}>
+                                        &laquo;
+                                    </button>
+                                </li>
+                                <li className="page-item"><button className="page-link">{numeroPagina+1}</button></li>
+                                <li className="page-item">
+                                    <button disabled={numeroPagina + 1 >= qtdPaginas}
+                                            className="page-link"
+                                            onClick={() => setNumeroPagina(numeroPagina+1)}>
+                                        &raquo;
+                                    </button>
+                                </li>
+                            </ul>
+                        }
                 </>
             )
             case 'noticias' : return (
                 <>
                     {
-                        noticias.map((noticia)=>(
+                        noticias.map((noticia) => (
                             <div key={noticia.id}>
                                 <CardNoticiaBoletim noticia={noticia}/>
                             </div>
                         ))
                     }
+                    <ul className="pagination justify-content-center">
+                        <li className="page-item">
+                            <button disabled={numeroPagina <= 0}
+                                    className="page-link"
+                                    onClick={() => setNumeroPagina(numeroPagina - 1)}>
+                                &laquo;
+                            </button>
+                        </li>
+                        <li className="page-item">
+                            <button className="page-link">{numeroPagina + 1}</button>
+                        </li>
+                        <li className="page-item">
+                            <button disabled={numeroPagina + 1 >= qtdPaginas}
+                                    className="page-link"
+                                    onClick={() => setNumeroPagina(numeroPagina + 1)}>
+                                &raquo;
+                            </button>
+                        </li>
+                    </ul>
                 </>
             )
-            case 'videos' : return (
-                <>
-                    {
-                        videos.map((video)=>(
-                            <div key={video.id}>
-                                <CardVideoBoletim video={video}/>
-                            </div>
-                        ))
+            case 'videos' :
+                return (
+                    <>
+                        {
+                            videos.map((video) => (
+                                <div key={video.id}>
+                                    <CardVideoBoletim video={video}/>
+                                </div>
+                            ))
+                        }
+                        {
+                            <ul className="pagination justify-content-center">
+                                <li className="page-item">
+                                    <button disabled={numeroPagina <= 0}
+                                            className="page-link"
+                                            onClick={() => setNumeroPagina(numeroPagina - 1)}>
+                                        &laquo;
+                                    </button>
+                                </li>
+                                <li className="page-item">
+                                    <button className="page-link">{numeroPagina + 1}</button>
+                                </li>
+                                <li className="page-item">
+                                <button disabled={numeroPagina + 1 >= qtdPaginas}
+                                        className="page-link"
+                                        onClick={() => setNumeroPagina(numeroPagina+1)}>
+                                    &raquo;
+                                </button>
+                            </li>
+                        </ul>
                     }
                 </>
             )
