@@ -9,6 +9,6 @@ const axiosClient: AxiosInstance = axios.create({
     }
 });
 
-axiosClient.interceptors.response.use(res => res.data);
+axiosClient.interceptors.response.use();
 
 export default axiosClient;
