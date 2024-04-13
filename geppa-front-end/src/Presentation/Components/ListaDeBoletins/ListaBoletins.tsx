@@ -1,10 +1,10 @@
 import "./StyleListaBoletins.css"
 import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
-import axios from "axios";
 import {ConsultaBoletim} from "../../../Data/ApiTypes/TypeConsultaBoletim.ts";
 import {TypeFiltro} from "../../../Data/ApiTypes/TypeFiltro.ts";
 import {Filtros} from "../Filters/FiltrosListagem/Filtros.tsx";
+import AxiosClient from "../../../Data/Services/AxiosClient.ts";
 
 export default function ListaBoletins() {
     const [consultaBoletim, setConsultaBoletim] = useState<ConsultaBoletim | null>(null);
@@ -16,8 +16,8 @@ export default function ListaBoletins() {
 
         const buscarBoletins = async () => {
             try {
-                const response = await axios.get(
-                    `http://localhost/boletins?page=${paginaAtual}` +
+                const response = await AxiosClient.get(
+                    `/boletins?page=${paginaAtual}` +
                     `&sort=dataPublicacao,desc` +
                     `&size=${tamanhoPagina}` +
                     (filtroType ?
