@@ -1,8 +1,8 @@
 import "./StyleListaBoletins.css"
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { ConsultaBoletim } from "../../../Data/ApiTypes/TypeConsultaBoletim.ts";
+import AxiosClient from "../../../Data/Services/AxiosClient.ts";
 
     export default function ListaBoletins() {
         const [consultaBoletim, setConsultaBoletim] = useState<ConsultaBoletim | null>(null);
@@ -12,7 +12,7 @@ import { ConsultaBoletim } from "../../../Data/ApiTypes/TypeConsultaBoletim.ts";
         useEffect(() => {
             const buscarBoletins = async () => {
                 try {
-                    const response = await axios.get(`http://localhost/boletins?page=${paginaAtual}&sort=dataPublicacao,desc&size=${tamanhoPagina}`);
+                    const response = await AxiosClient.get(`/boletins?page=${paginaAtual}&sort=dataPublicacao,desc&size=${tamanhoPagina}`);
                     setConsultaBoletim(response.data);
                 } catch (error) {
                     console.error('Erro ao buscar boletins:', error);
