@@ -5,15 +5,10 @@ import ListaConteudosPaginaBoletins
 
 export default function PaginaListaBoletins() {
 
-    return(
+    return (
         <div className="container-fluid mt-3">
             <div className="row">
-                <div className="col-md-2">
-                    FILTROS<br/>
-                    FILTROS<br/>
-                    FILTROS<br/>
-                </div>
-                <div className="col-md-5">
+                <div className="col-md-7">
                     <ListaBoletins/>
                 </div>
                 <div className="col-md-5 d-none d-md-block ">
