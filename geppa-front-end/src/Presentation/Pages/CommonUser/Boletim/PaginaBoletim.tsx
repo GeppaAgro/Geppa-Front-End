@@ -1,6 +1,5 @@
 import "./StylePaginaBoletim.css"
 
-import axios from "axios"
 import {useEffect, useState} from "react";
 import CardArtigoBoletim from "../../../Components/ComponentesBoletim/CardArtigoBoletim.tsx";
 import {Container} from "react-bootstrap";
@@ -12,12 +11,13 @@ import TabelaIndicadores from "../../../Components/Utils/TabelaIndicadores/Tabel
 import {Artigo, Curso, Evento, Noticia, Video} from "../../../../Domain/TypesConteudos/TypesConteudos.ts";
 import CardEventoBoletim from "../../../Components/ComponentesBoletim/CardEventoBoletim.tsx";
 import CardNoticiaBoletim from "../../../Components/ComponentesBoletim/CardNoticiasBoletim.tsx";
+import AxiosClient from "../../../../Data/Services/AxiosClient.ts";
 
 export default function PaginaBoletim() {
     const {edicao} = useParams<{ edicao: string }>()
     //const [edicao,setEdicao] = useState<string>();
     const [dataPublicacao, setDataPublicacao] = useState<Date>()
-    const [linkBoletim] = useState<string>(`http://localhost/boletins/${edicao}`);
+    const [linkBoletim] = useState<string>(`/boletins/${edicao}`);
 
     const [artigos, setArtigos] = useState<Artigo[]> ([]);
     const [cursos, setCursos] = useState<Curso[]>([]);
@@ -29,7 +29,8 @@ export default function PaginaBoletim() {
     useEffect(() => {
         const buscarBoletim = async () => {
             try {
-                const response = await axios.get(linkBoletim);
+                const response = await AxiosClient.get(linkBoletim)
+
                 //setEdicao(response.data.dados.edicao)
                 setDataPublicacao(new Date(response.data.dados.dataPublicacao))
                 setArtigos(response.data.dados.artigos)
