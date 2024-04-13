@@ -51,7 +51,7 @@ export default function PaginaBoletim() {
             <BoletimBanner/>
             <Container className="d-flex justify-content-between mt-5">
                 <h4>Edição: {edicao}</h4>
-                <h4> Data de Publicação: {dataPublicacao?.toLocaleDateString()}</h4>
+                <h4> Data de Publicação: {dataPublicacao?.toLocaleDateString('pt-BR', { timeZone: 'UTC'})}</h4>
                 <h4><i className="ri-download-2-line fw-bold"></i> .PDF</h4>
             </Container>
 

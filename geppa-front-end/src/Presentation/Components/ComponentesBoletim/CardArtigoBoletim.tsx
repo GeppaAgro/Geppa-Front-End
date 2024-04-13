@@ -13,7 +13,7 @@ const CardArtigoBoletim: React.FC<{ artigo: Artigo }> = ({artigo}) =>{
                 </p>
                 <div className="card-boletim-informacoes fw-bold fs-6 ">
                     <p>
-                        Data de publicação: {new Date (artigo.dataPublicacao).toLocaleDateString()}
+                        Data de publicação: {new Date(artigo.dataPublicacao).toLocaleDateString('pt-BR', { timeZone: 'UTC' })}
                     </p>
                      <p>
                          Autores: {artigo.autores.map((autor) => autor.nome).join(', ')}

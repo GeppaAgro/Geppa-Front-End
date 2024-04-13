@@ -13,7 +13,7 @@ const CardNoticiaBoletim: React.FC <{noticia : Noticia}> = ({noticia}) => {
                 {
                     noticia.dataPublicacao !== null && (
                         <p>
-                            Data de publicação: {new Date(noticia.dataPublicacao).toLocaleDateString()}
+                            Data de publicação:  {new Date(noticia.dataPublicacao).toLocaleDateString('pt-BR', { timeZone: 'UTC' })}
                         </p>
                     )
                 }

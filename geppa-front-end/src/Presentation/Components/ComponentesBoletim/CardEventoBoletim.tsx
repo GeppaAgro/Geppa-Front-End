@@ -13,7 +13,7 @@ const CardEventoBoletim: React.FC<{ evento: Evento }> = ({evento}) =>{
                 <div className="d-flex flex-column flex-sm-row gap-3 gap-sm-5">
 
                     <p>
-                        Inicio do evento: {new Date(evento.dataHoraInicio).toLocaleDateString()}
+                        Inicio do evento:  {new Date(evento.dataHoraInicio).toLocaleDateString('pt-BR', { timeZone: 'UTC' })}
                     </p>
                     {
                         evento.local !== null && (
@@ -25,7 +25,7 @@ const CardEventoBoletim: React.FC<{ evento: Evento }> = ({evento}) =>{
                 </div>
                 <div className="d-flex flex-column flex-sm-row gap-3 gap-sm-5">
                     <p>
-                        Termino do evento: {new Date(evento.dataHoraFim).toLocaleDateString()}
+                        Termino do evento: {new Date(evento.dataHoraFim).toLocaleDateString('pt-BR', { timeZone: 'UTC' })}
                     </p>
                         {
                             evento.preco === 0 ? (

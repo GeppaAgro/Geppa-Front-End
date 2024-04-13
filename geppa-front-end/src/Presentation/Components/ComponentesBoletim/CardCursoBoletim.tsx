@@ -22,7 +22,7 @@ const CardCursoBoletim: React.FC <{curso : Curso}> = ({curso}) => {
                         {
                             curso.prazoInscricao !== null && (
                                 <p>
-                                    Prazo para inscrição: {new Date(curso.prazoInscricao).toLocaleDateString()}
+                                    Prazo para inscrição:  {new Date(curso.prazoInscricao).toLocaleDateString('pt-BR', { timeZone: 'UTC' })}
                                 </p>
                             )
                         }

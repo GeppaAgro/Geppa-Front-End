@@ -14,6 +14,7 @@ import { ConsultaBoletim } from "../../../Data/ApiTypes/TypeConsultaBoletim.ts";
                 try {
                     const response = await axios.get(`http://localhost/boletins?page=${paginaAtual}&sort=dataPublicacao,desc&size=${tamanhoPagina}`);
                     setConsultaBoletim(response.data);
+                    console.log(response.data)
                 } catch (error) {
                     console.error('Erro ao buscar boletins:', error);
                 }
@@ -76,7 +77,7 @@ import { ConsultaBoletim } from "../../../Data/ApiTypes/TypeConsultaBoletim.ts";
                                             <Link
                                                 to={`/boletim/${Boletim.edicao}`}
                                                 className="table-row-link">
-                                                {new Date(Boletim.dataPublicacao).toLocaleDateString()}
+                                                {new Date(Boletim.dataPublicacao).toLocaleDateString('pt-BR', { timeZone: 'UTC' })}
                                             </Link>
                                         </td>
                                     </tr>
