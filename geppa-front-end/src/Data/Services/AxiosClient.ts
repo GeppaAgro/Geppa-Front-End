@@ -1,14 +1,14 @@
-import axios from "axios";
+import axios, {AxiosInstance} from 'axios';
 
-const axiosClient = axios.create(
-    {
-        baseURL:`http://localhost/`,
-        headers:{
-            "Content-Type":"application/json"
-        }
+const baseURL = import.meta.env.VITE_API_BASE_URL_PROD || import.meta.env.VITE_API_BASE_URL_DEV;
+
+const axiosClient: AxiosInstance = axios.create({
+    baseURL,
+    headers: {
+        'Content-Type': 'application/json'
     }
-)
+});
 
-axios.interceptors.response.use(res => res.data)
+axiosClient.interceptors.response.use(res => res.data);
 
-export default axiosClient
+export default axiosClient;
