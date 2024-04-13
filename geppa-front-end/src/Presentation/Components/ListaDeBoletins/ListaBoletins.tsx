@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { ConsultaBoletim } from "../../../Data/ApiTypes/TypeConsultaBoletim.ts";
+import BASE_URL from "../../../Core/AxiosClient/AxiosClient.ts";
 
     export default function ListaBoletins() {
         const [consultaBoletim, setConsultaBoletim] = useState<ConsultaBoletim | null>(null);
@@ -12,7 +13,7 @@ import { ConsultaBoletim } from "../../../Data/ApiTypes/TypeConsultaBoletim.ts";
         useEffect(() => {
             const buscarBoletins = async () => {
                 try {
-                    const response = await axios.get(`http://localhost/boletins?page=${paginaAtual}&sort=dataPublicacao,desc&size=${tamanhoPagina}`);
+                    const response = await axios.get(`${BASE_URL}/boletins?page=${paginaAtual}&sort=dataPublicacao,desc&size=${tamanhoPagina}`);
                     setConsultaBoletim(response.data);
                 } catch (error) {
                     console.error('Erro ao buscar boletins:', error);

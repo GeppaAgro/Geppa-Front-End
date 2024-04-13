@@ -8,6 +8,7 @@ import CardVideoBoletim from "../../../Components/ComponentesBoletim/CardVideoBo
 import {Artigo, Curso, Evento, Noticia, Video} from "../../../../Domain/TypesConteudos/TypesConteudos.ts";
 import axios from "axios";
 import CardEventoBoletim from "../../../Components/ComponentesBoletim/CardEventoBoletim.tsx";
+import BASE_URL from "../../../../Core/AxiosClient/AxiosClient.ts";
 
 export default function PaginaListaConteudos() {
     const {filtro } = useParams<{ filtro: string }>();
@@ -22,7 +23,7 @@ export default function PaginaListaConteudos() {
     const [noticias, setNoticias] = useState<Noticia[]>([]);
     const [videos, setVideos] = useState<Video[]>([]);
 
-    const urlConteudo = `http://localhost/${filtroSelecionado}?page=${numeroPagina}&sort=titulo,desc&size=5`;
+    const urlConteudo = `${BASE_URL}/${filtroSelecionado}?page=${numeroPagina}&sort=titulo,desc&size=5`;
 
     const trocarFiltro = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const novoFiltro = event.target.value;
