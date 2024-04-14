@@ -16,7 +16,7 @@ export default function ListaConteudosPaginaBoletins(){
     useEffect(() => {
         const buscarUltimosConteudos = async() => {
             try{
-                const response = await AxiosClient.get(`/conteudos?quantidade=15`);
+                const response = await AxiosClient.get(`/conteudos?size=15`);
                 setConteudos(response.data.dados)
             }catch (error){
                 console.error('Erro ao buscar conteudo', error)
