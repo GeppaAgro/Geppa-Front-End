@@ -15,7 +15,7 @@ const UltimosConteudos: React.FC<{tipo: string, conteudoGenerico: TypeConteudoGe
                         <h3>{tipo}</h3>
                     </Col>
                     <Col className="text-end">
-                        <Link to={'#'} className={"text-decoration-underline align-content-end fw-semibold"}
+                        <Link to={`/conteudos/${tipo.toLowerCase()}`} className={"text-decoration-underline align-content-end fw-semibold"}
                               style={{color: cores.marromEscuro}}>
                             Ir para mais {tipo}
                         </Link>

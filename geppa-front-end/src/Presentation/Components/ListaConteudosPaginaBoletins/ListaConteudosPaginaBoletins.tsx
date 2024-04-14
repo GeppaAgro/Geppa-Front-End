@@ -1,11 +1,14 @@
 import "./StyleListaCOnteudosPaginaBoletim.css"
-import axios from "axios"
 import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
+import AxiosClient from "../../../Data/Services/AxiosClient.ts";
+
 interface Conteudo{
     dataPublicacao:number;
     id: number;
+    titulo:string;
     descricao:string;
+    link:string;
 }
 export default function ListaConteudosPaginaBoletins(){
     const[conteudos,setConteudos] = useState<Conteudo[]>([]);
@@ -13,8 +16,8 @@ export default function ListaConteudosPaginaBoletins(){
     useEffect(() => {
         const buscarUltimosConteudos = async() => {
             try{
-                const response = await axios.get(`src/Data/JsonsForTests/TesteConteudosNaListaDeBoletins.json`);
-                setConteudos(response.data)
+                const response = await AxiosClient.get(`/conteudos?quantidade=15`);
+                setConteudos(response.data.dados)
             }catch (error){
                 console.error('Erro ao buscar conteudo', error)
             }
@@ -31,8 +34,8 @@ export default function ListaConteudosPaginaBoletins(){
                     (conteudo) =>
                         (
                             <div key={conteudo.id} className="containerConteudosSimplificado">
-                                <Link to='#'>
-                                    {conteudo.descricao}
+                                <Link to={conteudo.link} className="fs-6 fw-semibold">
+                                    {conteudo.titulo}
                                 </Link>
                             </div>
                         )
