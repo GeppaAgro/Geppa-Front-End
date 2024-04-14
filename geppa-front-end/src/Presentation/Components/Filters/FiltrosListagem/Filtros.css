@@ -1,0 +1,12 @@
+.accordion-button:not(.collapsed) {
+    color: var(--MarromEscuro) !important;
+    background-color: var(--Branco) !important;
+}
+
+.accordion {
+    --bs-accordion-btn-focus-box-shadow: 0 0 0 0.1rem rgba(141, 110, 99, 0.5) !important;
+}
+
+.accordion-button{
+    padding: 0.5rem 1rem !important;
+}

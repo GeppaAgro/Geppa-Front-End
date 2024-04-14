@@ -5,16 +5,20 @@ import {Noticia} from "../../../Domain/TypesConteudos/TypeNoticia.ts";
 
 const CardNoticiaBoletim: React.FC <{noticia : Noticia}> = ({noticia}) => {
     return(
-        <Container className="card-boletim p-5 mt-3 mb-3 d-flex flex-column justify-content-start p-3">
-            <p className="card-boletim-titulo fs-3 fw-bold">
+        <Container className="card-boletim p-5 mt-1 mb-3 d-flex flex-column justify-content-start p-3">
+            <p className="card-boletim-titulo fs-5 fw-bold">
                 {noticia.titulo.toUpperCase()}
             </p>
-            <div className="card-boletim-informacoes fw-semibold fs-5">
-                <p>
-                    Data de publicação: {new Date(noticia.dataPublicacao).toLocaleDateString()}
-                </p>
+            <div className="card-boletim-informacoes fw-bold fs-6">
+                {
+                    noticia.dataPublicacao !== null && (
+                        <p>
+                            Data de publicação:  {new Date(noticia.dataPublicacao).toLocaleDateString('pt-BR', { timeZone: 'UTC' })}
+                        </p>
+                    )
+                }
             </div>
-            <p className="card-boletim-descricao mt-2 mt-lg-0 fs-5 fw-medium">
+            <p className="card-boletim-descricao mt-2 mt-lg-0 fs-6 fw-medium">
                 {noticia.descricao}
             </p>
             <div
@@ -27,11 +31,15 @@ const CardNoticiaBoletim: React.FC <{noticia : Noticia}> = ({noticia}) => {
                         ))
                     }
                 </div>
-                <div className="link-boletim mt-3 mt-md-0 card-boletim-btn p-3 ">
-                    <Link to={noticia.link} className="fs-5 fw-bold ">
-                        Visitar Noticia
-                    </Link>
-                </div>
+                {
+                    noticia.link !== null && (
+                        <div className="link-boletim mt-3 mt-md-0 card-boletim-btn p-3 ">
+                            <Link to={noticia.link} className="fs-6 fw-bold ">
+                                Visitar Noticia
+                            </Link>
+                        </div>
+                    )
+                }
             </div>
         </Container>
     )
