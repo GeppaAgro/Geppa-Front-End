@@ -1,8 +1,7 @@
 import "./StyleListaCOnteudosPaginaBoletim.css"
-import axios from "axios"
 import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
-import BASE_URL from "../../../Core/AxiosClient/AxiosClient.ts";
+import AxiosClient from "../../../Data/Services/AxiosClient.ts";
 
 interface Conteudo{
     dataPublicacao:number;
@@ -17,7 +16,7 @@ export default function ListaConteudosPaginaBoletins(){
     useEffect(() => {
         const buscarUltimosConteudos = async() => {
             try{
-                const response = await axios.get(`${BASE_URL}/conteudos?quantidade=15`);
+                const response = await AxiosClient.get(`/conteudos?quantidade=15`);
                 setConteudos(response.data.dados)
             }catch (error){
                 console.error('Erro ao buscar conteudo', error)

@@ -6,9 +6,8 @@ import CardCursoBoletim from "../../../Components/ComponentesBoletim/CardCursoBo
 import CardNoticiaBoletim from "../../../Components/ComponentesBoletim/CardNoticiasBoletim.tsx";
 import CardVideoBoletim from "../../../Components/ComponentesBoletim/CardVideoBoletim.tsx";
 import {Artigo, Curso, Evento, Noticia, Video} from "../../../../Domain/TypesConteudos/TypesConteudos.ts";
-import axios from "axios";
 import CardEventoBoletim from "../../../Components/ComponentesBoletim/CardEventoBoletim.tsx";
-import BASE_URL from "../../../../Core/AxiosClient/AxiosClient.ts";
+import AxiosClient from "../../../../Data/Services/AxiosClient.ts";
 
 export default function PaginaListaConteudos() {
     const {filtro } = useParams<{ filtro: string }>();
@@ -23,7 +22,7 @@ export default function PaginaListaConteudos() {
     const [noticias, setNoticias] = useState<Noticia[]>([]);
     const [videos, setVideos] = useState<Video[]>([]);
 
-    const urlConteudo = `${BASE_URL}/${filtroSelecionado}?page=${numeroPagina}&sort=titulo,desc&size=5`;
+    const urlConteudo = `/${filtroSelecionado}?page=${numeroPagina}&sort=titulo,desc&size=5`;
 
     const trocarFiltro = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const novoFiltro = event.target.value;
@@ -37,7 +36,7 @@ export default function PaginaListaConteudos() {
                 switch (filtroSelecionado.toLowerCase()) {
                     case 'artigos':
                         try {
-                            const response = await axios.get(urlConteudo);
+                            const response = await AxiosClient.get(urlConteudo);
                             setArtigos(response.data.dados)
                             setQtdPaginas(response.data.totalPaginas)
                         }
@@ -47,7 +46,7 @@ export default function PaginaListaConteudos() {
                         break;
                     case 'cursos':
                         try {
-                            const response = await axios.get(urlConteudo);
+                            const response = await AxiosClient.get(urlConteudo);
                             setCursos(response.data.dados)
                             setQtdPaginas(response.data.totalPaginas)
                         }
@@ -57,7 +56,7 @@ export default function PaginaListaConteudos() {
                         break;
                     case 'eventos':
                         try {
-                            const response = await axios.get(urlConteudo);
+                            const response = await AxiosClient.get(urlConteudo);
                             setEventos(response.data.dados)
                             setQtdPaginas(response.data.totalPaginas)
                         }
@@ -67,7 +66,7 @@ export default function PaginaListaConteudos() {
                         break;
                     case 'noticias':
                         try {
-                            const response = await axios.get(urlConteudo);
+                            const response = await AxiosClient.get(urlConteudo);
                             setNoticias(response.data.dados)
                             setQtdPaginas(response.data.totalPaginas)
                         }
@@ -77,7 +76,7 @@ export default function PaginaListaConteudos() {
                         break;
                     case 'videos':
                         try {
-                            const response = await axios.get(urlConteudo);
+                            const response = await AxiosClient.get(urlConteudo);
                             setVideos(response.data.dados)
                             setQtdPaginas(response.data.totalPaginas)
                         }
