@@ -2,13 +2,12 @@ import {Banner} from "../../../Components/Inicial/Banner/Banner.tsx";
 import AreaInscricao from "../../../Components/Inicial/AreaInscricao/AreaInscricao.tsx";
 import UltimosConteudos from "../../../Components/Inicial/UltimosConteudos/UltimosConteudos.tsx";
 import {useEffect, useState} from "react";
-import BASE_URL from "../../../../Core/AxiosClient/AxiosClient.ts";
-import axios from "axios"
 import {TypeConteudoGenerico} from "../../../Components/Inicial/UltimosConteudos/TypeConteudoGenerico.ts";
 import {Container} from "react-bootstrap";
+import AxiosClient from "../../../../Data/Services/AxiosClient.ts";
 
 export default function PaginaInicial() {
-    const [urlUltimosConteudos] = useState<string>(`${BASE_URL}/conteudos/ultimos-por-conteudo?quantidade=4`)
+    const [urlUltimosConteudos] = useState<string>(`/conteudos/ultimos-por-conteudo?size=4`)
     const [artigos, setArtigos] = useState<TypeConteudoGenerico[]>([])
     const [cursos, setCursos] = useState<TypeConteudoGenerico[]>([])
     const [eventos, setEventos] = useState<TypeConteudoGenerico[]>([])
@@ -18,7 +17,7 @@ export default function PaginaInicial() {
     useEffect(() => {
         const buscarUltimosConteudos = async () => {
             try {
-                const res = await axios.get(urlUltimosConteudos);
+                const res = await AxiosClient.get(urlUltimosConteudos)
                 setArtigos(res.data.dados.Artigo)
                 setCursos(res.data.dados.Curso)
                 setEventos(res.data.dados.Evento)
