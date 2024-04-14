@@ -7,19 +7,19 @@ const CardArtigoBoletim: React.FC<{ artigo: Artigo }> = ({artigo}) =>{
 
     return (
         <>
-            <Container className="card-boletim p-5 mt-3 mb-3 d-flex flex-column justify-content-start p-3">
-                <p className="card-boletim-titulo fs-3 fw-bold">
+            <Container className="card-boletim p-5 mt-1 mb-3 d-flex flex-column justify-content-start p-3">
+                <p className="card-boletim-titulo fs-5 fw-bold">
                     {artigo.titulo.toUpperCase()}
                 </p>
-                <div className="card-boletim-informacoes fw-semibold fs-5">
+                <div className="card-boletim-informacoes fw-bold fs-6 ">
                     <p>
-                        Data de publicação: {new Date (artigo.dataPublicacao).toLocaleDateString()}
+                        Data de publicação: {new Date(artigo.dataPublicacao).toLocaleDateString('pt-BR', { timeZone: 'UTC' })}
                     </p>
                      <p>
                          Autores: {artigo.autores.map((autor) => autor.nome).join(', ')}
                      </p>
                 </div>
-                <p className="card-boletim-descricao mt-2 mt-lg-0 fs-5 fw-medium">
+                <p className="card-boletim-descricao mt-2 mt-lg-0 fs-6 fw-medium">
                     {artigo.descricao}
                 </p>
                 <div
@@ -32,11 +32,15 @@ const CardArtigoBoletim: React.FC<{ artigo: Artigo }> = ({artigo}) =>{
                             ))
                         }
                     </div>
-                    <div className="card-boletim-btn link-boletim mt-3 mt-md-0 p-3">
-                        <Link to={artigo.link} className="fs-5 fw-bold">
-                            Ir para o artigo
-                        </Link>
-                    </div>
+                    {
+                        artigo.link !== null && (
+                            <div className="card-boletim-btn link-boletim mt-3 mt-md-0 p-3">
+                                <Link to={artigo.link} className="fs-6 fw-bold" target={"_blank"}>
+                                    Ir para o artigo
+                                </Link>
+                            </div>
+                        )
+                    }
                 </div>
             </Container>
         </>

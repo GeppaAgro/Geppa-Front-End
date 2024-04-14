@@ -99,7 +99,7 @@ export default function ListaBoletins() {
                                         <Link
                                             to={`/boletim/${Boletim.edicao}`}
                                             className="table-row-link">
-                                            {Boletim.dataPublicacao}
+                                            {new Date(Boletim.dataPublicacao).toLocaleDateString('pt-BR', { timeZone: 'UTC' })}
                                         </Link>
                                     </td>
                                 </tr>
