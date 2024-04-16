@@ -1,6 +1,6 @@
 import {Placeholder} from "react-bootstrap";
 
-export const UltimosConteudosSimplificadoSkeleton = () => {
+export const LinhaSkeleton = () => {
     return (
         <>
             <Placeholder as="p" animation="glow" className="m-0">

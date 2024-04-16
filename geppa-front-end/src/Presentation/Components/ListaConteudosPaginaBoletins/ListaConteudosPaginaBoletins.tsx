@@ -2,7 +2,7 @@ import "./StyleListaCOnteudosPaginaBoletim.css"
 import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import AxiosClient from "../../../Data/Services/AxiosClient.ts";
-import {UltimosConteudosSimplificadoSkeleton} from "../Skeleton/UltimosConteudosSimplificadoSkeleton.tsx";
+import {LinhaSkeleton} from "../Skeleton/LinhaSkeleton.tsx";
 
 interface Conteudo {
     dataPublicacao: number;
@@ -40,7 +40,7 @@ export default function ListaConteudosPaginaBoletins() {
                 <>
                     {Array.from({length: sizeConteudos}).map((_, index) => (
                         <div key={index} className="containerConteudosSimplificado">
-                            <UltimosConteudosSimplificadoSkeleton/>
+                            <LinhaSkeleton/>
                         </div>
                     ))}
                 </>
