@@ -8,26 +8,29 @@ import CardVideoBoletim from "../../../Components/ComponentesBoletim/CardVideoBo
 import {Artigo, Curso, Evento, Noticia, Video} from "../../../../Domain/TypesConteudos/TypesConteudos.ts";
 import CardEventoBoletim from "../../../Components/ComponentesBoletim/CardEventoBoletim.tsx";
 import AxiosClient from "../../../../Data/Services/AxiosClient.ts";
+import {ConteudoSkeleton} from "../../../Components/Skeleton/ConteudoSkeleton.tsx";
 
 export default function PaginaListaConteudos() {
-    const {filtro } = useParams<{ filtro: string }>();
+    const {filtro} = useParams<{ filtro: string }>();
     const [filtroSelecionado, setFiltroSelecionado] = useState<string>(filtro || 'artigos');
 
-    const [numeroPagina, setNumeroPagina] = useState<number>( 0 )
-    const [qtdPaginas , setQtdPaginas] = useState<number>(1)
+    const [numeroPagina, setNumeroPagina] = useState<number>(0)
+    const [qtdPaginas, setQtdPaginas] = useState<number>(1)
 
-    const [artigos, setArtigos] = useState<Artigo[]> ([]);
+    const [artigos, setArtigos] = useState<Artigo[]>([]);
     const [cursos, setCursos] = useState<Curso[]>([]);
     const [eventos, setEventos] = useState<Evento[]>([]);
     const [noticias, setNoticias] = useState<Noticia[]>([]);
     const [videos, setVideos] = useState<Video[]>([]);
+    const [loadingConteudos, setLoadingConteudos] = useState<boolean>(true);
 
     const urlConteudo = `/${filtroSelecionado}?page=${numeroPagina}&sort=titulo,desc&size=5`;
 
     const trocarFiltro = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setLoadingConteudos(true)
         const novoFiltro = event.target.value;
         setFiltroSelecionado(novoFiltro);
-        setNumeroPagina( 0 );
+        setNumeroPagina(0);
     };
 
     useEffect(() => {
@@ -39,8 +42,8 @@ export default function PaginaListaConteudos() {
                             const response = await AxiosClient.get(urlConteudo);
                             setArtigos(response.data.dados)
                             setQtdPaginas(response.data.totalPaginas)
-                        }
-                        catch(error){
+                            setLoadingConteudos(false)
+                        } catch (error) {
                             console.log("tipo de conteudo nao encontrado")
                         }
                         break;
@@ -49,8 +52,8 @@ export default function PaginaListaConteudos() {
                             const response = await AxiosClient.get(urlConteudo);
                             setCursos(response.data.dados)
                             setQtdPaginas(response.data.totalPaginas)
-                        }
-                        catch(error){
+                            setLoadingConteudos(false)
+                        } catch (error) {
                             console.log("tipo de conteudo nao encontrado")
                         }
                         break;
@@ -59,8 +62,8 @@ export default function PaginaListaConteudos() {
                             const response = await AxiosClient.get(urlConteudo);
                             setEventos(response.data.dados)
                             setQtdPaginas(response.data.totalPaginas)
-                        }
-                        catch(error){
+                            setLoadingConteudos(false)
+                        } catch (error) {
                             console.log("tipo de conteudo nao encontrado")
                         }
                         break;
@@ -69,8 +72,8 @@ export default function PaginaListaConteudos() {
                             const response = await AxiosClient.get(urlConteudo);
                             setNoticias(response.data.dados)
                             setQtdPaginas(response.data.totalPaginas)
-                        }
-                        catch(error){
+                            setLoadingConteudos(false)
+                        } catch (error) {
                             console.log("tipo de conteudo nao encontrado")
                         }
                         break;
@@ -79,16 +82,15 @@ export default function PaginaListaConteudos() {
                             const response = await AxiosClient.get(urlConteudo);
                             setVideos(response.data.dados)
                             setQtdPaginas(response.data.totalPaginas)
-                        }
-                        catch(error){
+                            setLoadingConteudos(false)
+                        } catch (error) {
                             console.log("tipo de conteudo nao encontrado")
                         }
                         break;
                     default:
                         null;
                 }
-            }
-            catch(error){
+            } catch (error) {
                 console.log("tipo de conteudo nao encontrado")
             }
         };
@@ -96,37 +98,19 @@ export default function PaginaListaConteudos() {
     }, [filtroSelecionado, urlConteudo]);
 
     const renderizarConteudoSelecionado = () => {
-        switch (filtroSelecionado){
-            case 'artigos' : return (
-                <div className="d-flex row justify-content-center mb-3">
-                    {
-                        artigos.map((artigo) => (
-                            <div key={artigo.id}>
-                                <CardArtigoBoletim artigo={artigo}/>
-                            </div>
-                        ))
-                    }
-
-                        <ul className="pagination justify-content-center">
-                            <li className="page-item">
-                                <button disabled={numeroPagina <= 0}
-                                        className="page-link"
-                                        onClick={() => setNumeroPagina(numeroPagina-1)}>
-                                    &laquo;
-                                </button>
-                            </li>
-                            <li className="page-item"><button className="page-link">{numeroPagina+1}</button></li>
-                            <li className="page-item">
-                                <button disabled={numeroPagina + 1 >= qtdPaginas}
-                                        className="page-link"
-                                        onClick={() => setNumeroPagina(numeroPagina+1)}>
-                                    &raquo;
-                                </button>
-                            </li>
-                        </ul>
-
-                </div>
-            )
+        switch (filtroSelecionado) {
+            case 'artigos' :
+                return (
+                    <>
+                        {
+                            artigos.map((artigo) => (
+                                <div key={artigo.id}>
+                                    <CardArtigoBoletim artigo={artigo}/>
+                                </div>
+                            ))
+                        }
+                    </>
+                )
             case 'cursos' :
                 return (
                     <>
@@ -137,88 +121,32 @@ export default function PaginaListaConteudos() {
                                 </div>
                             ))
                         }
-                        {
-                            <ul className="pagination justify-content-center">
-                                <li className="page-item">
-                                    <button disabled={numeroPagina <= 0}
-                                            className="page-link"
-                                            onClick={() => setNumeroPagina(numeroPagina-1)}>
-                                        &laquo;
-                                    </button>
-                                </li>
-                                <li className="page-item"><button className="page-link">{numeroPagina+1}</button></li>
-                                <li className="page-item">
-                                    <button disabled={numeroPagina + 1 >= qtdPaginas}
-                                            className="page-link"
-                                            onClick={() => setNumeroPagina(numeroPagina+1)}>
-                                        &raquo;
-                                    </button>
-                                </li>
-                            </ul>
-                        }
                     </>
                 )
             case 'eventos' :
                 return (
                     <>
                         {
-                            eventos.map((evento)=>(
-                            <div key={evento.id}>
-                                <CardEventoBoletim evento={evento}/>
-                            </div>
-                        ))
-                    }
-                        {
-                            <ul className="pagination justify-content-center">
-                                <li className="page-item">
-                                    <button disabled={numeroPagina <= 0}
-                                            className="page-link"
-                                            onClick={() => setNumeroPagina(numeroPagina-1)}>
-                                        &laquo;
-                                    </button>
-                                </li>
-                                <li className="page-item"><button className="page-link">{numeroPagina+1}</button></li>
-                                <li className="page-item">
-                                    <button disabled={numeroPagina + 1 >= qtdPaginas}
-                                            className="page-link"
-                                            onClick={() => setNumeroPagina(numeroPagina+1)}>
-                                        &raquo;
-                                    </button>
-                                </li>
-                            </ul>
+                            eventos.map((evento) => (
+                                <div key={evento.id}>
+                                    <CardEventoBoletim evento={evento}/>
+                                </div>
+                            ))
                         }
-                </>
-            )
-            case 'noticias' : return (
-                <>
-                    {
-                        noticias.map((noticia) => (
-                            <div key={noticia.id}>
-                                <CardNoticiaBoletim noticia={noticia}/>
-                            </div>
-                        ))
-                    }
-                    <ul className="pagination justify-content-center">
-                        <li className="page-item">
-                            <button disabled={numeroPagina <= 0}
-                                    className="page-link"
-                                    onClick={() => setNumeroPagina(numeroPagina - 1)}>
-                                &laquo;
-                            </button>
-                        </li>
-                        <li className="page-item">
-                            <button className="page-link">{numeroPagina + 1}</button>
-                        </li>
-                        <li className="page-item">
-                            <button disabled={numeroPagina + 1 >= qtdPaginas}
-                                    className="page-link"
-                                    onClick={() => setNumeroPagina(numeroPagina + 1)}>
-                                &raquo;
-                            </button>
-                        </li>
-                    </ul>
-                </>
-            )
+                    </>
+                )
+            case 'noticias' :
+                return (
+                    <>
+                        {
+                            noticias.map((noticia) => (
+                                <div key={noticia.id}>
+                                    <CardNoticiaBoletim noticia={noticia}/>
+                                </div>
+                            ))
+                        }
+                    </>
+                )
             case 'videos' :
                 return (
                     <>
@@ -229,32 +157,12 @@ export default function PaginaListaConteudos() {
                                 </div>
                             ))
                         }
-                        {
-                            <ul className="pagination justify-content-center">
-                                <li className="page-item">
-                                    <button disabled={numeroPagina <= 0}
-                                            className="page-link"
-                                            onClick={() => setNumeroPagina(numeroPagina - 1)}>
-                                        &laquo;
-                                    </button>
-                                </li>
-                                <li className="page-item">
-                                    <button className="page-link">{numeroPagina + 1}</button>
-                                </li>
-                                <li className="page-item">
-                                <button disabled={numeroPagina + 1 >= qtdPaginas}
-                                        className="page-link"
-                                        onClick={() => setNumeroPagina(numeroPagina+1)}>
-                                    &raquo;
-                                </button>
-                            </li>
-                        </ul>
-                    }
-                </>
-            )
-            default : return ( <>
-                Erro ao buscar esse tipo de conteudo
-            </> )
+                    </>
+                )
+            default :
+                return (<>
+                    Erro ao buscar esse tipo de conteudo
+                </>)
         }
     }
 
@@ -264,8 +172,10 @@ export default function PaginaListaConteudos() {
                 <div className="row justify-content-center">
                     <div className="col-md-6">
                         <div className="input-group my-3">
-                            <label className="input-group-text d-none d-lg-block " htmlFor="filtro">Tipo do conteúdo:</label>
-                            <select className="form-select" id="filtro" value={filtroSelecionado} onChange={trocarFiltro}>
+                            <label className="input-group-text d-none d-lg-block " htmlFor="filtro">Tipo do
+                                conteúdo:</label>
+                            <select className="form-select" id="filtro" value={filtroSelecionado}
+                                    onChange={trocarFiltro}>
                                 <option value="artigos">Artigo</option>
                                 <option value="cursos">Cursos</option>
                                 <option value="eventos">Eventos</option>
@@ -278,8 +188,49 @@ export default function PaginaListaConteudos() {
             </Container>
 
             <Container>
-                {renderizarConteudoSelecionado()}
+                {loadingConteudos ? (
+                    <>
+                        {Array.from({length: 5}).map((_, index) => (
+                            <div key={index}>
+                                <ConteudoSkeleton/>
+                            </div>
+                        ))}
+                    </>
+                ) : (
+                    <>
+                        {renderizarConteudoSelecionado()}
+
+                        <ul className="pagination justify-content-center">
+                            <li className="page-item">
+                                <button disabled={numeroPagina <= 0}
+                                        className="page-link"
+                                        onClick={() => {
+                                            setNumeroPagina(numeroPagina - 1)
+                                            setLoadingConteudos(true)
+                                        }}>
+                                    &laquo;
+                                </button>
+                            </li>
+                            <li className="page-item">
+                                <button className="page-link">{numeroPagina + 1}</button>
+                            </li>
+                            <li className="page-item">
+                                <button disabled={numeroPagina + 1 >= qtdPaginas}
+                                        className="page-link"
+                                        onClick={() => {
+                                            setNumeroPagina(numeroPagina + 1);
+                                            setLoadingConteudos(true);
+                                        }}>
+                                    &raquo;
+                                </button>
+                            </li>
+                        </ul>
+                    </>
+                )}
             </Container>
         </>
     )
+
 }
+
+

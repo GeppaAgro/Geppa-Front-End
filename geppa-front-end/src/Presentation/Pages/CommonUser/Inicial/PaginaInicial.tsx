@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import {TypeConteudoGenerico} from "../../../Components/Inicial/UltimosConteudos/TypeConteudoGenerico.ts";
 import {Container} from "react-bootstrap";
 import AxiosClient from "../../../../Data/Services/AxiosClient.ts";
+import {UltimosConteudosSkeleton} from "../../../Components/Skeleton/UltimosConteudosSkeleton.tsx";
 
 export default function PaginaInicial() {
     const [urlUltimosConteudos] = useState<string>(`/conteudos/ultimos-por-conteudo?size=4`)
@@ -13,6 +14,7 @@ export default function PaginaInicial() {
     const [eventos, setEventos] = useState<TypeConteudoGenerico[]>([])
     const [noticias, setNoticias] = useState<TypeConteudoGenerico[]>([])
     const [videos, setVideos] = useState<TypeConteudoGenerico[]>([])
+    const [loadingUltimosConteudos, setLoadingUltimosConteudos] = useState<boolean>(true);
 
     useEffect(() => {
         const buscarUltimosConteudos = async () => {
@@ -23,10 +25,10 @@ export default function PaginaInicial() {
                 setEventos(res.data.dados.Evento)
                 setNoticias(res.data.dados.Noticia)
                 setVideos(res.data.dados.Video)
-
-                console.log(res)
+                setLoadingUltimosConteudos(false);
             } catch (error) {
                 console.log("Algo deu errado:", error);
+                setLoadingUltimosConteudos(false);
             }
         }
         buscarUltimosConteudos();
@@ -38,11 +40,23 @@ export default function PaginaInicial() {
                 <Banner/>
                 <AreaInscricao/>
                 <div className="mt-5">
-                    <UltimosConteudos tipo={"Artigos"} conteudoGenerico={artigos}/>
-                    <UltimosConteudos tipo={"Cursos"} conteudoGenerico={cursos}/>
-                    <UltimosConteudos tipo={"Eventos"} conteudoGenerico={eventos}/>
-                    <UltimosConteudos tipo={"Noticias"} conteudoGenerico={noticias}/>
-                    <UltimosConteudos tipo={"Videos"} conteudoGenerico={videos}/>
+                    {loadingUltimosConteudos ? (
+                        <>
+                            <UltimosConteudosSkeleton/>
+                            <UltimosConteudosSkeleton/>
+                            <UltimosConteudosSkeleton/>
+                            <UltimosConteudosSkeleton/>
+                            <UltimosConteudosSkeleton/>
+                        </>
+                    ) : (
+                        <>
+                            <UltimosConteudos tipo={"Artigos"} conteudoGenerico={artigos}/>
+                            <UltimosConteudos tipo={"Cursos"} conteudoGenerico={cursos}/>
+                            <UltimosConteudos tipo={"Eventos"} conteudoGenerico={eventos}/>
+                            <UltimosConteudos tipo={"Noticias"} conteudoGenerico={noticias}/>
+                            <UltimosConteudos tipo={"Videos"} conteudoGenerico={videos}/>
+                        </>
+                    )}
                 </div>
             </Container>
 
