@@ -5,7 +5,7 @@ import {useEffect, useState} from "react";
 import {TypeConteudoGenerico} from "../../../Components/Inicial/UltimosConteudos/TypeConteudoGenerico.ts";
 import {Container} from "react-bootstrap";
 import AxiosClient from "../../../../Data/Services/AxiosClient.ts";
-import {UltimosConteudosHomeSkeleton} from "../../../Components/Skeleton/UltimosConteudosHomeSkeleton.tsx";
+import {UltimosConteudosSkeleton} from "../../../Components/Skeleton/UltimosConteudosSkeleton.tsx";
 
 export default function PaginaInicial() {
     const [urlUltimosConteudos] = useState<string>(`/conteudos/ultimos-por-conteudo?size=4`)
@@ -42,11 +42,11 @@ export default function PaginaInicial() {
                 <div className="mt-5">
                     {loadingUltimosConteudos ? (
                         <>
-                            <UltimosConteudosHomeSkeleton/>
-                            <UltimosConteudosHomeSkeleton/>
-                            <UltimosConteudosHomeSkeleton/>
-                            <UltimosConteudosHomeSkeleton/>
-                            <UltimosConteudosHomeSkeleton/>
+                            <UltimosConteudosSkeleton/>
+                            <UltimosConteudosSkeleton/>
+                            <UltimosConteudosSkeleton/>
+                            <UltimosConteudosSkeleton/>
+                            <UltimosConteudosSkeleton/>
                         </>
                     ) : (
                         <>
