@@ -8,7 +8,6 @@ import PaginaIndicadores from "./Presentation/Pages/CommonUser/Indicadores/Pagin
 import PaginaBoletim from "./Presentation/Pages/CommonUser/Boletim/PaginaBoletim.tsx";
 import Footer from "./Presentation/Components/Footer/Footer.tsx";
 import PaginaListaBoletins from "./Presentation/Pages/CommonUser/ListaDeBoletins/PaginaListaBoletins.tsx";
-import React from "react";
 import AdminInicial from "./Presentation/Pages/AdminUser/AdminInicial/AdminInicial.tsx";
 import AdminBoletim from "./Presentation/Pages/AdminUser/AdminBoletim/AdminBoletim.tsx";
 import AdminCriarBoletim from "./Presentation/Pages/AdminUser/AdminCriarBoletim/AdminCriarBoletim.tsx";
@@ -33,10 +32,10 @@ function App() {
                 </Routes>
                 <Footer/>
             </Router>
+
             <Router>
                 <Sidebar />
                 <Routes>
-                    { //<Route path="/admin/auth" element={<AdminLogin/>}/> }
                     <Route path="/admin" element={ <AdminInicial/> } />
                     <Route path="/admin/boletins" element={ <AdminBoletim/> } />
                     <Route path="/admin/criar-boletins" element={<AdminCriarBoletim/>}/>
