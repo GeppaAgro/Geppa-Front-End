@@ -10,6 +10,10 @@ import Footer from "./Presentation/Components/Footer/Footer.tsx";
 import PaginaListaBoletins from "./Presentation/Pages/CommonUser/ListaDeBoletins/PaginaListaBoletins.tsx";
 import React from "react";
 import AdminInicial from "./Presentation/Pages/AdminUser/AdminInicial/AdminInicial.tsx";
+import AdminBoletim from "./Presentation/Pages/AdminUser/AdminBoletim/AdminBoletim.tsx";
+import AdminCriarBoletim from "./Presentation/Pages/AdminUser/AdminCriarBoletim/AdminCriarBoletim.tsx";
+import AdminPerfil from "./Presentation/Pages/AdminUser/AdminPerfil/AdminPerfil.tsx";
+import AdminAlunos from "./Presentation/Pages/AdminUser/AdminAlunos/AdminAlunos.tsx";
 import Sidebar from "./Presentation/Components/Sidebar/Sidebar.tsx";
 
 function App() {
@@ -33,12 +37,12 @@ function App() {
                 <Sidebar />
                 <Routes>
                     { //<Route path="/admin/auth" element={<AdminLogin/>}/> }
-                    <Route path="/admin/" element={ <AdminInicial/> }/>
-                    { //<Route path="/admin/boletins" element={<AdminBoletins/>}/> }
-                    { //<Route path="/admin/criar-boletins" element={<AdminCriarBoletins/>}/> }
-                    { //<Route path="/admin/perfil" element={<AdminPerfil/>}/> }
-                    { //<Route path="/admin/aluno" element={<AdminAlunos/>}/> }
-                    { //<Route path="/admin/"/> };
+                    <Route path="/admin" element={ <AdminInicial/> } />
+                    <Route path="/admin/boletins" element={ <AdminBoletim/> } />
+                    <Route path="/admin/criar-boletins" element={<AdminCriarBoletim/>}/>
+                    <Route path="/admin/perfil" element={<AdminPerfil/>}/>
+                    <Route path="/admin/aluno" element={<AdminAlunos/>}/>
+                    <Route path="/admin" />
                 </Routes>
             </Router>
         </>
