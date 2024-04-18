@@ -11,7 +11,7 @@ export default function PaginaListaBoletins() {
                 <div className="col-md-7">
                     <ListaBoletins/>
                 </div>
-                <div className="col-md-5 d-none d-md-block ">
+                <div className="col-md-5 d-none d-lg-block ">
                     <ListaConteudosPaginaBoletins/>
                 </div>
             </div>

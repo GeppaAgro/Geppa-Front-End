@@ -2,6 +2,7 @@ import "./StyleCardBoletim.css"
 import {Container} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import {Evento} from "../../../Domain/TypesConteudos/TypeEvento.ts";
+import {validaData} from "../Utils/ValidacaoDeData.ts";
 
 const CardEventoBoletim: React.FC<{ evento: Evento }> = ({evento}) =>{
     return  (
@@ -12,28 +13,43 @@ const CardEventoBoletim: React.FC<{ evento: Evento }> = ({evento}) =>{
             <div className="card-boletim-informacoes fw-bold fs-6">
                 <div className="d-flex flex-column flex-sm-row gap-3 gap-sm-5">
 
-                    <p>
-                        Inicio do evento:  {new Date(evento.dataHoraInicio).toLocaleDateString('pt-BR', { timeZone: 'UTC' })}
-                    </p>
+                    {
+                        evento.dataHoraInicio && validaData(evento.dataHoraInicio.toString()) && (
+                            <p>
+                                Inicio do
+                                evento: {new Date(evento.dataHoraInicio).toLocaleDateString('pt-BR', {timeZone: 'UTC'})}
+                            </p>
+                        )
+                    }
                     {
                         evento.local !== null && (
                             <p>
-                                Local: {evento.local}
+                            Local: {evento.local}
                             </p>
                         )
                     }
                 </div>
                 <div className="d-flex flex-column flex-sm-row gap-3 gap-sm-5">
-                    <p>
-                        Termino do evento: {new Date(evento.dataHoraFim).toLocaleDateString('pt-BR', { timeZone: 'UTC' })}
-                    </p>
-                        {
-                            evento.preco === 0 ? (
-                                <p>Entrada Gratuito</p>
+                    {
+                        evento.dataHoraFim && validaData(evento.dataHoraFim.toString()) &&(
+                            <p>
+                                Termino do evento: {new Date(evento.dataHoraFim).toLocaleDateString('pt-BR', {timeZone: 'UTC'})}
+                            </p>
+                        )
+                    }
+
+                    {
+                        evento.preco === 0 ? (
+                            <p>Entrada Gratuita</p>
                             ) : (
                                 <p>Preço: R$ {evento.preco.toFixed(2)}</p>
                             )
                         }
+                    {evento.dataHoraFim && evento.dataHoraInicio &&(
+                        <p>
+                            Horário do evento: {new Date(evento.dataHoraInicio).toLocaleTimeString('pt-BR', { timeZone: 'UTC', hour :'numeric', minute :'numeric'  })} e {new Date(evento.dataHoraFim).toLocaleTimeString('pt-BR', { timeZone: 'UTC', hour :'numeric', minute :'numeric'  })}
+                        </p>
+                    )}
                 </div>
             </div>
             <p className="card-boletim-descricao mt-2 mt-lg-0 fs-6 fw-medium">
@@ -42,10 +58,10 @@ const CardEventoBoletim: React.FC<{ evento: Evento }> = ({evento}) =>{
             <div
                 className="card-boletim-footer d-flex flex-column flex-md-row justify-content-between align-items-center">
                 <div
-                    className="tags-boletim d-flex flex-wrap justify-content-start justify-content-md-end mb-2 mb-md-0">
+                    className="tags-boletim d-flex flex-wrap justify-content-start justify-content-md-end mb-2 mb-md-0 gap-3">
                     {
                         evento.tags.map(tag => (
-                            <span className="card-boletim-tags p-3 fs-6 fw-semibold me-3" key={tag.id}> {tag.nome} </span>
+                            <span className="card-boletim-tags p-3 fs-6 fw-semibold" key={tag.id}> {tag.nome} </span>
                         ))
                     }
                 </div>
