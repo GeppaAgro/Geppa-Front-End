@@ -1,43 +1,65 @@
 import "./StyleListaCOnteudosPaginaBoletim.css"
-import axios from "axios"
 import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
-interface Conteudo{
-    dataPublicacao:number;
+import AxiosClient from "../../../Data/Services/AxiosClient.ts";
+import {LinhaSkeleton} from "../Skeleton/LinhaSkeleton.tsx";
+
+interface Conteudo {
+    dataPublicacao: number;
     id: number;
-    descricao:string;
+    titulo: string;
+    descricao: string;
+    link: string;
 }
-export default function ListaConteudosPaginaBoletins(){
-    const[conteudos,setConteudos] = useState<Conteudo[]>([]);
+
+export default function ListaConteudosPaginaBoletins() {
+    const sizeConteudos = 10
+
+    const [conteudos, setConteudos] = useState<Conteudo[]>([]);
+    const [loadingConteudos, setLoadingConteudos] = useState<boolean>(true);
+
 
     useEffect(() => {
-        const buscarUltimosConteudos = async() => {
-            try{
-                const response = await axios.get(`src/Data/JsonsForTests/TesteConteudosNaListaDeBoletins.json`);
-                setConteudos(response.data)
-            }catch (error){
+        const buscarUltimosConteudos = async () => {
+            try {
+                const response = await AxiosClient.get(`/conteudos?size=${sizeConteudos}`);
+                setConteudos(response.data.dados)
+                setLoadingConteudos(false);
+            } catch (error) {
                 console.error('Erro ao buscar conteudo', error)
+                setLoadingConteudos(false);
             }
         }
         buscarUltimosConteudos()
     }, []);
 
-    return(
+    return (
         <>
-            <h5 >Últimos conteúdos</h5>
-
-            {
-                conteudos.map(
-                    (conteudo) =>
-                        (
-                            <div key={conteudo.id} className="containerConteudosSimplificado">
-                                <Link to='#'>
-                                    {conteudo.descricao}
-                                </Link>
-                            </div>
+            <h5>Últimos conteúdos</h5>
+            {loadingConteudos ? (
+                <>
+                    {Array.from({length: sizeConteudos}).map((_, index) => (
+                        <div key={index} className="containerConteudosSimplificado">
+                            <LinhaSkeleton/>
+                        </div>
+                    ))}
+                </>
+            ) : (
+                <>
+                    {
+                        conteudos.map(
+                            (conteudo) =>
+                                (
+                                    <div key={conteudo.id} className="containerConteudosSimplificado">
+                                        <Link to={conteudo.link} className="fs-6 fw-semibold">
+                                            {conteudo.titulo}
+                                        </Link>
+                                    </div>
+                                )
                         )
-                )
-            }
+                    }
+                </>
+            )},
 
         </>
     )

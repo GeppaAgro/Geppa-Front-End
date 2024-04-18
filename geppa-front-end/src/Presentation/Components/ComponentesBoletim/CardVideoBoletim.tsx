@@ -13,16 +13,16 @@ const CardVideoBoletim: React.FC <{video : Video}> = ({video}) => {
     };
 
     return(
-        <Container className="card-boletim p-5 mt-3 mb-3 d-flex flex-column justify-content-start p-3">
-            <p className="card-boletim-titulo fs-3 fw-bold">
+        <Container className="card-boletim p-5 mt-1 mb-3 d-flex flex-column justify-content-start ">
+            <p className="card-boletim-titulo fs-5 fw-bold">
                 {video.titulo.toUpperCase()}
             </p>
-            <div className="card-boletim-informacoes fw-semibold fs-5">
+            <div className="card-boletim-informacoes fw-bold fs-6">
                 <p>
 
                 </p>
             </div>
-            <p className="card-boletim-descricao mt-2 mt-lg-0 fs-5 fw-medium">
+            <p className="card-boletim-descricao mt-2 mt-lg-0 fs-6 fw-medium">
                 {video.descricao}
             </p>
             <div
@@ -38,14 +38,14 @@ const CardVideoBoletim: React.FC <{video : Video}> = ({video}) => {
                 {
                     !video.youtube ? (
                         <div className="link-boletim mt-3 mt-md-0 card-boletim-btn p-3 ">
-                            <Link to={video.link} className="fs-5 fw-bold ">
+                            <Link to={video.link} className="fs-6 fw-bold ">
                                 Visitar Video
                             </Link>
                         </div>
                     ) : (
                         <div className="link-boletim mt-3 mt-md-0">
                             <button
-                                className="btn-abrir-video-boletim py-2 px-4 fw-semibold fs-5"
+                                className="btn-abrir-video-boletim py-2 px-4 fw-semibold fs-6"
                                 onClick={mostrarVideo}>
                                 Assistir video <i className="ri-arrow-down-s-line"/>
                             </button>

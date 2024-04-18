@@ -1,0 +1,27 @@
+.login-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.link-home {
+    color: var(--MarromEscuro);
+}
+
+.login-form {
+    width: 420px;
+    box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
+    border-radius: 8px;
+}
+
+.login-form-content {
+    padding-left: 12%;
+    padding-right: 12%;
+}
+
+.btn-login {
+    background-color: var(--VerdeOliva) !important;
+    color: var(--Branco) !important;
+}
