@@ -2,6 +2,7 @@ import "./StyleCardBoletim.css"
 import {Container} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import {Curso} from "../../../Domain/TypesConteudos/TypeCurso.ts";
+import {validaData} from "../Utils/ValidacaoDeData.ts";
 
 const CardCursoBoletim: React.FC <{curso : Curso}> = ({curso}) => {
     return(
@@ -20,7 +21,7 @@ const CardCursoBoletim: React.FC <{curso : Curso}> = ({curso}) => {
                             )
                         }
                         {
-                            curso.prazoInscricao !== null && (
+                            curso.prazoInscricao && validaData(curso.prazoInscricao.toString()) && (
                                 <p>
                                     Prazo para inscrição:  {new Date(curso.prazoInscricao).toLocaleDateString('pt-BR', { timeZone: 'UTC' })}
                                 </p>

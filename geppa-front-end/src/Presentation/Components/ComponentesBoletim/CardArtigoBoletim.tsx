@@ -2,6 +2,7 @@ import "./StyleCardBoletim.css"
 import {Container} from "react-bootstrap";
 import{Artigo} from "../../../Domain/TypesConteudos/TypeArtigo.ts";
 import {Link} from "react-router-dom";
+import {validaData} from "../Utils/ValidacaoDeData.ts";
 
 const CardArtigoBoletim: React.FC<{ artigo: Artigo }> = ({artigo}) =>{
 
@@ -12,9 +13,11 @@ const CardArtigoBoletim: React.FC<{ artigo: Artigo }> = ({artigo}) =>{
                     {artigo.titulo.toUpperCase()}
                 </p>
                 <div className="card-boletim-informacoes fw-bold fs-6 ">
-                    <p>
-                        Data de publicação: {new Date(artigo.dataPublicacao).toLocaleDateString('pt-BR', { timeZone: 'UTC' })}
-                    </p>
+                    { artigo.dataPublicacao && validaData (artigo.dataPublicacao.toString()) &&(
+                        <p>
+                            Data de publicação: {new Date(artigo.dataPublicacao).toLocaleDateString('pt-BR', {timeZone: 'UTC'})}
+                        </p>
+                        )}
                      <p>
                          Autores: {artigo.autores.map((autor) => autor.nome).join(', ')}
                      </p>

@@ -2,6 +2,7 @@ import "./StyleCardBoletim.css"
 import {Container} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import {Noticia} from "../../../Domain/TypesConteudos/TypeNoticia.ts";
+import {validaData} from "../Utils/ValidacaoDeData.ts";
 
 const CardNoticiaBoletim: React.FC <{noticia : Noticia}> = ({noticia}) => {
     return(
@@ -11,7 +12,7 @@ const CardNoticiaBoletim: React.FC <{noticia : Noticia}> = ({noticia}) => {
             </p>
             <div className="card-boletim-informacoes fw-bold fs-6">
                 {
-                    noticia.dataPublicacao !== null && (
+                    noticia.dataPublicacao && validaData(noticia.dataPublicacao.toString()) &&(
                         <p>
                             Data de publicação:  {new Date(noticia.dataPublicacao).toLocaleDateString('pt-BR', { timeZone: 'UTC' })}
                         </p>
