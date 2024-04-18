@@ -1,7 +1,7 @@
 import "./StyleCardBoletim.css"
 import {Container} from "react-bootstrap";
 import {Link} from "react-router-dom";
-import {Curso} from "../../../Domain/TypesConteudos/TypesConteudos.ts";
+import {Curso} from "../../../Domain/TypesConteudos/TypeCurso.ts";
 
 const CardCursoBoletim: React.FC <{curso : Curso}> = ({curso}) => {
     return(
@@ -33,10 +33,10 @@ const CardCursoBoletim: React.FC <{curso : Curso}> = ({curso}) => {
                 <div
                     className="card-boletim-footer d-flex flex-column flex-md-row justify-content-between align-items-center">
                     <div
-                        className="tags-boletim d-flex flex-wrap justify-content-start justify-content-md-end mb-2 mb-md-0">
+                        className="tags-boletim d-flex flex-wrap justify-content-start justify-content-md-end mb-2 mb-md-0 gap-3">
                         {
                             curso.tags.map(tag => (
-                                <span className="card-boletim-tags p-3 fs-6 fw-semibold me-3" key={tag.id}> {tag.nome} </span>
+                                <span className="card-boletim-tags p-3 fs-6 fw-semibold " key={tag.id}> {tag.nome} </span>
                             ))
                         }
                     </div>

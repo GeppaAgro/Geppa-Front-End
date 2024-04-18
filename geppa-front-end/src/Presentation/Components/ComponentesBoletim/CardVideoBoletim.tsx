@@ -28,10 +28,10 @@ const CardVideoBoletim: React.FC <{video : Video}> = ({video}) => {
             <div
                 className="card-boletim-footer d-flex flex-column flex-md-row justify-content-between align-items-center">
                 <div
-                    className="tags-boletim d-flex flex-wrap justify-content-start justify-content-md-end mb-2 mb-md-0">
+                    className="tags-boletim d-flex flex-wrap justify-content-start justify-content-md-end mb-2 mb-md-0 gap-3">
                     {
                         video.tags.map(tag => (
-                            <span className="card-boletim-tags p-3 fs-6 fw-semibold me-3" key={tag.id}> {tag.nome} </span>
+                            <span className="card-boletim-tags p-3 fs-6 fw-semibold " key={tag.id}> {tag.nome} </span>
                         ))
                     }
                 </div>

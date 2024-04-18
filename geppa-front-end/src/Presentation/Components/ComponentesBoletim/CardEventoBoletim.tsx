@@ -24,7 +24,7 @@ const CardEventoBoletim: React.FC<{ evento: Evento }> = ({evento}) =>{
                     </p>
                         {
                             evento.preco === 0 ? (
-                                <p>Entrada Gratuito</p>
+                                <p>Entrada Gratuita</p>
                             ) : (
                                 <p>Preço: R$ {evento.preco.toFixed(2)}</p>
                             )
@@ -37,10 +37,10 @@ const CardEventoBoletim: React.FC<{ evento: Evento }> = ({evento}) =>{
             <div
                 className="card-boletim-footer d-flex flex-column flex-md-row justify-content-between align-items-center">
                 <div
-                    className="tags-boletim d-flex flex-wrap justify-content-start justify-content-md-end mb-2 mb-md-0">
+                    className="tags-boletim d-flex flex-wrap justify-content-start justify-content-md-end mb-2 mb-md-0 gap-3">
                     {
                         evento.tags.map(tag => (
-                            <span className="card-boletim-tags p-3 fs-6 fw-semibold me-3" key={tag.id}> {tag.nome} </span>
+                            <span className="card-boletim-tags p-3 fs-6 fw-semibold" key={tag.id}> {tag.nome} </span>
                         ))
                     }
                 </div>
