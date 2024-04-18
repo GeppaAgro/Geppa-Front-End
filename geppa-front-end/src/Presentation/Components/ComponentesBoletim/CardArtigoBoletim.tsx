@@ -2,6 +2,7 @@ import "./StyleCardBoletim.css"
 import {Container} from "react-bootstrap";
 import{Artigo} from "../../../Domain/TypesConteudos/TypeArtigo.ts";
 import {Link} from "react-router-dom";
+import {validaData} from "../Utils/ValidacaoDeData.ts";
 
 const CardArtigoBoletim: React.FC<{ artigo: Artigo }> = ({artigo}) =>{
 
@@ -12,9 +13,11 @@ const CardArtigoBoletim: React.FC<{ artigo: Artigo }> = ({artigo}) =>{
                     {artigo.titulo.toUpperCase()}
                 </p>
                 <div className="card-boletim-informacoes fw-bold fs-6 ">
-                    <p>
-                        Data de publicação: {new Date(artigo.dataPublicacao).toLocaleDateString('pt-BR', { timeZone: 'UTC' })}
-                    </p>
+                    { artigo.dataPublicacao && validaData (artigo.dataPublicacao.toString()) &&(
+                        <p>
+                            Data de publicação: {new Date(artigo.dataPublicacao).toLocaleDateString('pt-BR', {timeZone: 'UTC'})}
+                        </p>
+                        )}
                      <p>
                          Autores: {artigo.autores.map((autor) => autor.nome).join(', ')}
                      </p>
@@ -25,10 +28,10 @@ const CardArtigoBoletim: React.FC<{ artigo: Artigo }> = ({artigo}) =>{
                 <div
                     className="card-boletim-footer d-flex flex-column flex-md-row justify-content-between align-items-center">
                     <div
-                        className="tags-boletim d-flex flex-wrap justify-content-start justify-content-md-end mb-2 mb-md-0">
+                        className="tags-boletim d-flex flex-wrap justify-content-start justify-content-md-end mb-2 mb-md-0 gap-3">
                         {
                             artigo.tags.map(tag => (
-                                <span className="card-boletim-tags p-3 fs-6 fw-semibold me-3" key={tag.id}> {tag.nome} </span>
+                                <span className="card-boletim-tags p-3 fs-6 fw-semibold " key={tag.id}> {tag.nome} </span>
                             ))
                         }
                     </div>

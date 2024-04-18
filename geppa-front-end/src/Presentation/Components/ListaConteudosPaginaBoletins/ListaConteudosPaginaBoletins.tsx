@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import AxiosClient from "../../../Data/Services/AxiosClient.ts";
 import {LinhaSkeleton} from "../Skeleton/LinhaSkeleton.tsx";
+import {Badge} from "react-bootstrap";
 
 interface Conteudo {
     dataPublicacao: number;
@@ -10,6 +11,7 @@ interface Conteudo {
     titulo: string;
     descricao: string;
     link: string;
+    tipo:string;
 }
 
 export default function ListaConteudosPaginaBoletins() {
@@ -50,16 +52,20 @@ export default function ListaConteudosPaginaBoletins() {
                         conteudos.map(
                             (conteudo) =>
                                 (
-                                    <div key={conteudo.id} className="containerConteudosSimplificado">
-                                        <Link to={conteudo.link} className="fs-6 fw-semibold">
+                                    <div key={conteudo.id} className="containerConteudosSimplificado gap-4 align-items-center d-flex flex-row justify-content-between">
+                                        <Link to={conteudo.link} className="fs-6 fw-semibold ">
                                             {conteudo.titulo}
                                         </Link>
+                                        <div>
+                                            <Badge className="fs-6 bg-secondary">{conteudo.tipo}</Badge>
+                                        </div>
+
                                     </div>
                                 )
                         )
                     }
                 </>
-            )},
+            )}
 
         </>
     )
