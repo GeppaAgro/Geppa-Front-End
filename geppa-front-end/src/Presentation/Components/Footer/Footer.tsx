@@ -1,3 +1,4 @@
+import "./Footer.css"
 import React, { useState } from 'react';
 import { Col, Form, Image, Row } from "react-bootstrap";
 import LogoHorizontal from "../../../Data/Images/Logos/LogoHorizontalCompleto.png";
