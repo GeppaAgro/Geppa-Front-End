@@ -8,6 +8,7 @@ import PaginaIndicadores from "./Presentation/Pages/CommonUser/Indicadores/Pagin
 import PaginaBoletim from "./Presentation/Pages/CommonUser/Boletim/PaginaBoletim.tsx";
 import Footer from "./Presentation/Components/Footer/Footer.tsx";
 import PaginaListaBoletins from "./Presentation/Pages/CommonUser/ListaDeBoletins/PaginaListaBoletins.tsx";
+import PaginaNaoEncontrada from "./Presentation/Pages/CommonUser/NotFound/PaginaNaoEncontrada.tsx";
 import AdminInicial from "./Presentation/Pages/AdminUser/AdminInicial/AdminInicial.tsx";
 import AdminBoletim from "./Presentation/Pages/AdminUser/AdminBoletim/AdminBoletim.tsx";
 import AdminCriarBoletim from "./Presentation/Pages/AdminUser/AdminCriarBoletim/AdminCriarBoletim.tsx";
@@ -34,10 +35,11 @@ function App() {
                     <Route path="/" element={<PaginaInicial/>}/>
                     <Route path="/boletins" element={<PaginaListaBoletins/>}/>
                     <Route path="/conteudos" element={<PaginaListaConteudos/>}/>
+                    <Route path="/conteudos/:filtro" element={<PaginaListaConteudos/>}/>
                     <Route path="/indicadores" element={<PaginaIndicadores/>}/>
                     <Route path="/sobre" element={<PaginaSobre/>}/>
                     <Route path="/boletim/:edicao" element={<PaginaBoletim/>}/>
-                    <Route path="/"/>
+                    <Route path="*" element={<PaginaNaoEncontrada/>}/>
                 </Routes>
                 <Footer/>
             </Router>

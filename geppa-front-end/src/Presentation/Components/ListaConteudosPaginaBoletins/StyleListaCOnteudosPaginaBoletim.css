@@ -12,8 +12,12 @@
 }
 /*Arrumar o tamanho maximo da div*/
 .containerConteudosSimplificado a{
-    overflow: hidden;
     text-decoration: none;
     color: var(--MarromTerra);
-    font-size: 18px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
 }

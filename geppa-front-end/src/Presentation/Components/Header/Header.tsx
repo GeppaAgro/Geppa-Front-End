@@ -32,14 +32,19 @@ const Header = () => {
                                 <NavLink className="text-decoration-none nav-link-font"
                                          to="/conteudos">Conteúdos</NavLink>
                             </li>
-                            <li className="nav-link" aria-current="page">
-                                <NavLink className="text-decoration-none nav-link-font"
-                                         to="/indicadores">Indicadores</NavLink>
-                            </li>
-                            <li className="nav-link " aria-current="page">
-                                <NavLink className="text-decoration-none nav-link-font"
-                                         to="/sobre">Sobre</NavLink>
-                            </li>
+                            {
+                                //<li className="nav-link" aria-current="page">
+                                //                                 <NavLink className="text-decoration-none nav-link-font"
+                                //                                          to="/indicadores">Indicadores</NavLink>
+                                //                             </li>
+                            }
+                            {
+                                //<li className="nav-link " aria-current="page">
+                                //                                 <NavLink className="text-decoration-none nav-link-font"
+                                //                                          to="/sobre">Sobre</NavLink>
+                                //                             </li>
+                            }
+
                         </ul>
                     </div>
                 </div>
