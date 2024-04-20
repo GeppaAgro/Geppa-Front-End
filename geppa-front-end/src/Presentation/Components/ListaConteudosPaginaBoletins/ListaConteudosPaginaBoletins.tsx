@@ -1,43 +1,71 @@
 import "./StyleListaCOnteudosPaginaBoletim.css"
-import axios from "axios"
 import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
-interface Conteudo{
-    dataPublicacao:number;
+import AxiosClient from "../../../Data/Services/AxiosClient.ts";
+import {LinhaSkeleton} from "../Skeleton/LinhaSkeleton.tsx";
+import {Badge} from "react-bootstrap";
+
+interface Conteudo {
+    dataPublicacao: number;
     id: number;
-    descricao:string;
+    titulo: string;
+    descricao: string;
+    link: string;
+    tipo:string;
 }
-export default function ListaConteudosPaginaBoletins(){
-    const[conteudos,setConteudos] = useState<Conteudo[]>([]);
+
+export default function ListaConteudosPaginaBoletins() {
+    const sizeConteudos = 10
+
+    const [conteudos, setConteudos] = useState<Conteudo[]>([]);
+    const [loadingConteudos, setLoadingConteudos] = useState<boolean>(true);
+
 
     useEffect(() => {
-        const buscarUltimosConteudos = async() => {
-            try{
-                const response = await axios.get(`src/Data/JsonsForTests/TesteConteudosNaListaDeBoletins.json`);
-                setConteudos(response.data)
-            }catch (error){
+        const buscarUltimosConteudos = async () => {
+            try {
+                const response = await AxiosClient.get(`/conteudos?size=${sizeConteudos}`);
+                setConteudos(response.data.dados)
+                setLoadingConteudos(false);
+            } catch (error) {
                 console.error('Erro ao buscar conteudo', error)
+                setLoadingConteudos(false);
             }
         }
         buscarUltimosConteudos()
     }, []);
 
-    return(
+    return (
         <>
-            <h5 >Últimos conteúdos</h5>
+            <h5>Últimos conteúdos</h5>
+            {loadingConteudos ? (
+                <>
+                    {Array.from({length: sizeConteudos}).map((_, index) => (
+                        <div key={index} className="containerConteudosSimplificado">
+                            <LinhaSkeleton/>
+                        </div>
+                    ))}
+                </>
+            ) : (
+                <>
+                    {
+                        conteudos.map(
+                            (conteudo) =>
+                                (
+                                    <div key={conteudo.id} className="containerConteudosSimplificado gap-4 align-items-center d-flex flex-row justify-content-between">
+                                        <Link to={conteudo.link} className="fs-6 fw-semibold ">
+                                            {conteudo.titulo}
+                                        </Link>
+                                        <div>
+                                            <Badge className="fs-6 bg-secondary">{conteudo.tipo}</Badge>
+                                        </div>
 
-            {
-                conteudos.map(
-                    (conteudo) =>
-                        (
-                            <div key={conteudo.id} className="containerConteudosSimplificado">
-                                <Link to='#'>
-                                    {conteudo.descricao}
-                                </Link>
-                            </div>
+                                    </div>
+                                )
                         )
-                )
-            }
+                    }
+                </>
+            )}
 
         </>
     )

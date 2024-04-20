@@ -9,6 +9,7 @@ import PaginaBoletim from "./Presentation/Pages/CommonUser/Boletim/PaginaBoletim
 import Footer from "./Presentation/Components/Footer/Footer.tsx";
 import PaginaListaBoletins from "./Presentation/Pages/CommonUser/ListaDeBoletins/PaginaListaBoletins.tsx";
 import PaginaTesteModais from "./Presentation/Pages/AdminUser/Testes/PaginaTesteModais.tsx";
+import PaginaNaoEncontrada from "./Presentation/Pages/CommonUser/NotFound/PaginaNaoEncontrada.tsx";
 
 function App() {
 
@@ -20,10 +21,13 @@ function App() {
                     <Route path="/" element={<PaginaInicial/>}/>
                     <Route path="/boletins" element={<PaginaListaBoletins/>}/>
                     <Route path="/conteudos" element={<PaginaListaConteudos/>}/>
+                    <Route path="/conteudos/:filtro" element={<PaginaListaConteudos/>}/>
                     <Route path="/indicadores" element={<PaginaIndicadores/>}/>
                     <Route path="/sobre" element={<PaginaSobre/>}/>
                     <Route path="/boletim/:edicao" element={<PaginaBoletim/>}/>
                     <Route path="/testeModais" element={<PaginaTesteModais/>}/>
+
+                    <Route path="*" element={<PaginaNaoEncontrada/>}/>
                 </Routes>
                 <Footer/>
             </Router>
