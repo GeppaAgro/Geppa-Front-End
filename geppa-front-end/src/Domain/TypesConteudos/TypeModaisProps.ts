@@ -4,7 +4,7 @@ export type ModalConteudoProps = {
     abrir: boolean;
     fechar: () => void;
     mostrar: () => void;
-    salvar: (data: Video) => void;
+    salvar: (data: Artigo | Curso | Evento | Noticia | Video) => void;
     artigo?: Artigo
     curso? : Curso
     evento?: Evento

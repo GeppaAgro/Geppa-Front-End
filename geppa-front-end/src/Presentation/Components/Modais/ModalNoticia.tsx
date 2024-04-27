@@ -1,38 +1,37 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState} from "react";
 import { Button, Modal } from "react-bootstrap";
-import {Video} from "../../../Domain/TypesConteudos/TypeVideo.ts";
-import {Tag} from "../../../Domain/TypesConteudos/TypeTag.ts";
+import { Noticia, Tag} from "../../../Domain/TypesConteudos/TypesConteudos.ts";
 import {ModalConteudoProps} from "../../../Domain/TypesConteudos/TypeModaisProps.ts";
-
-const ModalArtigo: React.FC<ModalConteudoProps> = ({ abrir, fechar, mostrar, salvar, video }) => {
+const ModalNoticia: React.FC<ModalConteudoProps> = ({abrir, fechar, mostrar, salvar, noticia}) => {
     const [titulo, setTitulo] = useState<string>('')
     const [descricao, setDescricao] = useState<string>('')
     const [link, setLink] = useState<string>('')
-    const [youtube, setYoutube] = useState<boolean>(false)
+    const [dataPublicacao, setDataPublicacao] = useState<Date | null>(null)
     const [novaTag, setNovaTag] = useState<string>('');
     const [tags, setTags] = useState<Tag[]>([]);
 
 
     useEffect(() => {
-        if (video) {
-            setTitulo(video.titulo)
-            setDescricao(video.descricao)
-            setLink(video.link)
-            setTags(video.tags || []);
+        if (noticia) {
+            setTitulo(noticia.titulo)
+            setDescricao(noticia.descricao)
+            setLink(noticia.link)
+            setDataPublicacao(new Date(noticia.dataPublicacao))
+            setTags(noticia.tags || []);
         }
-    }, [video]);
-
-    const salvarVideo = () => {
-        const dados: Video = {
+    }, [noticia]);
+    const salvarNoticia = () => {
+        const dados: Noticia = {
             id: '',
             boletimInformativoEdicao: '',
             titulo,
             descricao,
             link,
-            dataCadastro: new Date(),
-            dataAtualizacao: new Date(),
+            dataCadastro: '',
+            dataAtualizacao: new Date,
+            dataPublicacao: dataPublicacao || new Date,
             tags,
-            youtube }
+        }
         salvar(dados);
         fechar()
         limpar()
@@ -43,14 +42,15 @@ const ModalArtigo: React.FC<ModalConteudoProps> = ({ abrir, fechar, mostrar, sal
         limpar()
     }
 
-    const limpar = () =>{
+    const limpar =() =>{
         setTitulo('')
         setDescricao('')
         setLink('')
-        setYoutube(false)
-        setTags([])
+        setDataPublicacao(null)
         setNovaTag('')
+        setTags([])
     }
+
     const adicionarTag = () => {
         if (novaTag.trim() !== '') {
             const novaTagObj: Tag = {
@@ -67,39 +67,51 @@ const ModalArtigo: React.FC<ModalConteudoProps> = ({ abrir, fechar, mostrar, sal
         setTags(novasTags);
     };
 
+    const mudarData = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const dateString = e.target.value;
+        const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+
+        if (dateRegex.test(dateString)) {
+            setDataPublicacao(new Date(dateString));
+        } else {
+            setDataPublicacao(null);
+        }
+    };
 
     return (
         <>
             <Button variant="primary" onClick={mostrar}>
-                Adicionar Video
+                Adicionar Noticia
             </Button>
 
             <Modal show={abrir} onHide={cancelar} backdrop="static">
                 <Modal.Header>
-                    <Modal.Title>{video ? 'Editar Video' : 'Adicionar Video'}</Modal.Title>
+                    <Modal.Title>{noticia ? 'Editar noticia' : 'Adicionar noticia'}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form>
-                        <label htmlFor="titulo">Titulo do video *</label>
+                        <label htmlFor="titulo">Titulo da Noticia *</label>
                         <input type="text" className="form-control" id="titulo" value={titulo}
                                onChange={(e) => setTitulo(e.target.value)}/>
-                        <label htmlFor="descricao">Descreva brevemente o assunto do video *</label>
+                        <label htmlFor="descricao">Descreva brevemente a noticia *</label>
                         <textarea className="form-control" id="descricao" value={descricao}
                                   onChange={(e) => setDescricao(e.target.value)}/>
 
-                        <label htmlFor="link">Cole aqui o link para o vídeo *</label>
+                        <label htmlFor="link">Cole aqui o link para a noticia *</label>
                         <input type="text" className="form-control" id="link" value={link}
                                onChange={(e) => setLink(e.target.value)}/>
-                        <div className="d-flex justify-content-between">
-                            <label htmlFor="youtube">Este vídeo é do YouTube? </label>
+
+                        <div>
+                            <label htmlFor="dataCadastro">Quando a noticia foi lançada? *</label>
                             <input
-                                type="checkbox"
-                                className="form-check-input"
-                                id="youtube"
-                                checked={youtube}
-                                onChange={(e) => setYoutube(e.target.checked)}
+                                type="date"
+                                className="form-control"
+                                id="dataPublicacao"
+                                value={dataPublicacao ? dataPublicacao.toISOString().substr(0, 10) : ''}
+                                onChange={mudarData}
                             />
                         </div>
+
                         <div>
                             <input
                                 type="text"
@@ -129,13 +141,13 @@ const ModalArtigo: React.FC<ModalConteudoProps> = ({ abrir, fechar, mostrar, sal
                     <Button variant="secondary" onClick={cancelar}>
                         Cancelar
                     </Button>
-                    <Button variant="primary" onClick={salvarVideo}>
+                    <Button variant="primary" onClick={salvarNoticia}>
                         Salvar
                     </Button>
                 </Modal.Footer>
             </Modal>
         </>
-    );
-};
+    )
+}
 
-export default ModalArtigo
+export default ModalNoticia
