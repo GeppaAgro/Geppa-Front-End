@@ -1,38 +1,14 @@
 import "./Footer.css"
-import React, { useState } from 'react';
-import { Col, Form, Image, Row } from "react-bootstrap";
+import {Col, Image, Row} from "react-bootstrap";
 import LogoHorizontal from "../../../Data/Images/Logos/LogoHorizontalCompleto.png";
 import LogoCps from "../../../Data/Images/Logos/CPS_logo.png";
 import LogoFatec from "../../../Data/Images/Logos/FatecLogo.png";
 import LogoGovernoSaoPaulo from "../../../Data/Images/Logos/SPgovLogo.png";
 import LogoPodAgro from "../../../Data/Images/Logos/PodagroLogo.png";
-import { NewsletterService } from '../../../Data/Services/NewsletterService';
 import {NavLink} from "react-router-dom";
+import InscricaoNewslleter from "../InscricaoNewslleter.tsx";
 
 const Footer: React.FC = () => {
-    const [email, setEmail] = useState<string>('');
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setEmail(e.target.value);
-    };
-
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        try {
-            const newsletterService = new NewsletterService();
-            const success = await newsletterService.inscricaoNewsletter({ email });
-
-            if (success) {
-                alert('Inscrição na newsletter realizada com sucesso!');
-                setEmail('');
-            } else {
-                alert('Falha ao se inscrever na newsletter. Por favor, tente novamente mais tarde.');
-            }
-        } catch (error) {
-            console.error('Erro ao se inscrever na newsletter:', error.message);
-            alert('Ocorreu um erro ao se inscrever na newsletter. Por favor, tente novamente mais tarde.');
-        }
-    };
 
     return (
         <>
@@ -89,28 +65,7 @@ const Footer: React.FC = () => {
                     </Col>
 
                     <Col md={5} className="offset-md-1 mb-3">
-                        <Form onSubmit={handleSubmit}>
-                            <h5 className="text-center titulo-inscricao-newslleter">Inscreva-se para receber nossos
-                                boletins informativos por e-mail.</h5>
-                            <div className="d-flex row flex-sm-row gap-2 footer-input-newslleter">
-                                <input
-                                    type="email"
-                                    className="form-control"
-                                    placeholder="Insira seu E-mail"
-                                    value={email}
-                                    onChange={handleChange}
-                                    required
-                                />
-                                <div className="d-flex flex-column justify-content-center flex-sm-row gap-2 footer-buttons">
-                                    <NavLink to="/sobre"
-                                             className="btn border-3 fw-semibold"> Saiba
-                                        Mais </NavLink>
-                                    <button className="btn text-white fw-semibold"
-                                            type="submit">Cadastrar
-                                    </button>
-                                </div>
-                            </div>
-                        </Form>
+                        <InscricaoNewslleter></InscricaoNewslleter>
                     </Col>
                 </Row>
                 <div>
@@ -129,8 +84,12 @@ const Footer: React.FC = () => {
                         </Col>
                     </Row>
                 </div>
-                <div className="d-flex flex-column flex-sm-row align-items-center justify-content-between pt-3 mt-3 mb-0 border-top">
-                    <p className={'m-1'}>© 2024 GEPPA, Todos os direitos reservados. Desenvolvido por: <a target="_blank" href="https://www.linkedin.com/in/lucas-henrique-lh/">Lucas Henrique</a>, <a target="_blank" href="https://www.linkedin.com/in/devluanrodrigues/">Luan Rodrigues</a>, <a target="_blank" href="https://github.com/FellipeGodoi">Fellipe Godoi</a>.
+                <div
+                    className="d-flex flex-column flex-sm-row align-items-center justify-content-between pt-3 mt-3 mb-0 border-top">
+                    <p className={'m-1'}>© 2024 GEPPA, Todos os direitos reservados. Desenvolvido por: <a
+                        target="_blank" href="https://www.linkedin.com/in/lucas-henrique-lh/">Lucas Henrique</a>, <a
+                        target="_blank" href="https://www.linkedin.com/in/devluanrodrigues/">Luan Rodrigues</a>, <a
+                        target="_blank" href="https://github.com/FellipeGodoi">Fellipe Godoi</a>.
                     </p>
                     <ul className="list-unstyled d-flex m-1">
                         <li className="ms-3"><a className="link-dark" href="#">
