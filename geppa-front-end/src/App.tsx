@@ -1,36 +1,69 @@
-import './App.css'
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
-import Header from "./Presentation/Components/Header/Header.tsx";
-import PaginaInicial from "./Presentation/Pages/CommonUser/Inicial/PaginaInicial.tsx";
-import PaginaSobre from "./Presentation/Pages/CommonUser/Sobre/Sobre.tsx";
-import PaginaListaConteudos from "./Presentation/Pages/CommonUser/ListaDeConteudos/PaginaListaConteudos.tsx";
-import PaginaIndicadores from "./Presentation/Pages/CommonUser/Indicadores/PaginaIndicadores.tsx";
-import PaginaBoletim from "./Presentation/Pages/CommonUser/Boletim/PaginaBoletim.tsx";
-import Footer from "./Presentation/Components/Footer/Footer.tsx";
-import PaginaListaBoletins from "./Presentation/Pages/CommonUser/ListaDeBoletins/PaginaListaBoletins.tsx";
-import PaginaNaoEncontrada from "./Presentation/Pages/CommonUser/NotFound/PaginaNaoEncontrada.tsx";
+import './App.css';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import Header from './Presentation/Components/Header/Header.tsx';
+import Footer from './Presentation/Components/Footer/Footer.tsx';
+import Sidebar from './Presentation/Components/Sidebar/Sidebar.tsx';
+import AdminInicial from './Presentation/Pages/AdminUser/AdminInicial/AdminInicial.tsx';
+import AdminBoletim from './Presentation/Pages/AdminUser/AdminBoletim/AdminBoletim.tsx';
+import AdminCriarBoletim from './Presentation/Pages/AdminUser/AdminCriarBoletim/AdminCriarBoletim.tsx';
+import AdminAlunos from './Presentation/Pages/AdminUser/AdminAlunos/AdminAlunos.tsx';
+import PaginaListaBoletins from './Presentation/Pages/CommonUser/ListaDeBoletins/PaginaListaBoletins.tsx';
+import PaginaListaConteudos from './Presentation/Pages/CommonUser/ListaDeConteudos/PaginaListaConteudos.tsx';
+import PaginaIndicadores from './Presentation/Pages/CommonUser/Indicadores/PaginaIndicadores.tsx';
+import PaginaSobre from './Presentation/Pages/CommonUser/Sobre/Sobre.tsx';
+import PaginaBoletim from './Presentation/Pages/CommonUser/Boletim/PaginaBoletim.tsx';
+import PaginaNaoEncontrada from './Presentation/Pages/CommonUser/NotFound/PaginaNaoEncontrada.tsx';
+import { PaginaLogin } from './Presentation/Pages/AdminUser/Login/PaginaLogin.tsx';
+import PaginaInicial from './Presentation/Pages/CommonUser/Inicial/PaginaInicial.tsx';
 
-function App() {
-
-    return (
-        <>
-            <Router>
-                <Header/>
-                <Routes>
-                    <Route path="/" element={<PaginaInicial/>}/>
-                    <Route path="/boletins" element={<PaginaListaBoletins/>}/>
-                    <Route path="/conteudos" element={<PaginaListaConteudos/>}/>
-                    <Route path="/conteudos/:filtro" element={<PaginaListaConteudos/>}/>
-                    <Route path="/indicadores" element={<PaginaIndicadores/>}/>
-                    <Route path="/sobre" element={<PaginaSobre/>}/>
-                    <Route path="/boletim/:edicao" element={<PaginaBoletim/>}/>
-
-                    <Route path="*" element={<PaginaNaoEncontrada/>}/>
-                </Routes>
-                <Footer/>
-            </Router>
-        </>
-    )
+function AdminRoutes() {
+  return (
+    <>
+      <Sidebar />
+      <Routes>
+        <Route path="/admin" element={<AdminInicial />} />
+        <Route path="boletins" element={<AdminBoletim />} />
+        <Route path="criar-boletins" element={<AdminCriarBoletim />} />
+        <Route path="aluno" element={<AdminAlunos />} />
+      </Routes>
+    </>
+  );
 }
 
-export default App
+function UserRoutes() {
+  return (
+    <>
+      <Header />
+      <Routes>
+        <Route path="/" element={<PaginaInicial />} />
+        <Route path="boletins" element={<PaginaListaBoletins />} />
+        <Route path="conteudos/:filtro?" element={<PaginaListaConteudos />} />
+        <Route path="indicadores" element={<PaginaIndicadores />} />
+        <Route path="sobre" element={<PaginaSobre />} />
+        <Route path="boletim/:edicao" element={<PaginaBoletim />} />
+        <Route path="*" element={<PaginaNaoEncontrada />} />
+      </Routes>
+      <Footer />
+    </>
+  );
+}
+
+function App() {
+  const isLoggedIn = true;
+
+  return (
+    <Router>
+      <Routes>
+        <Route path="/login" element={<PaginaLogin />} /> 
+        {isLoggedIn ? (
+          <Route path="admin/*" element={<AdminRoutes />} />
+        ) : (
+          <Navigate to="/login" />
+        )}
+        <Route path="/*" element={<UserRoutes />} />
+      </Routes>
+    </Router>
+  );
+}
+
+export default App;
