@@ -14,13 +14,14 @@ import PaginaSobre from './Presentation/Pages/CommonUser/Sobre/Sobre.tsx';
 import PaginaBoletim from './Presentation/Pages/CommonUser/Boletim/PaginaBoletim.tsx';
 import PaginaNaoEncontrada from './Presentation/Pages/CommonUser/NotFound/PaginaNaoEncontrada.tsx';
 import { PaginaLogin } from './Presentation/Pages/AdminUser/Login/PaginaLogin.tsx';
+import PaginaInicial from './Presentation/Pages/CommonUser/Inicial/PaginaInicial.tsx';
 
 function AdminRoutes() {
   return (
     <>
       <Sidebar />
       <Routes>
-        <Route path="/" element={<AdminInicial />} />
+        <Route path="/admin" element={<AdminInicial />} />
         <Route path="boletins" element={<AdminBoletim />} />
         <Route path="criar-boletins" element={<AdminCriarBoletim />} />
         <Route path="aluno" element={<AdminAlunos />} />
@@ -34,6 +35,7 @@ function UserRoutes() {
     <>
       <Header />
       <Routes>
+        <Route path="/" element={<PaginaInicial />} />
         <Route path="boletins" element={<PaginaListaBoletins />} />
         <Route path="conteudos/:filtro?" element={<PaginaListaConteudos />} />
         <Route path="indicadores" element={<PaginaIndicadores />} />
