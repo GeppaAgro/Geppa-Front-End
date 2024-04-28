@@ -1,14 +1,15 @@
 import "./Footer.css"
-import {NavLink} from "react-router-dom";
-import {Col, Form, Image, Row} from "react-bootstrap";
+import {Col, Image, Row} from "react-bootstrap";
 import LogoHorizontal from "../../../Data/Images/Logos/LogoHorizontalCompleto.png";
 import LogoCps from "../../../Data/Images/Logos/CPS_logo.png";
 import LogoFatec from "../../../Data/Images/Logos/FatecLogo.png";
 import LogoGovernoSaoPaulo from "../../../Data/Images/Logos/SPgovLogo.png";
 import LogoPodAgro from "../../../Data/Images/Logos/PodagroLogo.png";
+import {NavLink} from "react-router-dom";
+import InscricaoNewslleter from "../InscricaoNewslleter.tsx";
 
+const Footer: React.FC = () => {
 
-export default function Footer() {
     return (
         <>
             <footer className="py-1 footer">
@@ -64,22 +65,7 @@ export default function Footer() {
                     </Col>
 
                     <Col md={5} className="offset-md-1 mb-3">
-                        <Form>
-                            <h5 className="text-center titulo-inscricao-newslleter">Inscreva-se para receber nossos
-                                boletins informativos por e-mail.</h5>
-                            <div className="d-flex row flex-sm-row gap-2 footer-input-newslleter">
-                                <input id="/" type="email" className="form-control "
-                                       placeholder="Insira seu E-mail"/>
-                                <div className="d-flex flex-column justify-content-center flex-sm-row gap-2 footer-buttons">
-                                    <NavLink to="/sobre"
-                                             className="btn border-3 fw-semibold"> Saiba
-                                        Mais </NavLink>
-                                    <button className="btn text-white fw-semibold"
-                                            type="submit">Cadastrar
-                                    </button>
-                                </div>
-                            </div>
-                        </Form>
+                        <InscricaoNewslleter></InscricaoNewslleter>
                     </Col>
                 </Row>
                 <div>
@@ -98,8 +84,12 @@ export default function Footer() {
                         </Col>
                     </Row>
                 </div>
-                <div className="d-flex flex-column flex-sm-row align-items-center justify-content-between pt-3 mt-3 mb-0 border-top">
-                    <p className={'m-1'}>© 2024 GEPPA, Todos os direitos reservados. Desenvolvido por: <a target="_blank" href="https://www.linkedin.com/in/lucas-henrique-lh/">Lucas Henrique</a>, <a target="_blank" href="https://www.linkedin.com/in/devluanrodrigues/">Luan Rodrigues</a>, <a target="_blank" href="https://github.com/FellipeGodoi">Fellipe Godoi</a>.
+                <div
+                    className="d-flex flex-column flex-sm-row align-items-center justify-content-between pt-3 mt-3 mb-0 border-top">
+                    <p className={'m-1'}>© 2024 GEPPA, Todos os direitos reservados. Desenvolvido por: <a
+                        target="_blank" href="https://www.linkedin.com/in/lucas-henrique-lh/">Lucas Henrique</a>, <a
+                        target="_blank" href="https://www.linkedin.com/in/devluanrodrigues/">Luan Rodrigues</a>, <a
+                        target="_blank" href="https://github.com/FellipeGodoi">Fellipe Godoi</a>.
                     </p>
                     <ul className="list-unstyled d-flex m-1">
                         <li className="ms-3"><a className="link-dark" href="#">
@@ -114,3 +104,5 @@ export default function Footer() {
         </>
     )
 }
+
+export default Footer;

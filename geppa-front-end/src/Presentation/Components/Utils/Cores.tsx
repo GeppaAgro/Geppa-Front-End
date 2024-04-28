@@ -9,6 +9,7 @@ const Cores = {
     marromTerra: '#8D6E63',
     branco: '#FFFFFF',
     brancoTransparente: '#FFFFFF99',
+    vermelho: '#FF0000',
 };
 
 export default Cores;
