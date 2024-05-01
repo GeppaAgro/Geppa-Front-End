@@ -2,7 +2,7 @@ import React from "react";
 import {Form} from "react-bootstrap";
 import {NavLink} from "react-router-dom";
 import CustomToast from "./Utils/CustomToast.tsx";
-import {useNewsletterSubscription} from "../../Data/Hooks/useNewsletterSubscription.ts";
+import {useNewsletterSubscription} from "../../Domain/Hooks/useNewsletterSubscription.ts";
 
 const InscricaoNewslleter: React.FC = () => {
     const {email, handleChange, handleSubmit, isSubmitting, toast} = useNewsletterSubscription();

@@ -4,7 +4,7 @@ import UltimosConteudos from "../../../Components/Inicial/UltimosConteudos/Ultim
 import {useEffect, useState} from "react";
 import {TypeConteudoGenerico} from "../../../Components/Inicial/UltimosConteudos/TypeConteudoGenerico.ts";
 import {Container} from "react-bootstrap";
-import AxiosClient from "../../../../Data/Services/AxiosClient.ts";
+import AxiosClient from "../../../../Domain/Services/AxiosClient.ts";
 import {UltimosConteudosSkeleton} from "../../../Components/Skeleton/UltimosConteudosSkeleton.tsx";
 
 export default function PaginaInicial() {
