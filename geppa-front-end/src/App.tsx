@@ -15,6 +15,7 @@ import PaginaBoletim from './Presentation/Pages/CommonUser/Boletim/PaginaBoletim
 import PaginaNaoEncontrada from './Presentation/Pages/CommonUser/NotFound/PaginaNaoEncontrada.tsx';
 import { PaginaLogin } from './Presentation/Pages/AdminUser/Login/PaginaLogin.tsx';
 import PaginaInicial from './Presentation/Pages/CommonUser/Inicial/PaginaInicial.tsx';
+import PaginaTesteModais from "./Presentation/Pages/AdminUser/Testes/PaginaTesteModais.tsx";
 
 function AdminRoutes() {
   return (
@@ -42,6 +43,7 @@ function UserRoutes() {
         <Route path="sobre" element={<PaginaSobre />} />
         <Route path="boletim/:edicao" element={<PaginaBoletim />} />
         <Route path="*" element={<PaginaNaoEncontrada />} />
+          <Route path="testesModais" element={<PaginaTesteModais/>}/>
       </Routes>
       <Footer />
     </>

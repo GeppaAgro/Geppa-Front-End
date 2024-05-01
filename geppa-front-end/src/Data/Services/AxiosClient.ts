@@ -11,4 +11,6 @@ const axiosClient: AxiosInstance = axios.create({
 
 axiosClient.interceptors.response.use();
 
+
+
 export default axiosClient;

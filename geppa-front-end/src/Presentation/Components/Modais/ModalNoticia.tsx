@@ -2,6 +2,9 @@ import { useEffect, useState} from "react";
 import { Button, Modal } from "react-bootstrap";
 import { Noticia, Tag} from "../../../Domain/TypesConteudos/TypesConteudos.ts";
 import {ModalConteudoProps} from "../../../Domain/TypesConteudos/TypeModaisProps.ts";
+import AxiosClient from "../../../Data/Services/AxiosClient.ts";
+import axiosClient from "../../../Data/Services/AxiosClient.ts";
+
 const ModalNoticia: React.FC<ModalConteudoProps> = ({abrir, fechar, mostrar, salvar, noticia}) => {
     const [titulo, setTitulo] = useState<string>('')
     const [descricao, setDescricao] = useState<string>('')
@@ -9,7 +12,7 @@ const ModalNoticia: React.FC<ModalConteudoProps> = ({abrir, fechar, mostrar, sal
     const [dataPublicacao, setDataPublicacao] = useState<Date | null>(null)
     const [novaTag, setNovaTag] = useState<string>('');
     const [tags, setTags] = useState<Tag[]>([]);
-
+    const [camposInvalidos, setCamposInvalidos] = useState<string[]>([])
 
     useEffect(() => {
         if (noticia) {
@@ -36,6 +39,29 @@ const ModalNoticia: React.FC<ModalConteudoProps> = ({abrir, fechar, mostrar, sal
         fechar()
         limpar()
     };
+
+    const validarNoticia = async () => {
+        const dados: Noticia = {
+            id: '',
+            boletimInformativoEdicao: '',
+            titulo,
+            descricao,
+            link,
+            dataCadastro: '',
+            dataAtualizacao: new Date,
+            dataPublicacao: dataPublicacao || new Date,
+            tags,
+        }
+        console.log(dados);
+
+        try {
+            const resp = await axiosClient.post('/noticias/validar', dados)
+            salvar(dados)
+        }catch (error) {
+            console.error('Erro ao validar a notícia:', error);
+        }
+    };
+
 
     const cancelar = () => {
         fechar()
@@ -143,6 +169,9 @@ const ModalNoticia: React.FC<ModalConteudoProps> = ({abrir, fechar, mostrar, sal
                     </Button>
                     <Button variant="primary" onClick={salvarNoticia}>
                         Salvar
+                    </Button>
+                    <Button variant="danger" onClick={validarNoticia}>
+                        Validar
                     </Button>
                 </Modal.Footer>
             </Modal>
