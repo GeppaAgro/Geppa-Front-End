@@ -1,7 +1,7 @@
 import "./StyleCardBoletim.css"
 import {Container} from "react-bootstrap";
 import {Link} from "react-router-dom";
-import {Curso} from "../../../Domain/TypesConteudos/TypeCurso.ts";
+import {Curso} from "../../../Domain/TypesConteudos/Conteudos/TypeCurso.ts";
 import {validaData} from "../Utils/ValidacaoDeData.ts";
 
 const CardCursoBoletim: React.FC <{curso : Curso}> = ({curso}) => {

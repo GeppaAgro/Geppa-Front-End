@@ -2,7 +2,7 @@ import "./StyleCardBoletim.css"
 import {Container} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import {useState} from "react";
-import {Video} from "../../../Domain/TypesConteudos/TypeVideo.ts";
+import {Video} from "../../../Domain/TypesConteudos/Conteudos/TypeVideo.ts";
 
 const CardVideoBoletim: React.FC <{video : Video}> = ({video}) => {
 
