@@ -1,16 +1,17 @@
-
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Tag } from "../../../../Domain/TypesConteudos/TypeTag.ts";
-import AxiosClient from "../../../../Data/Services/AxiosClient.ts";
+import {Tag} from "../../../../Domain/TypesConteudos/TypeTag.ts";
 import "./componentesModais.css"
 import {Form, Overlay, Popover} from "react-bootstrap";
+import {TagService} from "../../../../Domain/Services/TagService.ts";
+import {MensagensRetorno} from "../../../../Domain/Enums/MensagensRetorno.ts";
+
 interface BuscadorProps {
     label: string;
     salvarTag: (tag: Tag) => void;
 }
 
-const BuscadorTag: React.FC<BuscadorProps> = ({ label, salvarTag }) => {
+const BuscadorTag: React.FC<BuscadorProps> = ({label, salvarTag}) => {
     const [busca, setBusca] = useState<string>('');
     const [sugestoesTags, setSugestoesTags] = useState<Tag[]>([]);
     const [mensagemBusca, setMensagemBusca] = useState<string>('');
@@ -20,18 +21,13 @@ const BuscadorTag: React.FC<BuscadorProps> = ({ label, salvarTag }) => {
     const buscarSugestoesTags = async (tag: string) => {
         if (tag.trim() !== "") {
             try {
-                const response = await AxiosClient.get(`/tags/${tag}?size=5`);
-                const novasSugestoesTags = response.data.dados;
+                const novasSugestoesTags = await TagService.buscarSugestoesTags(tag);
                 setSugestoesTags(novasSugestoesTags);
                 setMensagemBusca('');
                 setShowPopover(true);
             } catch (error) {
-                if (error.response.status === 400) {
-                    setMensagemBusca('Tag não encontrada');
-                    setSugestoesTags([]);
-                } else {
-                    setSugestoesTags([]);
-                }
+                setMensagemBusca(error instanceof Error ? error.message : MensagensRetorno.ERRO_DESCONHECIDO);
+                setSugestoesTags([]);
             }
         } else {
             setSugestoesTags([]);
@@ -60,13 +56,13 @@ const BuscadorTag: React.FC<BuscadorProps> = ({ label, salvarTag }) => {
                 target={target.current}
                 placement="bottom"
             >
-                {({ placement, arrowProps, show: _show, popper, ...props }) => (
+                {({...props}) => (
                     <Popover {...props}>
-                        <Popover style={{ maxHeight: '200px', overflowY: 'auto' }}>
+                        <div style={{maxHeight: '200px', overflowY: 'auto'}}>
                             {sugestoesTags.length > 0 ? (
                                 sugestoesTags.map((tag) => (
                                     <p
-                                        className="fw-semibold p-2 rounded-2 lista-tags-buscaTag"
+                                        className="fw-semibold p-2 rounded-2 lista-tags-buscaTag mb-1"
                                         key={tag.id}
                                         onClick={() => {
                                             salvarTag(tag);
@@ -81,7 +77,7 @@ const BuscadorTag: React.FC<BuscadorProps> = ({ label, salvarTag }) => {
                             ) : (
                                 <p>{mensagemBusca}</p>
                             )}
-                        </Popover>
+                        </div>
                     </Popover>
                 )}
             </Overlay>
