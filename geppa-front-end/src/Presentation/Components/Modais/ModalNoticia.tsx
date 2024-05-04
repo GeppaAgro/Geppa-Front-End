@@ -2,8 +2,12 @@ import { useEffect, useState} from "react";
 import { Button, Modal } from "react-bootstrap";
 import { Noticia, Tag} from "../../../Domain/TypesConteudos/TypesConteudos.ts";
 import {ModalConteudoProps} from "../../../Domain/TypesConteudos/TypeModaisProps.ts";
-import AxiosClient from "../../../Data/Services/AxiosClient.ts";
 import axiosClient from "../../../Data/Services/AxiosClient.ts";
+import BuscadorDeTag from "./ComponentesModal/BuscadorDeTag.tsx";
+import CampoTextoSimplesModal from "./ComponentesModal/CampoTextoSimplesModal.tsx";
+import CampoDataModal from "./ComponentesModal/CampoDataModal.tsx";
+import CampoTextAreaModal from "./ComponentesModal/CampoTextAreaModal.tsx";
+import ListagemTagsModal from "./ComponentesModal/ListagemTagsModal.tsx";
 
 const ModalNoticia: React.FC<ModalConteudoProps> = ({abrir, fechar, mostrar, salvar, noticia}) => {
     const [titulo, setTitulo] = useState<string>('')
@@ -41,27 +45,23 @@ const ModalNoticia: React.FC<ModalConteudoProps> = ({abrir, fechar, mostrar, sal
     };
 
     const validarNoticia = async () => {
-        const dados: Noticia = {
-            id: '',
-            boletimInformativoEdicao: '',
+        const dadosValidacao = {
             titulo,
             descricao,
             link,
-            dataCadastro: '',
-            dataAtualizacao: new Date,
-            dataPublicacao: dataPublicacao || new Date,
-            tags,
-        }
-        console.log(dados);
+            dataPublicacao: dataPublicacao?.toISOString() || '',
+            tags: tags.map(tag => tag.nome),
+        };
+        console.log(dadosValidacao);
 
         try {
-            const resp = await axiosClient.post('/noticias/validar', dados)
-            salvar(dados)
+            const resp = await axiosClient.post('/noticias/validar', dadosValidacao)
+            console.log(resp)
         }catch (error) {
             console.error('Erro ao validar a notícia:', error);
         }
-    };
 
+    };
 
     const cancelar = () => {
         fechar()
@@ -77,14 +77,9 @@ const ModalNoticia: React.FC<ModalConteudoProps> = ({abrir, fechar, mostrar, sal
         setTags([])
     }
 
-    const adicionarTag = () => {
-        if (novaTag.trim() !== '') {
-            const novaTagObj: Tag = {
-                id: Math.random().toString(),
-                nome: novaTag.trim(),
-            };
+    const adicionarTag = (novaTagObj: Tag) => {
+        if (!tags.find(tag => tag.id === novaTagObj.id)){
             setTags([...tags, novaTagObj]);
-            setNovaTag('');
         }
     };
 
@@ -93,16 +88,7 @@ const ModalNoticia: React.FC<ModalConteudoProps> = ({abrir, fechar, mostrar, sal
         setTags(novasTags);
     };
 
-    const mudarData = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const dateString = e.target.value;
-        const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
 
-        if (dateRegex.test(dateString)) {
-            setDataPublicacao(new Date(dateString));
-        } else {
-            setDataPublicacao(null);
-        }
-    };
 
     return (
         <>
@@ -116,51 +102,12 @@ const ModalNoticia: React.FC<ModalConteudoProps> = ({abrir, fechar, mostrar, sal
                 </Modal.Header>
                 <Modal.Body>
                     <form>
-                        <label htmlFor="titulo">Titulo da Noticia *</label>
-                        <input type="text" className="form-control" id="titulo" value={titulo}
-                               onChange={(e) => setTitulo(e.target.value)}/>
-                        <label htmlFor="descricao">Descreva brevemente a noticia *</label>
-                        <textarea className="form-control" id="descricao" value={descricao}
-                                  onChange={(e) => setDescricao(e.target.value)}/>
-
-                        <label htmlFor="link">Cole aqui o link para a noticia *</label>
-                        <input type="text" className="form-control" id="link" value={link}
-                               onChange={(e) => setLink(e.target.value)}/>
-
-                        <div>
-                            <label htmlFor="dataCadastro">Quando a noticia foi lançada? *</label>
-                            <input
-                                type="date"
-                                className="form-control"
-                                id="dataPublicacao"
-                                value={dataPublicacao ? dataPublicacao.toISOString().substr(0, 10) : ''}
-                                onChange={mudarData}
-                            />
-                        </div>
-
-                        <div>
-                            <input
-                                type="text"
-                                id="novaTag"
-                                value={novaTag}
-                                onChange={(e) => setNovaTag(e.target.value)}
-                            />
-                            <Button variant="primary" onClick={adicionarTag}>
-                                Adicionar
-                            </Button>
-                        </div>
-
-                        <div>
-                            <h4>Tags:</h4>
-                            {tags.map(tag => (
-                                <div key={tag.id}>
-                                    <span>{tag.nome}</span>
-                                    <Button variant="danger" onClick={() => removerTag(tag.id)}>
-                                        Remover
-                                    </Button>
-                                </div>
-                            ))}
-                        </div>
+                        <CampoTextoSimplesModal id="Titulo" label="Titulo" texto={titulo} salvarTexto={setTitulo}/>
+                        <CampoTextAreaModal id="Descricao" label="Descreva brevemente a noticia" texto={descricao} salvarTexto={setDescricao}/>
+                        <CampoDataModal  label="Quando a noticia foi lançada?" valor={dataPublicacao} salvarData={setDataPublicacao} />
+                        <CampoTextoSimplesModal id="Link" label="Cole aqui o link para a noticia" texto={link} salvarTexto={setLink}/>
+                        <BuscadorDeTag label="Selecione suas tags" salvarTag={adicionarTag}/>
+                        <ListagemTagsModal tags={tags} removerTag={removerTag} />
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
