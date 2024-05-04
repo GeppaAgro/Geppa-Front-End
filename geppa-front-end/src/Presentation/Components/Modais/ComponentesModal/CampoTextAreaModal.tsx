@@ -32,6 +32,7 @@ const CampoTextAreaModal: React.FC<CampoTextoSimplesProps> = ({id, label, salvar
                 id={id}
                 value={textoLocal}
                 onChange={atualizaTexto}
+                style={{ height: '150px' }}
             />
             {erro && <div className="invalid-feedback">{erro}</div>}
         </div>
