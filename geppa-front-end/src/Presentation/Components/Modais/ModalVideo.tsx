@@ -105,7 +105,7 @@ const ModalArtigo: React.FC<ModalConteudoProps> = ({ abrir, fechar, mostrar, sal
                                             salvarTexto={setDescricao}
                                             erro={errosValidacao?.descricao}
                                             tentouSalvar={tentouSalvar}/>
-                        <CampoTextoSimplesModal id="Link" label="Cole aqui o link para a noticia"
+                        <CampoTextoSimplesModal id="Link" label="Cole aqui o link do video"
                                                 texto={link}
                                                 salvarTexto={setLink}
                                                 erro={errosValidacao?.link}

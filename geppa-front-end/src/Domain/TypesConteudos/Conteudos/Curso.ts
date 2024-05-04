@@ -2,11 +2,11 @@ import {Conteudo} from "./Conteudo.ts";
 import {Tag} from "../TypeTag.ts";
 
 export class Curso extends Conteudo {
-    prazoInscricao: Date;
-    preco: number;
+    prazoInscricao: Date | null;
+    preco: number ;
     duracaoEmHoras: number;
 
-    constructor(titulo: string, descricao: string, link: string, tags: Tag[], prazoInscricao: Date, preco: number, duracaoEmHoras: number, id?: string, boletimInformativoEdicao?: string, dataCadastro?: Date, dataAtualizacao?: Date) {
+    constructor(titulo: string, descricao: string, link: string, tags: Tag[], prazoInscricao: Date | null, preco: number, duracaoEmHoras: number, id?: string, boletimInformativoEdicao?: string, dataCadastro?: Date, dataAtualizacao?: Date) {
         super(titulo, descricao, link, tags, id, boletimInformativoEdicao, dataCadastro, dataAtualizacao);
         this.prazoInscricao = prazoInscricao;
         this.preco = preco;
