@@ -2,7 +2,7 @@ import {ModalConteudoProps} from "../../../Domain/TypesConteudos/TypeModaisProps
 import {Button, Modal} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import {Tag} from "../../../Domain/TypesConteudos/TypeTag.ts";
-import {Artigo} from "../../../Domain/TypesConteudos/TypeArtigo.ts";
+import {Artigo} from "../../../Domain/TypesConteudos/Conteudos/TypeArtigo.ts";
 import {Autor} from "../../../Domain/TypesConteudos/TypeAutor.ts";
 const ModalArtigo: React.FC<ModalConteudoProps> = ({abrir, fechar, mostrar, salvar, artigo}) =>{
 

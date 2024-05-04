@@ -1,9 +1,9 @@
-import { useEffect, useState} from "react";
-import { Button, Modal } from "react-bootstrap";
-import { Noticia, Tag} from "../../../Domain/TypesConteudos/TypesConteudos.ts";
+import {useEffect, useState} from "react";
+import {Button, Modal} from "react-bootstrap";
+import {Noticia, Tag} from "../../../Domain/TypesConteudos/TypesConteudos.ts";
 import {ModalConteudoProps} from "../../../Domain/TypesConteudos/TypeModaisProps.ts";
-import AxiosClient from "../../../Domain/Services/AxiosClient.ts";
-import axiosClient from "../../../Domain/Services/AxiosClient.ts";
+import {ValidarConteudoService} from "../../../Domain/Services/ValidarConteudoService.ts";
+import {TipoConteudo} from "../../../Domain/Enums/TipoConteudo.ts";
 
 const ModalNoticia: React.FC<ModalConteudoProps> = ({abrir, fechar, mostrar, salvar, noticia}) => {
     const [titulo, setTitulo] = useState<string>('')
