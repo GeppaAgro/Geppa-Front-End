@@ -17,7 +17,6 @@ const ModalArtigo: React.FC<ModalConteudoProps> = ({ abrir, fechar, mostrar, sal
     const [descricao, setDescricao] = useState<string>('')
     const [link, setLink] = useState<string>('')
     const [youtube, setYoutube] = useState<boolean>(false)
-    const [novaTag, setNovaTag] = useState<string>('');
     const [tags, setTags] = useState<Tag[]>([]);
     const [errosValidacao, setErrosValidacao] = useState<{ [key: string]: string }>()
     const [tentouSalvar, setTentouSalvar] = useState(false);
@@ -69,7 +68,6 @@ const ModalArtigo: React.FC<ModalConteudoProps> = ({ abrir, fechar, mostrar, sal
         setLink('')
         setYoutube(false)
         setTags([])
-        setNovaTag('')
     }
     const adicionarTag = (novaTagObj: Tag) => {
         if (!tags.find(tag => tag.id === novaTagObj.id)) {
