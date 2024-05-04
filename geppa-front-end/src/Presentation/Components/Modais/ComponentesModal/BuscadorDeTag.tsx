@@ -9,9 +9,11 @@ import {MensagensRetorno} from "../../../../Domain/Enums/MensagensRetorno.ts";
 interface BuscadorProps {
     label: string;
     salvarTag: (tag: Tag) => void;
+    erro?: string;
+    tentouSalvar?: boolean;
 }
 
-const BuscadorTag: React.FC<BuscadorProps> = ({label, salvarTag}) => {
+const BuscadorTag: React.FC<BuscadorProps> = ({label, salvarTag, erro, tentouSalvar}) => {
     const [busca, setBusca] = useState<string>('');
     const [sugestoesTags, setSugestoesTags] = useState<Tag[]>([]);
     const [mensagemBusca, setMensagemBusca] = useState<string>('');
@@ -40,7 +42,7 @@ const BuscadorTag: React.FC<BuscadorProps> = ({label, salvarTag}) => {
             <Form.Label htmlFor="buscatag" className="fw-semibold">{label}</Form.Label>
             <Form.Control
                 id="buscatag"
-                className="form-control mb-2"
+                className={`form-control ${erro ? 'is-invalid' : (tentouSalvar && !erro) ? 'is-valid' : ''}`}
                 placeholder="Digite uma tag..."
                 type="search"
                 value={busca}
@@ -51,6 +53,7 @@ const BuscadorTag: React.FC<BuscadorProps> = ({label, salvarTag}) => {
                 }}
                 ref={target}
             />
+            {erro && <div className="invalid-feedback">{erro}</div>}
             <Overlay
                 show={showPopover}
                 target={target.current}

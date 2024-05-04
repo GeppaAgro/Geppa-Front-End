@@ -1,8 +1,8 @@
 import {useState} from "react";
-import {Artigo} from "../TypesConteudos/Conteudos/TypeArtigo.ts";
-import {Curso} from "../TypesConteudos/Conteudos/TypeCurso.ts";
-import {Noticia} from "../TypesConteudos/Conteudos/TypeNoticia.ts";
-import {Video} from "../TypesConteudos/Conteudos/TypeVideo.ts";
+import {Artigo} from "../TypesConteudos/Conteudos/Artigo.ts";
+import {Curso} from "../TypesConteudos/Conteudos/Curso.ts";
+import {Noticia} from "../TypesConteudos/Conteudos/Noticia.ts";
+import {Video} from "../TypesConteudos/Conteudos/Video.ts";
 
 export const useItemsAndModal = () => {
 

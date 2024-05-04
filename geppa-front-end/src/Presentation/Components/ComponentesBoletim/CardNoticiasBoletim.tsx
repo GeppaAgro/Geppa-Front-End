@@ -1,7 +1,7 @@
 import "./StyleCardBoletim.css"
 import {Container} from "react-bootstrap";
 import {Link} from "react-router-dom";
-import {Noticia} from "../../../Domain/TypesConteudos/Conteudos/TypeNoticia.ts";
+import {Noticia} from "../../../Domain/TypesConteudos/Conteudos/Noticia.ts";
 import {validaData} from "../Utils/ValidacaoDeData.ts";
 
 const CardNoticiaBoletim: React.FC <{noticia : Noticia}> = ({noticia}) => {

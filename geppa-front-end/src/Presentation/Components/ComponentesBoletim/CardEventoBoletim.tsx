@@ -1,7 +1,7 @@
 import "./StyleCardBoletim.css"
 import {Container} from "react-bootstrap";
 import {Link} from "react-router-dom";
-import {Evento} from "../../../Domain/TypesConteudos/Conteudos/TypeEvento.ts";
+import {Evento} from "../../../Domain/TypesConteudos/Conteudos/Evento.ts";
 import {validaData} from "../Utils/ValidacaoDeData.ts";
 
 const CardEventoBoletim: React.FC<{ evento: Evento }> = ({evento}) =>{

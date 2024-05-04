@@ -1,4 +1,4 @@
-import {Conteudo} from "../TypesConteudos/Conteudos/TypeConteudo.ts";
+import {Conteudo} from "../TypesConteudos/Conteudos/Conteudo.ts";
 import {TipoConteudo} from "../Enums/TipoConteudo.ts";
 import axiosClient from "./AxiosClient.ts";
 import {AxiosError, AxiosResponse} from "axios";
@@ -6,9 +6,9 @@ import {MensagensValidacao} from "../Enums/MensagensValidacao.ts";
 
 export class ValidarConteudoService {
 
-    async validarConteudo(conteudo: Conteudo, tipoConteudo: TipoConteudo): Promise<{
+    static async validarConteudo(conteudo: Conteudo, tipoConteudo: TipoConteudo): Promise<{
         success: boolean;
-        errors: Array<object>
+        errors: { [key: string]: string }
     }> {
         try {
             const response = await axiosClient.post(`/${tipoConteudo}/validar`, conteudo)
@@ -19,19 +19,19 @@ export class ValidarConteudoService {
         }
     }
 
-    private handleResponse(response: AxiosResponse): { success: boolean; errors: Array<object> } {
+    private static handleResponse(response: AxiosResponse): { success: boolean; errors:{ [key: string]: string } } {
         if (response.status >= 200 && response.status < 300) {
-            return {success: true, errors: []}
+            return {success: true, errors: {}}
         }
         return {
-            success: false, errors: [
+            success: false, errors:
                 {mensagem: MensagensValidacao.IMPOSSIVEL_REALIZAR_VALIDACAO}
-            ]
+
         }
     }
 
 
-    private handleError(response: AxiosResponse): { success: boolean; errors: Array<object> } {
+    private static handleError(response: AxiosResponse): { success: boolean; errors: { [key: string]: string } } {
         if (response.status == 400) {
             if (response.data.errosValidacao) {
                 return {
@@ -41,15 +41,15 @@ export class ValidarConteudoService {
             }
             return {
                 success: false,
-                errors: [{
+                errors: {
                     mensagem: response.data.mensagem
-                }]
+                }
             }
         }
 
         return {
             success: false,
-            errors: [{mensagem: MensagensValidacao.IMPOSSIVEL_REALIZAR_VALIDACAO}]
+            errors: {mensagem: MensagensValidacao.IMPOSSIVEL_REALIZAR_VALIDACAO}
         }
     }
 }

@@ -1,13 +1,15 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 
 interface CampoDataProps {
     label: string;
     valor: Date | null;
     salvarData: (data: Date | null) => void;
+    erro?: string;
+    tentouSalvar?: boolean;
 }
 
 
-const CampoDataModal: React.FC<CampoDataProps> = ({ label, valor, salvarData }) => {
+const CampoDataModal: React.FC<CampoDataProps> = ({ label, valor, salvarData, erro, tentouSalvar }) => {
     const [dataLocal, setDataLocal] = useState<Date | null>(null);
 
     useEffect(() => {
@@ -35,10 +37,11 @@ const CampoDataModal: React.FC<CampoDataProps> = ({ label, valor, salvarData }) 
             <label htmlFor="data" className="fw-semibold">{label}</label>
             <input
                 type="date"
-                className="form-control"
+                className={`form-control ${erro ? 'is-invalid' : (tentouSalvar && !erro) ? 'is-valid' : ''}`}
                 value={dataLocal ? dataLocal.toISOString().substr(0, 10) : ''}
                 onChange={handleChange}
             />
+            {erro && <div className="invalid-feedback">{erro}</div>}
         </div>
     );
 };

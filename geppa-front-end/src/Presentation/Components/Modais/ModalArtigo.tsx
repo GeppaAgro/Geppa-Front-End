@@ -2,7 +2,7 @@ import {ModalConteudoProps} from "../../../Domain/TypesConteudos/TypeModaisProps
 import {Button, Modal} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import {Tag} from "../../../Domain/TypesConteudos/TypeTag.ts";
-import {Artigo} from "../../../Domain/TypesConteudos/Conteudos/TypeArtigo.ts";
+import {Artigo} from "../../../Domain/TypesConteudos/Conteudos/Artigo.ts";
 import {Autor} from "../../../Domain/TypesConteudos/TypeAutor.ts";
 import ListagemTagsModal from "./ComponentesModal/ListagemTagsModal.tsx";
 import BuscadorDeTag from "./ComponentesModal/BuscadorDeTag.tsx";

@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import { Button, Modal } from "react-bootstrap";
-import {Video} from "../../../Domain/TypesConteudos/Conteudos/TypeVideo.ts";
+import {Video} from "../../../Domain/TypesConteudos/Conteudos/Video.ts";
 import {Tag} from "../../../Domain/TypesConteudos/TypeTag.ts";
 import {ModalConteudoProps} from "../../../Domain/TypesConteudos/TypeModaisProps.ts";
 

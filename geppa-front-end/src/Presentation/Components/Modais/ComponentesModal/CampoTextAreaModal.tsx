@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 
 interface CampoTextoSimplesProps {
-    id:string;
+    id: string;
     label: string;
     salvarTexto: (data: string) => void;
     texto?: string;
+    erro?: string;
+    tentouSalvar?: boolean;
 }
 
-const CampoTextAreaModal: React.FC<CampoTextoSimplesProps> = ({ id, label, salvarTexto, texto }) => {
+const CampoTextAreaModal: React.FC<CampoTextoSimplesProps> = ({id, label, salvarTexto, texto, erro, tentouSalvar}) => {
     const [textoLocal, setTextoLocal] = useState<string>("");
 
     useEffect(() => {
@@ -26,11 +28,12 @@ const CampoTextAreaModal: React.FC<CampoTextoSimplesProps> = ({ id, label, salva
         <div className="mb-2">
             <label htmlFor="buscatag" className="fw-semibold">{label}</label>
             <textarea
-                className="form-control"
-                id ={id}
+                className={`form-control ${erro ? 'is-invalid' : (tentouSalvar && !erro && textoLocal) ? 'is-valid' : ''}`}
+                id={id}
                 value={textoLocal}
                 onChange={atualizaTexto}
             />
+            {erro && <div className="invalid-feedback">{erro}</div>}
         </div>
     );
 };
