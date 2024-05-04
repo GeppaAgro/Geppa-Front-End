@@ -9,5 +9,9 @@ export enum MensagensValidacao {
     TAGS_OBRIGATORIAS = 'As tags são obrigatórias',
     TAGS_SIZE_MINIMO = 'Deve haver pelo menos uma tag',
     DATA_PUBLICACAO_OBRIGATORIA = 'A data de publicação é obrigatória',
-    DATA_PUBLICACAO_ANTERIOR_DATA_ATUAL = 'A data de publicação deve ser anterior a data atual'
+    DATA_PUBLICACAO_ANTERIOR_DATA_ATUAL = 'A data de publicação deve ser anterior a data atual',
+    AUTORES_OBRIGATORIOS = 'Os autores são obrigatórios',
+    AUTORES_SIZE_MINIMO = 'Deve haver pelo menos um autor',
+    AUTORES_NOME_OBRIGATORIO = 'O nome do autor é obrigatório',
+    AUTORES_NOME_MINIMO_CARACTERES = 'O nome do autor deve ter pelo menos 3 caracteres',
 }

@@ -6,6 +6,8 @@ export function getMpperMensagensValidacaoCampos(tipoConteudo: TipoConteudo) {
     switch (tipoConteudo) {
         case TipoConteudo.NOTICIA:
             return mapeamentosCamposValidacaoNoticia;
+        case TipoConteudo.ARTIGO:
+            return mapeamentosCamposValidacaoArtigo;
         default:
             return mapeamentosCamposValidacaoConteudo;
     }
@@ -36,4 +38,18 @@ const mapeamentosCamposValidacaoNoticia = {
         ['A data de publicacao eh obrigatoria', MensagensValidacao.DATA_PUBLICACAO_OBRIGATORIA],
         ['A data de publicacao deve ser anterior a data atual', MensagensValidacao.DATA_PUBLICACAO_ANTERIOR_DATA_ATUAL],
     ])
+}
+
+const mapeamentosCamposValidacaoArtigo = {
+    ...mapeamentosCamposValidacaoConteudo,
+    dataPublicacao: new Map([
+        ['A data de publicacao eh obrigatoria', MensagensValidacao.DATA_PUBLICACAO_OBRIGATORIA],
+        ['A data de publicacao deve no passado ou presente', MensagensValidacao.DATA_PUBLICACAO_ANTERIOR_DATA_ATUAL],
+    ]),
+    autores: new Map([
+        ['Os autores sao obrigatorios', MensagensValidacao.AUTORES_OBRIGATORIOS],
+        ['Deve haver pelo menos um autor', MensagensValidacao.AUTORES_SIZE_MINIMO],
+        ['O nome do autor eh obrigatorio', MensagensValidacao.AUTORES_NOME_OBRIGATORIO],
+        ['O nome do autor deve ter pelo menos 3 caracteres', MensagensValidacao.AUTORES_NOME_MINIMO_CARACTERES],
+    ]),
 }

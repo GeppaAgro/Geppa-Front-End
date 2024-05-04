@@ -12,9 +12,17 @@ export function mapperMensagensValidacaoConteudo(erros: { [key: string]: string 
     const errosMapeados: { [key: string]: string } = {};
 
     for (const chave in erros) {
-        if (Object.prototype.hasOwnProperty.call(mapeamentoEspecifico, chave)) {
+        let chaveMapeada = chave;
+
+        const match = chave.match(/(.+)\[(\d+)\]\.(.+)/);
+        if (match) {
+            const [, baseChave, index, subChave] = match;
+            chaveMapeada = `${baseChave}[${index}].${subChave}`;
+        }
+
+        if (Object.prototype.hasOwnProperty.call(mapeamentoEspecifico, chaveMapeada)) {
             const mensagemOriginal = erros[chave];
-            const mapeamentoEspecificoChave = mapeamentoEspecifico[chave];
+            const mapeamentoEspecificoChave = mapeamentoEspecifico[chaveMapeada];
 
             const mensagemMapeada = mapeamentoEspecificoChave.get(mensagemOriginal);
             errosMapeados[chave] = mensagemMapeada !== undefined ? mensagemMapeada : mensagemOriginal;
