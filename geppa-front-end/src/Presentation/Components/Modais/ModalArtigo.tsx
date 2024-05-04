@@ -2,7 +2,6 @@ import {ModalConteudoProps} from "../../../Domain/TypesConteudos/TypeModaisProps
 import {Button, Modal} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import {Tag} from "../../../Domain/TypesConteudos/TypeTag.ts";
-import {Artigo} from "../../../Domain/TypesConteudos/Conteudos/Artigo.ts";
 import {Autor} from "../../../Domain/TypesConteudos/TypeAutor.ts";
 import ListagemTagsModal from "./ComponentesModal/ListagemTagsModal.tsx";
 import BuscadorDeTag from "./ComponentesModal/BuscadorDeTag.tsx";
@@ -11,61 +10,76 @@ import CampoTextoSimplesModal from "./ComponentesModal/CampoTextoSimplesModal.ts
 import CampoTextAreaModal from "./ComponentesModal/CampoTextAreaModal.tsx";
 import AdicaoDeStringAoArrayModal from "./ComponentesModal/AdicaoDeStringAoArrayModal.tsx";
 import ListagemDeAutores from "./ComponentesModal/ListagemDeAutores.tsx";
-const ModalArtigo: React.FC<ModalConteudoProps> = ({abrir, fechar, mostrar, salvar, artigo}) =>{
+import {Artigo} from "../../../Domain/TypesConteudos/Conteudos/Artigo.ts";
+import {ValidarConteudoService} from "../../../Domain/Services/ValidarConteudoService.ts";
+import {TipoConteudo} from "../../../Domain/Enums/TipoConteudo.ts";
+import {mapperMensagensValidacaoConteudo} from "../../../Domain/mappers/MapperMensagensValidacao.ts";
+import LoadingOverlay from "../Utils/LoadingOverlay/LoadingOverlay.tsx";
+
+const ModalArtigo: React.FC<ModalConteudoProps> = ({abrir, fechar, mostrar, salvar, artigo}) => {
 
     const [titulo, setTitulo] = useState<string>('')
     const [descricao, setDescricao] = useState<string>('')
     const [link, setLink] = useState<string>('')
-    const [dataPublicacao, setDataPublicacao] = useState<Date|null>(null)
+    const [dataPublicacao, setDataPublicacao] = useState<Date | null>(null)
     const [tags, setTags] = useState<Tag[]>([]);
     const [novoAutor, setNovoAutor] = useState<string>('')
     const [autores, setAutores] = useState<Autor[]>([])
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [errosValidacao, setErrosValidacao] = useState<{ [key: string]: string }>()
+    const [tentouSalvar, setTentouSalvar] = useState(false);
 
-    const mudarData = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const dateString = e.target.value;
-        const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
 
-        if (dateRegex.test(dateString)) {
-            setDataPublicacao(new Date(dateString));
-        } else {
-            setDataPublicacao(null);
-        }
-    };
     useEffect(() => {
-        if (artigo){
+        if (artigo) {
             setTitulo(artigo.titulo)
             setDescricao(artigo.descricao)
             setLink(artigo.link)
-            setDataPublicacao(new Date (artigo.dataPublicacao))
-            setTags(artigo.tags||[])
+            setDataPublicacao(artigo.dataPublicacao)
+            setTags(artigo.tags || [])
             setAutores(artigo.autores)
         }
     }, [artigo]);
 
-    const salvarArtigo = () => {
-        const dados: Artigo = {
-            id: '',
-            boletimInformativoEdicao: '',
-            titulo: titulo,
-            descricao: descricao,
-            link: link,
-            dataCadastro: '',
-            dataAtualizacao:'',
-            tags: tags,
-            dataPublicacao: dataPublicacao || new Date(),
-            autores: autores
+    const handleArtigo = async () => {
+        setIsLoading(true);
+        const artigo: Artigo = new Artigo(titulo, descricao, link, autores, dataPublicacao, tags)
+
+        const isValid = await validar(artigo);
+        setTentouSalvar(true);
+
+        if (isValid) {
+            salvar(artigo);
+            fechar();
+            limpar();
         }
-        salvar(dados)
-        fechar()
-        limpar()
-    }
+        setIsLoading(false);
+    };
+
+
+    const validar = async (artigo: Artigo): Promise<boolean> => {
+        const artigoParaValidar = {
+            ...artigo,
+            autores: artigo.autores.map(autor => ({nome: autor.nome}))
+        };
+        const result = await ValidarConteudoService.validarConteudo(artigoParaValidar, TipoConteudo.ARTIGO);
+
+
+        if (result.success) {
+            return true
+        }
+        const errosValidacao = mapperMensagensValidacaoConteudo(result.errors, TipoConteudo.ARTIGO)
+        setErrosValidacao(errosValidacao)
+        return false
+    };
+
 
     const cancelar = () => {
         fechar()
         limpar()
     }
 
-    const limpar = () =>{
+    const limpar = () => {
         setTitulo('')
         setDescricao('')
         setLink('')
@@ -75,7 +89,7 @@ const ModalArtigo: React.FC<ModalConteudoProps> = ({abrir, fechar, mostrar, salv
     }
 
     const adicionarTag = (novaTagObj: Tag) => {
-        if (!tags.find(tag => tag.id === novaTagObj.id)){
+        if (!tags.find(tag => tag.id === novaTagObj.id)) {
             setTags([...tags, novaTagObj]);
         }
     };
@@ -101,32 +115,64 @@ const ModalArtigo: React.FC<ModalConteudoProps> = ({abrir, fechar, mostrar, salv
 
     return (
         <>
+            {isLoading && <LoadingOverlay/>}
             <Button variant="primary" onClick={mostrar}>
                 Adicionar Artigo
             </Button>
 
             <Modal show={abrir} onHide={cancelar} backdrop="static">
-                 <Modal.Header>
-                     <Modal.Title>{artigo ? 'Editar artigo' : 'Adicionar Artigo'}</Modal.Title>
-                 </Modal.Header>
+                <Modal.Header>
+                    <Modal.Title>{artigo ? 'Editar artigo' : 'Adicionar Artigo'}</Modal.Title>
+                </Modal.Header>
                 <Modal.Body>
                     <form>
-                        <CampoTextoSimplesModal id="Titulo" label="Titulo do artigo" texto={titulo} salvarTexto={setTitulo}/>
-                        <CampoTextAreaModal id="Descricao" label="Descreva brevemente o assunto do artigo" texto={descricao} salvarTexto={setDescricao}/>
-                        <CampoTextoSimplesModal id="Link" label="Cole aqui o link para o artigo" texto={link} salvarTexto={setLink}/>
-                        <CampoDataModal label="Quando o artigo foi lançado?" valor={dataPublicacao} salvarData={setDataPublicacao}/>
-                        <BuscadorDeTag label="Selecione suas tags" salvarTag={adicionarTag}/>
-                        <ListagemTagsModal tags={tags} removerTag={removerTag} />
-                        <hr className="mx-5"/>
-                        <AdicaoDeStringAoArrayModal label="Autores" novaString={novoAutor} setNovaString={setNovoAutor} adicionarString={adicionarAutor} />
-                        <ListagemDeAutores autores={autores} removerAutor={removerAutor}/>
+                        <CampoTextoSimplesModal id="Titulo" label="Titulo do artigo"
+                                                texto={titulo}
+                                                salvarTexto={setTitulo}
+                                                erro={errosValidacao?.titulo}
+                                                tentouSalvar={tentouSalvar}/>
+
+                        <CampoTextAreaModal id="Descricao" label="Descreva brevemente o assunto do artigo"
+                                            texto={descricao}
+                                            salvarTexto={setDescricao}
+                                            erro={errosValidacao?.descricao}
+                                            tentouSalvar={tentouSalvar}/>
+
+                        <CampoTextoSimplesModal id="Link" label="Cole aqui o link para o artigo"
+                                                texto={link}
+                                                salvarTexto={setLink}
+                                                erro={errosValidacao?.link}
+                                                tentouSalvar={tentouSalvar}/>
+
+                        <CampoDataModal label="Quando o artigo foi lançado?"
+                                        valor={dataPublicacao}
+                                        salvarData={setDataPublicacao}
+                                        erro={errosValidacao?.dataPublicacao}
+                                        tentouSalvar={tentouSalvar}/>
+
+
+                        <AdicaoDeStringAoArrayModal label="Autores" novaString={novoAutor}
+                                                    setNovaString={setNovoAutor}
+                                                    adicionarString={adicionarAutor}/>
+
+                        <ListagemDeAutores autores={autores} removerAutor={removerAutor}
+                                           errosValidacao={errosValidacao}/>
+
+                        <hr/>
+
+                        <BuscadorDeTag label="Selecione suas tags"
+                                       salvarTag={adicionarTag}
+                                       erro={errosValidacao?.tags}
+                                       tentouSalvar={tentouSalvar}/>
+
+                        <ListagemTagsModal tags={tags} removerTag={removerTag}/>
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={cancelar}>
                         Cancelar
                     </Button>
-                    <Button variant="primary" onClick={salvarArtigo}>
+                    <Button variant="primary" onClick={handleArtigo}>
                         Salvar
                     </Button>
                 </Modal.Footer>

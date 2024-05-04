@@ -4,10 +4,10 @@ import {Tag} from "../TypeTag.ts";
 
 
 export class Artigo extends Conteudo {
-    dataPublicacao: Date;
+    dataPublicacao: Date | null;
     autores: Autor[];
 
-    constructor(titulo: string, descricao: string, link: string, autores: Autor[], dataPublicacao: Date, tags: Tag[], id?: string, boletimInformativoEdicao?: string, dataCadastro?: Date, dataAtualizacao?: Date) {
+    constructor(titulo: string, descricao: string, link: string, autores: Autor[], dataPublicacao: Date | null, tags: Tag[], id?: string, boletimInformativoEdicao?: string, dataCadastro?: Date, dataAtualizacao?: Date) {
         super(titulo, descricao, link, tags, id, boletimInformativoEdicao, dataCadastro, dataAtualizacao);
         this.dataPublicacao = dataPublicacao;
         this.autores = autores;
