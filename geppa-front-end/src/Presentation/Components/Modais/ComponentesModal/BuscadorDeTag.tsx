@@ -5,7 +5,6 @@ import { Tag } from "../../../../Domain/TypesConteudos/TypeTag.ts";
 import AxiosClient from "../../../../Data/Services/AxiosClient.ts";
 import "./componentesModais.css"
 import {Form, Overlay, Popover} from "react-bootstrap";
-import {Axios} from "axios";
 interface BuscadorProps {
     label: string;
     salvarTag: (tag: Tag) => void;
@@ -28,7 +27,7 @@ const BuscadorTag: React.FC<BuscadorProps> = ({ label, salvarTag }) => {
                 setShowPopover(true);
             } catch (error) {
                 if (error.response.status === 400) {
-                    setMensagemBusca('Tag nÃ£o encontrada');
+                    setMensagemBusca('Tag não encontrada');
                     setSugestoesTags([]);
                 } else {
                     setSugestoesTags([]);
@@ -42,7 +41,7 @@ const BuscadorTag: React.FC<BuscadorProps> = ({ label, salvarTag }) => {
 
     return (
         <div className="mb-2">
-            <Form.Label htmlFor="buscatag">{label}</Form.Label>
+            <Form.Label htmlFor="buscatag" className="fw-semibold">{label}</Form.Label>
             <Form.Control
                 id="buscatag"
                 className="form-control mb-2"
