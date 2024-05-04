@@ -3,6 +3,14 @@ import { Button, Modal } from "react-bootstrap";
 import {Video} from "../../../Domain/TypesConteudos/Conteudos/Video.ts";
 import {Tag} from "../../../Domain/TypesConteudos/TypeTag.ts";
 import {ModalConteudoProps} from "../../../Domain/TypesConteudos/TypeModaisProps.ts";
+import {ValidarConteudoService} from "../../../Domain/Services/ValidarConteudoService.ts";
+import {TipoConteudo} from "../../../Domain/Enums/TipoConteudo.ts";
+import {mapperMensagensValidacaoConteudo} from "../../../Domain/mappers/MapperMensagensValidacao.ts";
+import LoadingOverlay from "../Utils/LoadingOverlay/LoadingOverlay.tsx";
+import CampoTextoSimplesModal from "./ComponentesModal/CampoTextoSimplesModal.tsx";
+import CampoTextAreaModal from "./ComponentesModal/CampoTextAreaModal.tsx";
+import BuscadorDeTag from "./ComponentesModal/BuscadorDeTag.tsx";
+import ListagemTagsModal from "./ComponentesModal/ListagemTagsModal.tsx";
 
 const ModalArtigo: React.FC<ModalConteudoProps> = ({ abrir, fechar, mostrar, salvar, video }) => {
     const [titulo, setTitulo] = useState<string>('')
@@ -11,7 +19,9 @@ const ModalArtigo: React.FC<ModalConteudoProps> = ({ abrir, fechar, mostrar, sal
     const [youtube, setYoutube] = useState<boolean>(false)
     const [novaTag, setNovaTag] = useState<string>('');
     const [tags, setTags] = useState<Tag[]>([]);
-
+    const [errosValidacao, setErrosValidacao] = useState<{ [key: string]: string }>()
+    const [tentouSalvar, setTentouSalvar] = useState(false);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     useEffect(() => {
         if (video) {
@@ -19,24 +29,34 @@ const ModalArtigo: React.FC<ModalConteudoProps> = ({ abrir, fechar, mostrar, sal
             setDescricao(video.descricao)
             setLink(video.link)
             setTags(video.tags || []);
+            setYoutube(video.youtube)
         }
     }, [video]);
 
-    const salvarVideo = () => {
-        const dados: Video = {
-            id: '',
-            boletimInformativoEdicao: '',
-            titulo,
-            descricao,
-            link,
-            dataCadastro: new Date(),
-            dataAtualizacao: new Date(),
-            tags,
-            youtube }
-        salvar(dados);
-        fechar()
-        limpar()
+    const salvarVideo = async () => {
+        setIsLoading(true);
+        const video: Video = new Video(titulo, descricao, link, tags, youtube)
+        const isValid = await validar(video);
+        setTentouSalvar(true);
+        if (isValid) {
+            salvar(video);
+            fechar();
+            limpar();
+        }
+        setIsLoading(false);
     };
+
+
+    const validar = async (video: Video): Promise<boolean> => {
+        const result = await ValidarConteudoService.validarConteudo(video, TipoConteudo.VIDEO);
+        if (result.success) {
+            return true
+        }
+        const errosValidacao = mapperMensagensValidacaoConteudo(result.errors, TipoConteudo.VIDEO)
+        setErrosValidacao(errosValidacao)
+        return false
+    };
+
 
     const cancelar = () => {
         fechar()
@@ -51,14 +71,9 @@ const ModalArtigo: React.FC<ModalConteudoProps> = ({ abrir, fechar, mostrar, sal
         setTags([])
         setNovaTag('')
     }
-    const adicionarTag = () => {
-        if (novaTag.trim() !== '') {
-            const novaTagObj: Tag = {
-                id: Math.random().toString(),
-                nome: novaTag.trim(),
-            };
+    const adicionarTag = (novaTagObj: Tag) => {
+        if (!tags.find(tag => tag.id === novaTagObj.id)) {
             setTags([...tags, novaTagObj]);
-            setNovaTag('');
         }
     };
 
@@ -67,29 +82,35 @@ const ModalArtigo: React.FC<ModalConteudoProps> = ({ abrir, fechar, mostrar, sal
         setTags(novasTags);
     };
 
-
     return (
         <>
+            {isLoading && <LoadingOverlay/>}
             <Button variant="primary" onClick={mostrar}>
                 Adicionar Video
             </Button>
-
             <Modal show={abrir} onHide={cancelar} backdrop="static">
                 <Modal.Header>
                     <Modal.Title>{video ? 'Editar Video' : 'Adicionar Video'}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form>
-                        <label htmlFor="titulo">Titulo do video *</label>
-                        <input type="text" className="form-control" id="titulo" value={titulo}
-                               onChange={(e) => setTitulo(e.target.value)}/>
-                        <label htmlFor="descricao">Descreva brevemente o assunto do video *</label>
-                        <textarea className="form-control" id="descricao" value={descricao}
-                                  onChange={(e) => setDescricao(e.target.value)}/>
+                        <CampoTextoSimplesModal id="Titulo"
+                                                label="Titulo do Video"
+                                                texto={titulo}
+                                                salvarTexto={setTitulo}
+                                                erro={errosValidacao?.titulo}
+                                                tentouSalvar={tentouSalvar}/>
+                        <CampoTextAreaModal id="Descricao" label="Descreva brevemente o assunto do video"
+                                            texto={descricao}
+                                            salvarTexto={setDescricao}
+                                            erro={errosValidacao?.descricao}
+                                            tentouSalvar={tentouSalvar}/>
+                        <CampoTextoSimplesModal id="Link" label="Cole aqui o link para a noticia"
+                                                texto={link}
+                                                salvarTexto={setLink}
+                                                erro={errosValidacao?.link}
+                                                tentouSalvar={tentouSalvar}/>
 
-                        <label htmlFor="link">Cole aqui o link para o vídeo *</label>
-                        <input type="text" className="form-control" id="link" value={link}
-                               onChange={(e) => setLink(e.target.value)}/>
                         <div className="d-flex justify-content-between">
                             <label htmlFor="youtube">Este vídeo é do YouTube? </label>
                             <input
@@ -100,29 +121,12 @@ const ModalArtigo: React.FC<ModalConteudoProps> = ({ abrir, fechar, mostrar, sal
                                 onChange={(e) => setYoutube(e.target.checked)}
                             />
                         </div>
-                        <div>
-                            <input
-                                type="text"
-                                id="novaTag"
-                                value={novaTag}
-                                onChange={(e) => setNovaTag(e.target.value)}
-                            />
-                            <Button variant="primary" onClick={adicionarTag}>
-                                Adicionar
-                            </Button>
-                        </div>
+                        <BuscadorDeTag label="Selecione suas tags"
+                                       salvarTag={adicionarTag}
+                                       erro={errosValidacao?.tags}
+                                       tentouSalvar={tentouSalvar}/>
 
-                        <div>
-                            <h4>Tags:</h4>
-                            {tags.map(tag => (
-                                <div key={tag.id}>
-                                    <span>{tag.nome}</span>
-                                    <Button variant="danger" onClick={() => removerTag(tag.id)}>
-                                        Remover
-                                    </Button>
-                                </div>
-                            ))}
-                        </div>
+                        <ListagemTagsModal tags={tags} removerTag={removerTag}/>
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
