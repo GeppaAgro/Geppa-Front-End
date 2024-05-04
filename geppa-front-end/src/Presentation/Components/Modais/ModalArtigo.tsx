@@ -4,13 +4,19 @@ import {useEffect, useState} from "react";
 import {Tag} from "../../../Domain/TypesConteudos/TypeTag.ts";
 import {Artigo} from "../../../Domain/TypesConteudos/Conteudos/TypeArtigo.ts";
 import {Autor} from "../../../Domain/TypesConteudos/TypeAutor.ts";
+import ListagemTagsModal from "./ComponentesModal/ListagemTagsModal.tsx";
+import BuscadorDeTag from "./ComponentesModal/BuscadorDeTag.tsx";
+import CampoDataModal from "./ComponentesModal/CampoDataModal.tsx";
+import CampoTextoSimplesModal from "./ComponentesModal/CampoTextoSimplesModal.tsx";
+import CampoTextAreaModal from "./ComponentesModal/CampoTextAreaModal.tsx";
+import AdicaoDeStringAoArrayModal from "./ComponentesModal/AdicaoDeStringAoArrayModal.tsx";
+import ListagemDeAutores from "./ComponentesModal/ListagemDeAutores.tsx";
 const ModalArtigo: React.FC<ModalConteudoProps> = ({abrir, fechar, mostrar, salvar, artigo}) =>{
 
     const [titulo, setTitulo] = useState<string>('')
     const [descricao, setDescricao] = useState<string>('')
     const [link, setLink] = useState<string>('')
     const [dataPublicacao, setDataPublicacao] = useState<Date|null>(null)
-    const [novaTag, setNovaTag] = useState<string>('');
     const [tags, setTags] = useState<Tag[]>([]);
     const [novoAutor, setNovoAutor] = useState<string>('')
     const [autores, setAutores] = useState<Autor[]>([])
@@ -68,21 +74,16 @@ const ModalArtigo: React.FC<ModalConteudoProps> = ({abrir, fechar, mostrar, salv
         setAutores([])
     }
 
-    const adicionarTag = () => {
-        if (novaTag.trim() !== '') {
-            const novaTagObj: Tag = {
-                id: Math.random().toString(),
-                nome: novaTag.trim(),
-            };
+    const adicionarTag = (novaTagObj: Tag) => {
+        if (!tags.find(tag => tag.id === novaTagObj.id)){
             setTags([...tags, novaTagObj]);
-            setNovaTag('');
         }
     };
+
     const removerTag = (id: string) => {
         const novasTags = tags.filter(tag => tag.id !== id);
         setTags(novasTags);
     };
-
     const adicionarAutor = () => {
         if (novoAutor.trim() !== '') {
             const novaAutorObj: Autor = {
@@ -110,70 +111,15 @@ const ModalArtigo: React.FC<ModalConteudoProps> = ({abrir, fechar, mostrar, salv
                  </Modal.Header>
                 <Modal.Body>
                     <form>
-                        <label htmlFor="titulo">Titulo do video *</label>
-                        <input type="text" className="form-control" id="titulo" value={titulo}
-                               onChange={(e) => setTitulo(e.target.value)}/>
-                        <label htmlFor="descricao">Descreva brevemente o assunto do video *</label>
-                        <textarea className="form-control" id="descricao" value={descricao}
-                                  onChange={(e) => setDescricao(e.target.value)}/>
-
-                        <label htmlFor="link">Cole aqui o link para o vídeo *</label>
-                        <input type="text" className="form-control" id="link" value={link}
-                               onChange={(e) => setLink(e.target.value)}/>
-                        <label htmlFor="dataCadastro">Quando o artigo foi lançado? *</label>
-                        <input
-                            type="date"
-                            className="form-control"
-                            id="dataCadastro"
-                            value={dataPublicacao ? dataPublicacao.toISOString().substr(0, 10) : ''}
-                            onChange={(mudarData)}
-                        />
-                        <div>
-                            <h4>Tags:</h4>
-                            <label htmlFor="novaTag"> Adicionar TAG</label>
-                            <input
-                                type="text"
-                                id="novaTag"
-                                value={novaTag}
-                                onChange={(e) => setNovaTag(e.target.value)}
-                            />
-                            <Button variant="primary" onClick={adicionarTag}>
-                                Adicionar
-                            </Button>
-                        </div>
-                        <div>
-                            {tags.map(tag => (
-                                <div key={tag.id}>
-                                    <span>{tag.nome}</span>
-                                    <Button variant="danger" onClick={() => removerTag(tag.id)}>
-                                        Remover
-                                    </Button>
-                                </div>
-                            ))}
-                        </div>
-                        <div>
-                            <h4>Autores :</h4>
-                            <label htmlFor="novoAutor"> Adicionar autor</label>
-                            <input
-                                type="text"
-                                id="novoAutor"
-                                value={novoAutor}
-                                onChange={(e) => setNovoAutor(e.target.value)}
-                            />
-                            <Button variant="primary" onClick={adicionarAutor}>
-                                Adicionar
-                            </Button>
-                        </div>
-                        <div>
-                            {autores.map(autor => (
-                                <div key={autor.id}>
-                                    <span>{autor.nome}</span>
-                                    <Button variant="danger" onClick={() => removerAutor(autor.id)}>
-                                        Remover
-                                    </Button>
-                                </div>
-                            ))}
-                        </div>
+                        <CampoTextoSimplesModal id="Titulo" label="Titulo do artigo" texto={titulo} salvarTexto={setTitulo}/>
+                        <CampoTextAreaModal id="Descricao" label="Descreva brevemente o assunto do artigo" texto={descricao} salvarTexto={setDescricao}/>
+                        <CampoTextoSimplesModal id="Link" label="Cole aqui o link para o artigo" texto={link} salvarTexto={setLink}/>
+                        <CampoDataModal label="Quando o artigo foi lançado?" valor={dataPublicacao} salvarData={setDataPublicacao}/>
+                        <BuscadorDeTag label="Selecione suas tags" salvarTag={adicionarTag}/>
+                        <ListagemTagsModal tags={tags} removerTag={removerTag} />
+                        <hr className="mx-5"/>
+                        <AdicaoDeStringAoArrayModal label="Autores" novaString={novoAutor} setNovaString={setNovoAutor} adicionarString={adicionarAutor} />
+                        <ListagemDeAutores autores={autores} removerAutor={removerAutor}/>
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
