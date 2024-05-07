@@ -3,12 +3,12 @@ import {Tag} from "../TypeTag.ts";
 
 export class Evento extends Conteudo {
 
-    dataHoraInicio: Date;
-    dataHoraFim: Date;
+    dataHoraInicio: Date | null;
+    dataHoraFim: Date | null;
     local: string;
     preco: number;
 
-    constructor(titulo: string, descricao: string, link: string, tags: Tag[], dataHoraInicio: Date, dataHoraFim: Date, local: string, preco: number, id?: string, boletimInformativoEdicao?: string, dataCadastro?: Date, dataAtualizacao?: Date) {
+    constructor(titulo: string, descricao: string, link: string, tags: Tag[], dataHoraInicio: Date | null, dataHoraFim: Date | null, local: string, preco: number, id?: string, boletimInformativoEdicao?: string, dataCadastro?: Date, dataAtualizacao?: Date) {
         super(titulo, descricao, link, tags, id, boletimInformativoEdicao, dataCadastro, dataAtualizacao);
         this.dataHoraInicio = dataHoraInicio;
         this.dataHoraFim = dataHoraFim;

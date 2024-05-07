@@ -3,6 +3,7 @@ import {Artigo} from "../TypesConteudos/Conteudos/Artigo.ts";
 import {Curso} from "../TypesConteudos/Conteudos/Curso.ts";
 import {Noticia} from "../TypesConteudos/Conteudos/Noticia.ts";
 import {Video} from "../TypesConteudos/Conteudos/Video.ts";
+import {Evento} from "../TypesConteudos/Conteudos/Evento.ts";
 
 export const useItemsAndModal = () => {
 
@@ -27,7 +28,7 @@ export const useItemsAndModal = () => {
         setModal(prev => ({...prev, show: false}));
     };
 
-    const saveItem = <T extends Artigo | Curso | Noticia | Video>(
+    const saveItem = <T extends Artigo | Curso |Evento| Noticia | Video>(
         type: keyof typeof items,
         item: T,
         editIndex: number | null

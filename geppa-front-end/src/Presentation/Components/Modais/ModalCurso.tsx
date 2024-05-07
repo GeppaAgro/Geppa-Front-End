@@ -22,7 +22,6 @@ const ModalCurso: React.FC<ModalConteudoProps> = ({abrir, fechar, mostrar, salva
     const [link, setLink] = useState<string>('')
     const [preco, setPreco] = useState<number | null>(0)
     const [duracaoEmHoras, setDuracaoEmHoras] = useState<number>(0)
-    const [novaTag, setNovaTag] = useState<string>('');
     const [tags, setTags] = useState<Tag[]>([]);
     const [errosValidacao, setErrosValidacao] = useState<{ [key: string]: string }>()
     const [tentouSalvar, setTentouSalvar] = useState(false);
@@ -77,7 +76,6 @@ const ModalCurso: React.FC<ModalConteudoProps> = ({abrir, fechar, mostrar, salva
         setPreco(0)
         setDuracaoEmHoras(0)
         setTags([])
-        setNovaTag('')
     }
 
     const adicionarTag = (novaTagObj: Tag) => {

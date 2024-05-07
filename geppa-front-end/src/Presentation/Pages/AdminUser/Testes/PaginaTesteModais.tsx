@@ -1,10 +1,11 @@
-import {Artigo, Curso, Noticia, Video} from "../../../../Domain/TypesConteudos/TypesConteudos.ts";
+import {Artigo, Curso, Evento, Noticia, Video} from "../../../../Domain/TypesConteudos/TypesConteudos.ts";
 import {Button, Container} from "react-bootstrap";
 import ModalArtigo from "../../../Components/Modais/ModalArtigo.tsx";
 import ModalCurso from "../../../Components/Modais/ModalCurso.tsx";
 import ModalNoticia from "../../../Components/Modais/ModalNoticia.tsx";
 import ModalVideo from "../../../Components/Modais/ModalVideo.tsx";
 import {useItemsAndModal} from "../../../../Domain/Hooks/useItemsAndModal.ts";
+import ModalEvento from "../../../Components/Modais/ModalEvento.tsx";
 
 interface Item {
     id: string | number;
@@ -88,6 +89,13 @@ const PaginaTesteModais: React.FC = () => {
                             curso={modal.editIndex !== null ? items.cursos[modal.editIndex] : undefined}
                         />
                     )}
+                    {modal.type === 'evento' && (
+                        <ModalEvento abrir={modal.show}
+                                     fechar={closeModal}
+                                     mostrar={() => openModal('evento')}
+                                     salvar={(data: Evento) => saveItem('eventos', data, modal.editIndex)}
+                                     evento={modal.editIndex !==null ? items.eventos[modal.editIndex] : undefined}/>
+                    )}
                     {modal.type === 'noticia' && (
                         <ModalNoticia
                             abrir={modal.show}
@@ -106,19 +114,11 @@ const PaginaTesteModais: React.FC = () => {
                             video={modal.editIndex !== null ? items.videos[modal.editIndex] : undefined}
                         />
                     )}
-                    {/*{modal.type === 'evento' && (*/}
-                    {/*    <ModalVideo*/}
-                    {/*        abrir={modal.show}*/}
-                    {/*        fechar={closeModal}*/}
-                    {/*        mostrar={() => openModal('video')}*/}
-                    {/*        salvar={(data: Video) => saveItem('videos', data, modal.editIndex)}*/}
-                    {/*        video={modal.editIndex !== null ? items.videos[modal.editIndex] : undefined}*/}
-                    {/*    />*/}
-                    {/*)}*/}
                 </>
             )}
             {renderList('artigos', items.artigos)}
             {renderList('cursos', items.cursos)}
+            {renderList('eventos', items.eventos)}
             {renderList('noticias', items.noticias)}
             {renderList('videos', items.videos)}
         </Container>
