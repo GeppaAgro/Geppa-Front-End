@@ -6,6 +6,7 @@ import CadastroTag from "../../../Components/Tags/CadastroTag/CadastroTag.tsx";
 import {Tag} from "../../../../Domain/TypesConteudos/TypeTag.ts";
 import AxiosClient from "../../../../Data/Services/AxiosClient.ts";
 import Paginacao from "../../../Components/Paginacao/Paginacao.tsx";
+import DeleteTag from "../../../Components/Tags/DeleteTag/DeleteTag.tsx";
 
 const ListagemTags: React.FC = () => {
     const filterInputRef = useRef<HTMLInputElement>(null);
@@ -16,20 +17,28 @@ const ListagemTags: React.FC = () => {
     const [totalPages, setTotalPages] = useState(0);
 
     useEffect(() => {
-        const fetchTags = async () => {
-            let response;
+        fetchTags();
+    }, [currentPage, filter]);
+
+    const fetchTags = async () => {
+        let response;
+        try {
             if (filter) {
                 response = await AxiosClient(`/tags/${filter}`);
                 setTotalPages(1);
+                setCurrentPage(0);
             } else {
                 response = await AxiosClient(`/tags?page=${currentPage}&size=8`);
                 setTotalPages(response.data.totalPaginas);
+                setCurrentPage(response.data.paginaAtual || 0);
             }
             setTags(response.data.dados);
-            setCurrentPage(response.data.paginaAtual || 0);
-        };
-        fetchTags();
-    }, [currentPage, filter]);
+        } catch (error) {
+            setTags([]);
+            setTotalPages(1);
+            setCurrentPage(0);
+        }
+    };
 
     const clearFilter = () => {
         setFilter('');
@@ -38,22 +47,8 @@ const ListagemTags: React.FC = () => {
         }
     };
 
-
-    const filteredTags = tags.filter(tags =>
-        tags.nome.includes(filter.toLowerCase())
-    );
-
     const handleEdit = (tags: Tag) => {
         setSelectedTag(tags);
-
-    };
-
-    const handleDelete = (tags: Tag) => {
-        console.log('Excluir categoria:', tags.id);
-    };
-
-    const handleCloseModal = () => {
-        setSelectedTag(null);
     };
 
     const handlePageChange = (page: number) => {
@@ -61,7 +56,6 @@ const ListagemTags: React.FC = () => {
     };
     const handleSave = () => {
         console.log('Salvar categoria:', selectedTag);
-        handleCloseModal();
     };
 
     return (
@@ -85,8 +79,6 @@ const ListagemTags: React.FC = () => {
                             }}>
                                 Buscar
                             </Button>
-
-
                         </InputGroup>
 
                         <CadastroTag buttonText={"Nova Tag"} iconClass={"ri-add-line"}/>
@@ -100,20 +92,21 @@ const ListagemTags: React.FC = () => {
                             </tr>
                             </thead>
                             <tbody>
-                            {filteredTags.length > 0 ? (
-                                filteredTags.map((tags, index) => (
+                            {tags.length > 0 ? (
+                                tags.map((tags, index) => (
                                     <tr key={tags.id}>
                                         <td className={"align-middle"}>{index + 1}</td>
                                         <td className={"align-middle"}>{tags.nome}</td>
                                         <td className="text-center align-middle">
-                                            <Button variant="primary" onClick={() => handleEdit(tags)}>
+                                            <Button variant=""
+                                                    className={'fw-medium text-primary-emphasis'}
+
+                                                    onClick={() => handleEdit(tags)}>
                                                 Editar
                                                 <i className=" fw- ps-1 ri-pencil-fill"></i>
                                             </Button>
-                                            <Button variant="danger" onClick={() => handleDelete(tags)}>
-                                                Excluir
-                                                <i className="ps-1 ri-delete-bin-line"></i>
-                                            </Button>
+                                            <span className={'px-1'}/>
+                                            <DeleteTag tag={tags} fetchTags={fetchTags}/>
                                         </td>
                                     </tr>
                                 ))) : (
