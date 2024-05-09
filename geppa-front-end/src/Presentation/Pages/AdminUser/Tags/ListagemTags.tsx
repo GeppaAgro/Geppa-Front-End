@@ -54,9 +54,6 @@ const ListagemTags: React.FC = () => {
     const handlePageChange = (page: number) => {
         setCurrentPage(page);
     };
-    const handleSave = () => {
-        console.log('Salvar categoria:', selectedTag);
-    };
 
     return (
         <>
@@ -81,7 +78,7 @@ const ListagemTags: React.FC = () => {
                             </Button>
                         </InputGroup>
 
-                        <CadastroTag buttonText={"Nova Tag"} iconClass={"ri-add-line"}/>
+                        <CadastroTag buttonText={"Nova Tag"} iconClass={"ri-add-line"} fetchTags={fetchTags}/>
 
                         <Table striped hover>
                             <thead>
