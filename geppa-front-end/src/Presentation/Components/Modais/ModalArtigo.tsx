@@ -149,7 +149,9 @@ const ModalArtigo: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, artig
 
                         <AdicaoDeStringAoArrayModal label="Autores" novaString={novoAutor}
                                                     setNovaString={setNovoAutor}
-                                                    adicionarString={adicionarAutor}/>
+                                                    adicionarString={adicionarAutor}
+                                                    erro={errosValidacao?.autores}
+                                                    tentouSalvar={tentouSalvar}/>
 
                         <ListagemDeAutores autores={autores} removerAutor={removerAutor}
                                            errosValidacao={errosValidacao}/>
