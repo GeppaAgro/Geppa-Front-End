@@ -15,7 +15,7 @@ import {Tag} from "../../../Domain/TypesConteudos/TypeTag.ts";
 import CampoValorMonetarioModal from "./ComponentesModal/CampoValorMonetarioModal.tsx";
 import CampoNumerico from "./ComponentesModal/CampoNumerico.tsx";
 
-const ModalCurso: React.FC<ModalConteudoProps> = ({abrir, fechar, mostrar, salvar, curso}) => {
+const ModalCurso: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, curso}) => {
     const [titulo, setTitulo] = useState<string>('')
     const [descricao, setDescricao] = useState<string>('')
     const [prazoInscricao, setPrazoInscricao] = useState<Date|null>(null)
@@ -92,10 +92,6 @@ const ModalCurso: React.FC<ModalConteudoProps> = ({abrir, fechar, mostrar, salva
     return(
         <>
             {isLoading && <LoadingOverlay />}
-
-            <Button variant="primary" onClick={mostrar}>
-                Adicionar Curso
-            </Button>
 
             <Modal show={abrir} onHide={cancelar} backdrop="static">
                 <Modal.Header>

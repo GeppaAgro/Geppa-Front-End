@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import { Button, Modal } from "react-bootstrap";
+import {Button, Modal} from "react-bootstrap";
 import {Video} from "../../../Domain/TypesConteudos/Conteudos/Video.ts";
 import {Tag} from "../../../Domain/TypesConteudos/TypeTag.ts";
 import {ModalConteudoProps} from "../../../Domain/TypesConteudos/TypeModaisProps.ts";
@@ -12,7 +12,7 @@ import CampoTextAreaModal from "./ComponentesModal/CampoTextAreaModal.tsx";
 import BuscadorDeTag from "./ComponentesModal/BuscadorDeTag.tsx";
 import ListagemTagsModal from "./ComponentesModal/ListagemTagsModal.tsx";
 
-const ModalArtigo: React.FC<ModalConteudoProps> = ({ abrir, fechar, mostrar, salvar, video }) => {
+const ModalArtigo: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, video}) => {
     const [titulo, setTitulo] = useState<string>('')
     const [descricao, setDescricao] = useState<string>('')
     const [link, setLink] = useState<string>('')
@@ -62,7 +62,7 @@ const ModalArtigo: React.FC<ModalConteudoProps> = ({ abrir, fechar, mostrar, sal
         limpar()
     }
 
-    const limpar = () =>{
+    const limpar = () => {
         setTitulo('')
         setDescricao('')
         setLink('')
@@ -83,9 +83,6 @@ const ModalArtigo: React.FC<ModalConteudoProps> = ({ abrir, fechar, mostrar, sal
     return (
         <>
             {isLoading && <LoadingOverlay/>}
-            <Button variant="primary" onClick={mostrar}>
-                Adicionar Video
-            </Button>
             <Modal show={abrir} onHide={cancelar} backdrop="static">
                 <Modal.Header>
                     <Modal.Title>{video ? 'Editar Video' : 'Adicionar Video'}</Modal.Title>
