@@ -45,7 +45,7 @@ const ModalEvento: React.FC<ModalConteudoProps> = ({abrir, fechar, mostrar, salv
 
     const handleEvento = async () => {
         setIsLoading(true);
-        const evento: Evento = new Evento(titulo, descricao, link, tags, dataHoraInicio,dataHoraFim,local,preco )
+        const evento: Evento = new Evento(titulo, descricao, link, tags, dataHoraInicio,dataHoraFim,local, preco)
 
         const isValid = await validar(evento);
         setTentouSalvar(true);
@@ -173,6 +173,7 @@ const ModalEvento: React.FC<ModalConteudoProps> = ({abrir, fechar, mostrar, salv
                                         salvarData={salvarDataInicio}
                                         erro={errosValidacao?.dataHoraInicio}
                                         tentouSalvar={tentouSalvar} />
+
                         <CampoHoraModal label="Hora de Início do Evento"
                                         valor={dataHoraInicio ? dataHoraInicio.getHours().toString().padStart(2, '0') + ':' + dataHoraInicio.getMinutes().toString().padStart(2, '0') : ''}
                                         salvarHora={salvarHoraInicio}
@@ -184,6 +185,7 @@ const ModalEvento: React.FC<ModalConteudoProps> = ({abrir, fechar, mostrar, salv
                                         salvarData={salvarDataFim}
                                         erro={errosValidacao?.dataHoraFim}
                                         tentouSalvar={tentouSalvar} />
+
                         <CampoHoraModal label="Hora de Fim do Evento"
                                         valor={dataHoraFim ? dataHoraFim.getHours().toString().padStart(2, '0') + ':' + dataHoraFim.getMinutes().toString().padStart(2, '0') : ''}
                                         salvarHora={salvarHoraFim}

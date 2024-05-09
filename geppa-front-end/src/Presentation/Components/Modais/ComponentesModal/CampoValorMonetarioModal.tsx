@@ -18,6 +18,9 @@ const CampoValorMonetarioModal: React.FC<CampoValorMonetarioProps> = ({ label, v
     useEffect(() => {
         if (valor !== null) {
             setValorLocal(valor);
+            if(valor === 0 ){
+                setIsCursoGratuito(true)
+            }
         } else{
             setValorLocal(null);
         }
@@ -38,8 +41,7 @@ const CampoValorMonetarioModal: React.FC<CampoValorMonetarioProps> = ({ label, v
 
     const handleCursoGratuitoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setIsCursoGratuito(e.target.checked);
-        //NAO ESQUECER DE COLOCAR 0 AQUI APOS FIM DA VALIDAÇÃO NO BACKEND
-        salvarValor(1)
+        salvarValor(0)
     };
 
     return (

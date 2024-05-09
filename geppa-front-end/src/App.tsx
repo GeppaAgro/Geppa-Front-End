@@ -5,7 +5,6 @@ import Footer from './Presentation/Components/Footer/Footer.tsx';
 import Sidebar from './Presentation/Components/Sidebar/Sidebar.tsx';
 import AdminInicial from './Presentation/Pages/AdminUser/AdminInicial/AdminInicial.tsx';
 import AdminBoletim from './Presentation/Pages/AdminUser/AdminBoletim/AdminBoletim.tsx';
-import AdminCriarBoletim from './Presentation/Pages/AdminUser/AdminCriarBoletim/AdminCriarBoletim.tsx';
 import AdminAlunos from './Presentation/Pages/AdminUser/AdminAlunos/AdminAlunos.tsx';
 import PaginaListaBoletins from './Presentation/Pages/CommonUser/ListaDeBoletins/PaginaListaBoletins.tsx';
 import PaginaListaConteudos from './Presentation/Pages/CommonUser/ListaDeConteudos/PaginaListaConteudos.tsx';
@@ -15,18 +14,20 @@ import PaginaBoletim from './Presentation/Pages/CommonUser/Boletim/PaginaBoletim
 import PaginaNaoEncontrada from './Presentation/Pages/CommonUser/NotFound/PaginaNaoEncontrada.tsx';
 import { PaginaLogin } from './Presentation/Pages/AdminUser/Login/PaginaLogin.tsx';
 import PaginaInicial from './Presentation/Pages/CommonUser/Inicial/PaginaInicial.tsx';
-import PaginaTesteModais from "./Presentation/Pages/AdminUser/Testes/PaginaTesteModais.tsx";
+import PaginaCriacaoBoletim from "./Presentation/Pages/AdminUser/Testes/PaginaCriacaoBoletim.tsx";
 
 function AdminRoutes() {
   return (
     <>
       <Sidebar />
-      <Routes>
-        <Route path="/admin" element={<AdminInicial />} />
-        <Route path="boletins" element={<AdminBoletim />} />
-        <Route path="criar-boletins" element={<AdminCriarBoletim />} />
-        <Route path="aluno" element={<AdminAlunos />} />
-      </Routes>
+        <div style={{marginLeft: '280px'}}>
+            <Routes>
+                <Route path="/admin" element={<AdminInicial />} />
+                <Route path="boletins" element={<AdminBoletim />} />
+                <Route path="criar-boletins" element={<PaginaCriacaoBoletim />} />
+                <Route path="aluno" element={<AdminAlunos />} />
+            </Routes>
+        </div>
     </>
   );
 }
@@ -43,7 +44,6 @@ function UserRoutes() {
         <Route path="sobre" element={<PaginaSobre />} />
         <Route path="boletim/:edicao" element={<PaginaBoletim />} />
         <Route path="*" element={<PaginaNaoEncontrada />} />
-          <Route path="testesModais" element={<PaginaTesteModais/>}/>
       </Routes>
       <Footer />
     </>

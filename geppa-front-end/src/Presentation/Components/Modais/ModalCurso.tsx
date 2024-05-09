@@ -130,7 +130,6 @@ const ModalCurso: React.FC<ModalConteudoProps> = ({abrir, fechar, mostrar, salva
                                                   salvarValor={setPreco}
                                                   erro={errosValidacao?.preco}
                                                   tentouSalvar={tentouSalvar}/>
-
                         <CampoNumerico
                             value={duracaoEmHoras}
                             onChange={setDuracaoEmHoras}
