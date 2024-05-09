@@ -12,7 +12,6 @@ const ListagemTags: React.FC = () => {
     const filterInputRef = useRef<HTMLInputElement>(null);
     const [tags, setTags] = useState<Tag[]>([]);
     const [filter, setFilter] = useState('');
-    const [selectedTag, setSelectedTag] = useState<Tag | null>(null);
     const [currentPage, setCurrentPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
 
@@ -47,10 +46,6 @@ const ListagemTags: React.FC = () => {
         }
     };
 
-    const handleEdit = (tags: Tag) => {
-        setSelectedTag(tags);
-    };
-
     const handlePageChange = (page: number) => {
         setCurrentPage(page);
     };
@@ -78,7 +73,10 @@ const ListagemTags: React.FC = () => {
                             </Button>
                         </InputGroup>
 
-                        <CadastroTag buttonText={"Nova Tag"} iconClass={"ri-add-line"} fetchTags={fetchTags}/>
+                        <CadastroTag buttonText={"Nova Tag"}
+                                     iconClass={"ri-add-line"}
+                                     fetchTags={fetchTags}
+                                     classNameBtn={"mb-3 border-0"}/>
 
                         <Table striped hover>
                             <thead>
@@ -90,20 +88,21 @@ const ListagemTags: React.FC = () => {
                             </thead>
                             <tbody>
                             {tags.length > 0 ? (
-                                tags.map((tags, index) => (
-                                    <tr key={tags.id}>
+                                tags.map((tag, index) => (
+                                    <tr key={tag.id}>
                                         <td className={"align-middle"}>{index + 1}</td>
-                                        <td className={"align-middle"}>{tags.nome}</td>
+                                        <td className={"align-middle"}>{tag.nome}</td>
                                         <td className="text-center align-middle">
-                                            <Button variant=""
-                                                    className={'fw-medium text-primary-emphasis'}
 
-                                                    onClick={() => handleEdit(tags)}>
-                                                Editar
-                                                <i className=" fw- ps-1 ri-pencil-fill"></i>
-                                            </Button>
+                                            <CadastroTag buttonText={"Editar"}
+                                                         iconClass={"ri-pencil-fill"}
+                                                         fetchTags={fetchTags}
+                                                         classNameBtn={"text-primary-emphasis fw-medium border-0"}
+                                                         tag={tag}
+                                                         colorBtn={cores.transparente}
+                                            />
                                             <span className={'px-1'}/>
-                                            <DeleteTag tag={tags} fetchTags={fetchTags}/>
+                                            <DeleteTag tag={tag} fetchTags={fetchTags}/>
                                         </td>
                                     </tr>
                                 ))) : (

@@ -3,12 +3,15 @@ import {Button, Modal, Form} from 'react-bootstrap';
 import cores from "../../Utils/Cores.tsx";
 import AxiosClient from "../../../../Data/Services/AxiosClient.ts";
 import CustomToast from "../../Utils/CustomToast.tsx";
+import {Tag} from "../../../../Domain/TypesConteudos/TypeTag.ts";
 
 interface AddTagButtonProps {
     buttonText: string;
     iconClass: string;
-    editMode?: boolean;
+    tag?: Tag;
     useIcon?: boolean;
+    classNameBtn?: string;
+    colorBtn?: string;
     fetchTags: () => void;
 }
 
@@ -31,13 +34,23 @@ const CadastroTag: React.FC<AddTagButtonProps> = ({
                                                       buttonText,
                                                       iconClass,
                                                       useIcon = true,
-                                                      editMode = false,
-                                                      fetchTags
+                                                      tag = null,
+                                                      fetchTags,
+                                                      classNameBtn,
+                                                      colorBtn = cores.verdeOliva,
                                                   }) => {
     const [showModal, setShowModal] = useState(false);
     const [tagName, setTagName] = useState('');
     const [toast, setToast] = useState<{ message: string; isSuccess: boolean } | null>(null);
     const [erro, setErro] = useState<ErroValidacao | null>()
+    const [isEditing, setIsEditing] = useState(false);
+
+    useEffect(() => {
+        if (tag) {
+            setIsEditing(true);
+            setTagName(tag.nome || '');
+        }
+    }, [tag]);
 
     useEffect(() => {
         if (toast) {
@@ -52,16 +65,16 @@ const CadastroTag: React.FC<AddTagButtonProps> = ({
     const handleCloseModal = () => {
         setShowModal(false)
         setErro(null)
-        setTagName('')
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            await AxiosClient.post('/tags', {nome: tagName});
+            const url = isEditing ? `/tags/${tag?.id}` : '/tags';
+            await AxiosClient[isEditing ? 'put' : 'post'](url, {nome: tagName});
             handleCloseModal();
             setToast({
-                message: `Tag '${tagName}' criada com sucesso!`,
+                message: `Tag ${isEditing ? 'editada' : 'criada'} com sucesso!`,
                 isSuccess: true,
             });
             setTagName('')
@@ -93,8 +106,8 @@ const CadastroTag: React.FC<AddTagButtonProps> = ({
         <>
             {toast && <CustomToast show={!!toast} message={toast.message} isSuccess={toast.isSuccess}/>}
             <Button variant="success"
-                    style={{backgroundColor: cores.verdeOliva}}
-                    className={"mb-3 border-0"}
+                    style={{backgroundColor: colorBtn}}
+                    className={classNameBtn}
                     onClick={() => setShowModal(true)}>
                 {buttonText}
                 {useIcon && <i className={`ps-1 ${iconClass}`}></i>}
@@ -102,7 +115,7 @@ const CadastroTag: React.FC<AddTagButtonProps> = ({
 
             <Modal show={showModal} onHide={handleCloseModal}>
                 <Modal.Header closeButton>
-                    <Modal.Title>{editMode ? 'Editar Tag' : 'Nova Tag'}</Modal.Title>
+                    <Modal.Title>{isEditing ? 'Editar Tag' : 'Nova Tag'}</Modal.Title>
                 </Modal.Header>
                 <Form onSubmit={handleSubmit}>
                     <Modal.Body>

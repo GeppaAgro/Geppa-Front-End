@@ -10,6 +10,7 @@ const Cores = {
     branco: '#FFFFFF',
     brancoTransparente: '#FFFFFF99',
     vermelho: '#FF0000',
+    transparente: 'transparent',
 };
 
 export default Cores;
