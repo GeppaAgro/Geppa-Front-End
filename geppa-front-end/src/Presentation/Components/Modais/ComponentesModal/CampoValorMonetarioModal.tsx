@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 
 interface CampoValorMonetarioProps {
     label: string;
@@ -10,7 +10,15 @@ interface CampoValorMonetarioProps {
     tentouSalvar?: boolean;
 }
 
-const CampoValorMonetarioModal: React.FC<CampoValorMonetarioProps> = ({ label, valor, checkBox, checkBoxLabel, salvarValor, erro, tentouSalvar }) => {
+const CampoValorMonetarioModal: React.FC<CampoValorMonetarioProps> = ({
+                                                                          label,
+                                                                          valor,
+                                                                          checkBox,
+                                                                          checkBoxLabel,
+                                                                          salvarValor,
+                                                                          erro,
+                                                                          tentouSalvar
+                                                                      }) => {
     const [valorLocal, setValorLocal] = useState<number | null>(null);
     const [isCursoGratuito, setIsCursoGratuito] = useState<boolean>(false);
 
@@ -18,10 +26,10 @@ const CampoValorMonetarioModal: React.FC<CampoValorMonetarioProps> = ({ label, v
     useEffect(() => {
         if (valor !== null) {
             setValorLocal(valor);
-            if(valor === 0 ){
-                setIsCursoGratuito(true)
+            if (valor === 1) {
+                setIsCursoGratuito(false)
             }
-        } else{
+        } else {
             setValorLocal(null);
         }
     }, [valor]);
@@ -48,27 +56,27 @@ const CampoValorMonetarioModal: React.FC<CampoValorMonetarioProps> = ({ label, v
         <div className="mb-2">
             <div className="d-flex flex-column">
                 <label htmlFor="valor" className="fw-semibold" hidden={isCursoGratuito}>{label}</label>
-                    <input
-                        type="number"
-                        step="0.01"
-                        className={`form-control ${erro ? 'is-invalid' : (tentouSalvar && !erro) ? 'is-valid' : ''}`}
-                        value={valorLocal !== null ? valorLocal : ''}
-                        onChange={handleChange}
-                        min="0.01"
-                        hidden={isCursoGratuito}
-                    />
-                    {erro && <div className="invalid-feedback">{erro}</div>}
+                <input
+                    type="number"
+                    step="0.01"
+                    className={`form-control ${erro ? 'is-invalid' : (tentouSalvar && !erro) ? 'is-valid' : ''}`}
+                    value={valorLocal !== null ? valorLocal : ''}
+                    onChange={handleChange}
+                    min="0.01"
+                    hidden={isCursoGratuito}
+                />
+                {erro && <div className="invalid-feedback">{erro}</div>}
 
             </div>
             <div className="form-check mt-2" hidden={!checkBox}>
                 <input
-                    className="form-check-input"
+                    className="form-check-input border-2 border-dark-subtle"
                     type="checkbox"
                     id="cursoGratuito"
                     checked={isCursoGratuito}
                     onChange={handleCursoGratuitoChange}
                 />
-                <label className="form-check-label" htmlFor="cursoGratuito" >
+                <label className="form-check-label" htmlFor="cursoGratuito">
                     {checkBoxLabel}
                 </label>
             </div>
