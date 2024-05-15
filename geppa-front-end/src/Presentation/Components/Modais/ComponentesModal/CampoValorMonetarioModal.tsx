@@ -18,7 +18,7 @@ const CampoValorMonetarioModal: React.FC<CampoValorMonetarioProps> = ({ label, v
     useEffect(() => {
         if (valor !== null) {
             setValorLocal(valor);
-            if(valor === 0 ){
+            if(valor === 0 && checkBox){
                 setIsCursoGratuito(true)
             }
         } else{

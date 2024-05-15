@@ -27,7 +27,7 @@ const CampoTextoSimplesModal: React.FC<CampoTextoSimplesProps> = ({ id, label, s
     return (
         <div className="mb-2">
             {erro && <div className="invalid-feedback mb-3">{erro}</div>}
-            <label htmlFor="buscatag" className="fw-semibold">{label}</label>
+            <label htmlFor="buscatag" className="fw-semibold" hidden={label === ""}>{label}</label>
             <input
                 className={`form-control ${erro ? 'is-invalid' : (tentouSalvar && !erro && textoLocal) ? 'is-valid' : ''}`}
                 type="text"

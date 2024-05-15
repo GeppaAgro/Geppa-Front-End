@@ -1,5 +1,5 @@
 import {Artigo, Curso, Evento, Noticia, Video} from "../../../../Domain/TypesConteudos/TypesConteudos.ts";
-import {Button, Container} from "react-bootstrap";
+import {Button, Container, Modal} from "react-bootstrap";
 import ModalArtigo from "../../../Components/Modais/ModalArtigo.tsx";
 import ModalCurso from "../../../Components/Modais/ModalCurso.tsx";
 import ModalNoticia from "../../../Components/Modais/ModalNoticia.tsx";
@@ -8,6 +8,10 @@ import {useItemsAndModal} from "../../../../Domain/Hooks/useItemsAndModal.ts";
 import ModalEvento from "../../../Components/Modais/ModalEvento.tsx";
 import "./PaginaCriacaoBoletim.css"
 import Logo from '../../../../Data/Images/Logos/Logo.png'
+import ModalIndicadores from "../../../Components/Modais/ModalIndicadores.tsx";
+import {Indicador} from "../../../../Domain/TypesConteudos/Indicador.ts";
+import {useState} from "react";
+import ListaDeIndicadores from "../../../Components/Modais/ComponentesModal/ListaDeIndicadores.tsx";
 
 interface Item {
     id: string | number;
@@ -15,6 +19,44 @@ interface Item {
 }
 
 const PaginaCriacaoBoletim: React.FC = () => {
+
+    const [indicadores, setIndicadores] = useState<Indicador[]>([]);
+    const [modalIndicadores, setModalIndicadores] = useState<{
+        show: boolean,
+        editIndex: number | null
+    }>({ show: false, editIndex: null });
+
+    const closeModalIndicadores = () => {
+        setModalIndicadores({
+           show: false,
+           editIndex: null
+        })
+    }
+
+    const openModalIndicadores = (index: number | null) => {
+        setModalIndicadores({
+            show: true,
+            editIndex: index
+        })
+    }
+
+    const salvarIndicador = (indicador : Indicador, index: number | null) => {
+        console.log(indicador, index);
+        setIndicadores((prevIndicadores) => {
+            const newIndicadores = [...prevIndicadores];
+            if (index !== null && index >= 0 && index < newIndicadores.length) {
+                newIndicadores[index] = indicador;
+            } else {
+                newIndicadores.push(indicador);
+            }
+            return newIndicadores;
+        });
+    }
+    const deleteIndicador = (index: number) => {
+        indicadores.splice(index, 1);
+        setIndicadores([...indicadores]);
+    };
+
 
     type ContentType = 'artigo' | 'curso' | 'noticia' | 'video'| 'evento';
 
@@ -31,7 +73,6 @@ const PaginaCriacaoBoletim: React.FC = () => {
     };
 
     const {items, modal, openModal, closeModal, saveItem, deleteItem} = useItemsAndModal();
-
     const renderList = (type: 'artigos' | 'cursos' | 'noticias' | 'videos' | 'eventos', items: Item[]) => {
         return (
             <ul>
@@ -77,13 +118,15 @@ const PaginaCriacaoBoletim: React.FC = () => {
         }
     };
 
+
     return (
         <Container className="pagina-criar-boletim p-5">
             <div className="d-flex justify-content-center mb-2">
                 <span className="fs-1 fw-semibold">Cadastrar Boletim</span>
             </div>
 
-            <Container className="col-8 px-5 d-none d-xl-flex align-items-center container-lista-conteudos mb-3 justify-content-between flex-row" >
+            <Container
+                className="col-8 px-5 d-none d-xl-flex align-items-center container-lista-conteudos mb-3 justify-content-between flex-row">
                 <div className=" my-3 col-8">
                     <div className="d-flex justify-content-center mb-2">
                         <span className="fs-5 fw-semibold">
@@ -128,7 +171,7 @@ const PaginaCriacaoBoletim: React.FC = () => {
                                      fechar={closeModal}
                                      mostrar={() => openModal('evento')}
                                      salvar={(data: Evento) => saveItem('eventos', data, modal.editIndex)}
-                                     evento={modal.editIndex !==null ? items.eventos[modal.editIndex] : undefined}/>
+                                     evento={modal.editIndex !== null ? items.eventos[modal.editIndex] : undefined}/>
                     )}
                     {modal.type === 'noticia' && (
                         <ModalNoticia
@@ -155,6 +198,10 @@ const PaginaCriacaoBoletim: React.FC = () => {
             {renderList('eventos', items.eventos)}
             {renderList('noticias', items.noticias)}
             {renderList('videos', items.videos)}
+
+
+
+            <ListaDeIndicadores/>
 
             <div className="d-flex flex-row gap-4 justify-content-end mb-5">
                 <Button onClick={deletarBoletim} className="" variant="danger">Cancelar</Button>
