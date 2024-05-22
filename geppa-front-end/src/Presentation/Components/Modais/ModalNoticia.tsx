@@ -14,7 +14,7 @@ import {mapperMensagensValidacaoConteudo} from "../../../Domain/mappers/MapperMe
 import LoadingOverlay from "../Utils/LoadingOverlay/LoadingOverlay.tsx";
 
 
-const ModalNoticia: React.FC<ModalConteudoProps> = ({abrir, fechar, mostrar, salvar, noticia}) => {
+const ModalNoticia: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, noticia}) => {
     const [titulo, setTitulo] = useState<string>('')
     const [descricao, setDescricao] = useState<string>('')
     const [link, setLink] = useState<string>('')
@@ -87,10 +87,6 @@ const ModalNoticia: React.FC<ModalConteudoProps> = ({abrir, fechar, mostrar, sal
     return (
         <>
             {isLoading && <LoadingOverlay />}
-            <Button variant="primary" onClick={mostrar}>
-                Adicionar Noticia
-            </Button>
-
             <Modal show={abrir} onHide={cancelar} backdrop="static">
                 <Modal.Header>
                     <Modal.Title>{noticia ? 'Editar noticia' : 'Adicionar noticia'}</Modal.Title>

@@ -15,16 +15,16 @@ import LoadingOverlay from "../Utils/LoadingOverlay/LoadingOverlay.tsx";
 import CampoValorMonetarioModal from "./ComponentesModal/CampoValorMonetarioModal.tsx";
 import CampoHoraModal from "./ComponentesModal/CampoHoraModal.tsx";
 
-const ModalEvento: React.FC<ModalConteudoProps> = ({abrir, fechar, mostrar, salvar, evento}) => {
+const ModalEvento: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, evento}) => {
 
     const [titulo, setTitulo] = useState<string>('')
     const [descricao, setDescricao] = useState<string>('')
     const [link, setLink] = useState<string>('')
     const [tags, setTags] = useState<Tag[]>([]);
-    const [dataHoraInicio, setDataHoraInicio] = useState<Date| null>(null)
-    const [dataHoraFim, setDataHoraFim] = useState<Date| null>(null)
+    const [dataHoraInicio, setDataHoraInicio] = useState<Date | null>(null)
+    const [dataHoraFim, setDataHoraFim] = useState<Date | null>(null)
     const [local, setLocal] = useState<string>('')
-    const [preco, setPreco] = useState<number|null>(0)
+    const [preco, setPreco] = useState<number | null>(0)
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [errosValidacao, setErrosValidacao] = useState<{ [key: string]: string }>()
@@ -45,7 +45,7 @@ const ModalEvento: React.FC<ModalConteudoProps> = ({abrir, fechar, mostrar, salv
 
     const handleEvento = async () => {
         setIsLoading(true);
-        const evento: Evento = new Evento(titulo, descricao, link, tags, dataHoraInicio,dataHoraFim,local, preco)
+        const evento: Evento = new Evento(titulo, descricao, link, tags, dataHoraInicio, dataHoraFim, local, preco)
 
         const isValid = await validar(evento);
         setTentouSalvar(true);
@@ -74,7 +74,7 @@ const ModalEvento: React.FC<ModalConteudoProps> = ({abrir, fechar, mostrar, salv
         limpar()
     }
 
-    const limpar = () =>{
+    const limpar = () => {
         setTitulo('')
         setDescricao('')
         setLink('')
@@ -126,13 +126,9 @@ const ModalEvento: React.FC<ModalConteudoProps> = ({abrir, fechar, mostrar, salv
         setDataHoraFim(dataHoraCombinada);
     };
 
-    return(
+    return (
         <>
-            {isLoading && <LoadingOverlay />}
-
-            <Button variant="primary" onClick={mostrar}>
-                Adicionar Evento
-            </Button>
+            {isLoading && <LoadingOverlay/>}
             <Modal show={abrir} onHide={cancelar} backdrop="static">
                 <Modal.Header>
                     <Modal.Title>{evento ? 'Editar Evento' : 'Adicionar Evento'}</Modal.Title>
@@ -154,7 +150,7 @@ const ModalEvento: React.FC<ModalConteudoProps> = ({abrir, fechar, mostrar, salv
                                                 salvarTexto={setLink}
                                                 erro={errosValidacao?.link}
                                                 tentouSalvar={tentouSalvar}/>
-                        <CampoValorMonetarioModal label="Preço do Evento"
+                        <CampoValorMonetarioModal label="Preço do Evento (R$)"
                                                   valor={preco}
                                                   checkBox={true}
                                                   checkBoxLabel="O evento é gratuito?"
@@ -172,25 +168,25 @@ const ModalEvento: React.FC<ModalConteudoProps> = ({abrir, fechar, mostrar, salv
                                         valor={dataHoraInicio}
                                         salvarData={salvarDataInicio}
                                         erro={errosValidacao?.dataHoraInicio}
-                                        tentouSalvar={tentouSalvar} />
+                                        tentouSalvar={tentouSalvar}/>
 
                         <CampoHoraModal label="Hora de Início do Evento"
                                         valor={dataHoraInicio ? dataHoraInicio.getHours().toString().padStart(2, '0') + ':' + dataHoraInicio.getMinutes().toString().padStart(2, '0') : ''}
                                         salvarHora={salvarHoraInicio}
                                         erro={errosValidacao?.dataHoraInicio}
-                                        tentouSalvar={tentouSalvar} />
+                                        tentouSalvar={tentouSalvar}/>
 
                         <CampoDataModal label="Data de Fim do Evento"
                                         valor={dataHoraFim}
                                         salvarData={salvarDataFim}
                                         erro={errosValidacao?.dataHoraFim}
-                                        tentouSalvar={tentouSalvar} />
+                                        tentouSalvar={tentouSalvar}/>
 
                         <CampoHoraModal label="Hora de Fim do Evento"
                                         valor={dataHoraFim ? dataHoraFim.getHours().toString().padStart(2, '0') + ':' + dataHoraFim.getMinutes().toString().padStart(2, '0') : ''}
                                         salvarHora={salvarHoraFim}
                                         erro={errosValidacao?.dataHoraFim}
-                                        tentouSalvar={tentouSalvar} />
+                                        tentouSalvar={tentouSalvar}/>
 
 
                         <BuscadorDeTag label="Selecione suas tags"

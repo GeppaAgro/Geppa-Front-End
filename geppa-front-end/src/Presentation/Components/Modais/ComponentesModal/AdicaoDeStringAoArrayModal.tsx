@@ -6,22 +6,34 @@ interface ArrayStringProps {
     novaString: string;
     setNovaString: (novoAutor: string) => void;
     adicionarString: () => void;
+    erro?: string;
+    tentouSalvar?: boolean;
 }
 
-const AdicaoDeStringAoArrayModal: React.FC<ArrayStringProps> = ({label, novaString, setNovaString, adicionarString }) => {
+const AdicaoDeStringAoArrayModal: React.FC<ArrayStringProps> = ({
+                                                                    label,
+                                                                    novaString,
+                                                                    setNovaString,
+                                                                    adicionarString,
+                                                                    erro,
+                                                                    tentouSalvar
+                                                                }) => {
     return (
         <div>
             <label htmlFor="novaString" className="fw-semibold">{label}</label>
             <div className="d-flex flex-row gap-1">
-                <input
-                    placeholder="digite o nome do autor..."
-                    className="form-control"
-                    type="text"
-                    id="novaString"
-                    value={novaString}
-                    onChange={(e) => setNovaString(e.target.value)}
-                />
-                <Button variant="primary" onClick={adicionarString}>
+                <div className={'w-75'}>
+                    <input
+                        placeholder="digite o nome do autor..."
+                        className={`form-control ${erro ? 'is-invalid' : (tentouSalvar && !erro) ? 'is-valid' : ''}`}
+                        type="text"
+                        id="novaString"
+                        value={novaString}
+                        onChange={(e) => setNovaString(e.target.value)}
+                    />
+                    {erro && <div className="invalid-feedback">{erro}</div>}
+                </div>
+                <Button variant="primary" className={'h-50'} onClick={adicionarString}>
                     Adicionar
                 </Button>
             </div>

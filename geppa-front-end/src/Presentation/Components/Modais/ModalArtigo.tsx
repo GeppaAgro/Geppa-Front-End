@@ -16,7 +16,7 @@ import {TipoConteudo} from "../../../Domain/Enums/TipoConteudo.ts";
 import {mapperMensagensValidacaoConteudo} from "../../../Domain/mappers/MapperMensagensValidacao.ts";
 import LoadingOverlay from "../Utils/LoadingOverlay/LoadingOverlay.tsx";
 
-const ModalArtigo: React.FC<ModalConteudoProps> = ({abrir, fechar, mostrar, salvar, artigo}) => {
+const ModalArtigo: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, artigo}) => {
 
     const [titulo, setTitulo] = useState<string>('')
     const [descricao, setDescricao] = useState<string>('')
@@ -116,10 +116,6 @@ const ModalArtigo: React.FC<ModalConteudoProps> = ({abrir, fechar, mostrar, salv
     return (
         <>
             {isLoading && <LoadingOverlay/>}
-            <Button variant="primary" onClick={mostrar}>
-                Adicionar Artigo
-            </Button>
-
             <Modal show={abrir} onHide={cancelar} backdrop="static">
                 <Modal.Header>
                     <Modal.Title>{artigo ? 'Editar artigo' : 'Adicionar Artigo'}</Modal.Title>
@@ -153,7 +149,9 @@ const ModalArtigo: React.FC<ModalConteudoProps> = ({abrir, fechar, mostrar, salv
 
                         <AdicaoDeStringAoArrayModal label="Autores" novaString={novoAutor}
                                                     setNovaString={setNovoAutor}
-                                                    adicionarString={adicionarAutor}/>
+                                                    adicionarString={adicionarAutor}
+                                                    erro={errosValidacao?.autores}
+                                                    tentouSalvar={tentouSalvar}/>
 
                         <ListagemDeAutores autores={autores} removerAutor={removerAutor}
                                            errosValidacao={errosValidacao}/>
