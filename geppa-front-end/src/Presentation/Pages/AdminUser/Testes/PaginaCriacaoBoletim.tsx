@@ -1,5 +1,5 @@
 import {Artigo, Curso, Evento, Noticia, Video} from "../../../../Domain/TypesConteudos/TypesConteudos.ts";
-import {Button, Container, Modal} from "react-bootstrap";
+import {Button, Container} from "react-bootstrap";
 import ModalArtigo from "../../../Components/Modais/ModalArtigo.tsx";
 import ModalCurso from "../../../Components/Modais/ModalCurso.tsx";
 import ModalNoticia from "../../../Components/Modais/ModalNoticia.tsx";
@@ -8,9 +8,6 @@ import {useItemsAndModal} from "../../../../Domain/Hooks/useItemsAndModal.ts";
 import ModalEvento from "../../../Components/Modais/ModalEvento.tsx";
 import "./PaginaCriacaoBoletim.css"
 import Logo from '../../../../Data/Images/Logos/Logo.png'
-import ModalIndicadores from "../../../Components/Modais/ModalIndicadores.tsx";
-import {Indicador} from "../../../../Domain/TypesConteudos/Indicador.ts";
-import {useState} from "react";
 import ListaDeIndicadores from "../../../Components/Modais/ComponentesModal/ListaDeIndicadores.tsx";
 
 interface Item {
