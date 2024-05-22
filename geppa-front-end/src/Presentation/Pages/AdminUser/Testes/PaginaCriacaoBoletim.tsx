@@ -8,6 +8,7 @@ import {useItemsAndModal} from "../../../../Domain/Hooks/useItemsAndModal.ts";
 import ModalEvento from "../../../Components/Modais/ModalEvento.tsx";
 import "./PaginaCriacaoBoletim.css"
 import Logo from '../../../../Data/Images/Logos/Logo.png'
+import ListaDeIndicadores from "../../../Components/Modais/ComponentesModal/ListaDeIndicadores.tsx";
 
 interface Item {
     id: string | number;
@@ -31,7 +32,6 @@ const PaginaCriacaoBoletim: React.FC = () => {
     };
 
     const {items, modal, openModal, closeModal, saveItem, deleteItem} = useItemsAndModal();
-
     const renderList = (type: 'artigos' | 'cursos' | 'noticias' | 'videos' | 'eventos', items: Item[]) => {
         return (
             <ul>
@@ -77,13 +77,15 @@ const PaginaCriacaoBoletim: React.FC = () => {
         }
     };
 
+
     return (
         <Container className="pagina-criar-boletim p-5">
             <div className="d-flex justify-content-center mb-2">
                 <span className="fs-1 fw-semibold">Cadastrar Boletim</span>
             </div>
 
-            <Container className="col-8 px-5 d-none d-xl-flex align-items-center container-lista-conteudos mb-3 justify-content-between flex-row" >
+            <Container
+                className="col-8 px-5 d-none d-xl-flex align-items-center container-lista-conteudos mb-3 justify-content-between flex-row">
                 <div className=" my-3 col-8">
                     <div className="d-flex justify-content-center mb-2">
                         <span className="fs-5 fw-semibold">
@@ -128,7 +130,7 @@ const PaginaCriacaoBoletim: React.FC = () => {
                                      fechar={closeModal}
                                      mostrar={() => openModal('evento')}
                                      salvar={(data: Evento) => saveItem('eventos', data, modal.editIndex)}
-                                     evento={modal.editIndex !==null ? items.eventos[modal.editIndex] : undefined}/>
+                                     evento={modal.editIndex !== null ? items.eventos[modal.editIndex] : undefined}/>
                     )}
                     {modal.type === 'noticia' && (
                         <ModalNoticia
@@ -155,6 +157,10 @@ const PaginaCriacaoBoletim: React.FC = () => {
             {renderList('eventos', items.eventos)}
             {renderList('noticias', items.noticias)}
             {renderList('videos', items.videos)}
+
+
+
+            <ListaDeIndicadores/>
 
             <div className="d-flex flex-row gap-4 justify-content-end mb-5">
                 <Button onClick={deletarBoletim} className="" variant="danger">Cancelar</Button>

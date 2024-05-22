@@ -150,7 +150,7 @@ const ModalCurso: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, curso}
                         Cancelar
                     </Button>
                     <Button variant="primary" onClick={salvarCurso}>
-                        Salvar
+                        Adicionar
                     </Button>
                 </Modal.Footer>
             </Modal>
