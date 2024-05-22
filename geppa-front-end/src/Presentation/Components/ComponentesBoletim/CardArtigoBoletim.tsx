@@ -1,6 +1,6 @@
 import "./StyleCardBoletim.css"
 import {Container} from "react-bootstrap";
-import{Artigo} from "../../../Domain/TypesConteudos/TypeArtigo.ts";
+import{Artigo} from "../../../Domain/TypesConteudos/Conteudos/Artigo.ts";
 import {Link} from "react-router-dom";
 import {validaData} from "../Utils/ValidacaoDeData.ts";
 

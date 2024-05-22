@@ -11,7 +11,7 @@ import TabelaIndicadores from "../../../Components/Utils/TabelaIndicadores/Tabel
 import {Artigo, Curso, Evento, Noticia, Video} from "../../../../Domain/TypesConteudos/TypesConteudos.ts";
 import CardEventoBoletim from "../../../Components/ComponentesBoletim/CardEventoBoletim.tsx";
 import CardNoticiaBoletim from "../../../Components/ComponentesBoletim/CardNoticiasBoletim.tsx";
-import AxiosClient from "../../../../Data/Services/AxiosClient.ts";
+import AxiosClient from "../../../../Domain/Services/AxiosClient.ts";
 import {PaginaBoletimSkeleton} from "../../../Components/Skeleton/PaginaBoletimSkeleton.tsx";
 
 export default function PaginaBoletim() {

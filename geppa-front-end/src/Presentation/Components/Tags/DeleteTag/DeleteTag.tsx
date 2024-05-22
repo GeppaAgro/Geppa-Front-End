@@ -1,9 +1,9 @@
 import {Tag} from "../../../../Domain/TypesConteudos/TypeTag.ts";
 import React, {useEffect, useState} from "react";
-import AxiosClient from "../../../../Data/Services/AxiosClient.ts";
 import {Button, Modal} from "react-bootstrap";
 import CustomToast from "../../Utils/CustomToast.tsx";
 import {AxiosError} from "axios";
+import AxiosClient from "../../../../Domain/Services/AxiosClient.ts";
 
 interface DeleteButtonProps {
     tag: Tag;

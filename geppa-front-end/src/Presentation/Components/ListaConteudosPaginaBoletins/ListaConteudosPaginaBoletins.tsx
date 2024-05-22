@@ -1,7 +1,7 @@
 import "./StyleListaCOnteudosPaginaBoletim.css"
 import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
-import AxiosClient from "../../../Data/Services/AxiosClient.ts";
+import AxiosClient from "../../../Domain/Services/AxiosClient.ts";
 import {LinhaSkeleton} from "../Skeleton/LinhaSkeleton.tsx";
 import {Badge} from "react-bootstrap";
 

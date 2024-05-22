@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import {ConsultaBoletim} from "../../../Data/ApiTypes/TypeConsultaBoletim.ts";
 import {TypeFiltro} from "../../../Data/ApiTypes/TypeFiltro.ts";
 import {Filtros} from "../Filters/FiltrosListagem/Filtros.tsx";
-import AxiosClient from "../../../Data/Services/AxiosClient.ts";
+import AxiosClient from "../../../Domain/Services/AxiosClient.ts";
 import {LinhaSkeleton} from "../Skeleton/LinhaSkeleton.tsx";
 
 export default function ListaBoletins() {

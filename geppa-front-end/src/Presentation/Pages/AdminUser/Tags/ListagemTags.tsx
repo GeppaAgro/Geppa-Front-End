@@ -4,9 +4,9 @@ import {Section} from "@react-email/components";
 import cores from "../../../Components/Utils/Cores.tsx";
 import CadastroTag from "../../../Components/Tags/CadastroTag/CadastroTag.tsx";
 import {Tag} from "../../../../Domain/TypesConteudos/TypeTag.ts";
-import AxiosClient from "../../../../Data/Services/AxiosClient.ts";
 import Paginacao from "../../../Components/Paginacao/Paginacao.tsx";
 import DeleteTag from "../../../Components/Tags/DeleteTag/DeleteTag.tsx";
+import AxiosClient from "../../../../Domain/Services/AxiosClient.ts";
 
 const ListagemTags: React.FC = () => {
     const filterInputRef = useRef<HTMLInputElement>(null);

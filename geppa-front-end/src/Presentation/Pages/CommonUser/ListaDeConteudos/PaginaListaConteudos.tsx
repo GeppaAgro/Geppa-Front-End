@@ -7,7 +7,7 @@ import CardNoticiaBoletim from "../../../Components/ComponentesBoletim/CardNotic
 import CardVideoBoletim from "../../../Components/ComponentesBoletim/CardVideoBoletim.tsx";
 import {Artigo, Curso, Evento, Noticia, Video} from "../../../../Domain/TypesConteudos/TypesConteudos.ts";
 import CardEventoBoletim from "../../../Components/ComponentesBoletim/CardEventoBoletim.tsx";
-import AxiosClient from "../../../../Data/Services/AxiosClient.ts";
+import AxiosClient from "../../../../Domain/Services/AxiosClient.ts";
 import {ConteudoSkeleton} from "../../../Components/Skeleton/ConteudoSkeleton.tsx";
 
 export default function PaginaListaConteudos() {

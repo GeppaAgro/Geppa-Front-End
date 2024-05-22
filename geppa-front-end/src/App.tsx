@@ -5,7 +5,6 @@ import Footer from './Presentation/Components/Footer/Footer.tsx';
 import Sidebar from './Presentation/Components/Sidebar/Sidebar.tsx';
 import AdminInicial from './Presentation/Pages/AdminUser/AdminInicial/AdminInicial.tsx';
 import AdminBoletim from './Presentation/Pages/AdminUser/AdminBoletim/AdminBoletim.tsx';
-import AdminCriarBoletim from './Presentation/Pages/AdminUser/AdminCriarBoletim/AdminCriarBoletim.tsx';
 import AdminAlunos from './Presentation/Pages/AdminUser/AdminAlunos/AdminAlunos.tsx';
 import PaginaListaBoletins from './Presentation/Pages/CommonUser/ListaDeBoletins/PaginaListaBoletins.tsx';
 import PaginaListaConteudos from './Presentation/Pages/CommonUser/ListaDeConteudos/PaginaListaConteudos.tsx';
@@ -16,6 +15,7 @@ import PaginaNaoEncontrada from './Presentation/Pages/CommonUser/NotFound/Pagina
 import {PaginaLogin} from './Presentation/Pages/AdminUser/Login/PaginaLogin.tsx';
 import PaginaInicial from './Presentation/Pages/CommonUser/Inicial/PaginaInicial.tsx';
 import ListagemTags from "./Presentation/Pages/AdminUser/Tags/ListagemTags.tsx";
+import PaginaCriacaoBoletim from "./Presentation/Pages/AdminUser/Testes/PaginaCriacaoBoletim.tsx";
 
 function AdminRoutes() {
     return (
@@ -25,7 +25,7 @@ function AdminRoutes() {
                 <Routes>
                     <Route path="/admin" element={<AdminInicial/>}/>
                     <Route path="boletins" element={<AdminBoletim/>}/>
-                    <Route path="criar-boletins" element={<AdminCriarBoletim/>}/>
+                    <Route path="criar-boletins" element={<PaginaCriacaoBoletim/>}/>
                     <Route path="aluno" element={<AdminAlunos/>}/>
                     <Route path="tags" element={<ListagemTags/>}/>
                 </Routes>

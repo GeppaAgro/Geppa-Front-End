@@ -1,5 +1,5 @@
 import {AxiosError, AxiosResponse} from 'axios';
-import {Newsletter} from '../ApiTypes/TypeNewsletter.ts';
+import {Newsletter} from '../../Data/ApiTypes/TypeNewsletter.ts';
 import AxiosClient from "./AxiosClient.ts";
 
 
