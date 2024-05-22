@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Modal, Form} from 'react-bootstrap';
 import cores from "../../Utils/Cores.tsx";
-import AxiosClient from "../../../../Data/Services/AxiosClient.ts";
 import CustomToast from "../../Utils/CustomToast.tsx";
 import {Tag} from "../../../../Domain/TypesConteudos/TypeTag.ts";
+import AxiosClient from "../../../../Domain/Services/AxiosClient.ts";
 
 interface AddTagButtonProps {
     buttonText: string;
