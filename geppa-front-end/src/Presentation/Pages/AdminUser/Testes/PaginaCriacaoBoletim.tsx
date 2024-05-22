@@ -20,44 +20,6 @@ interface Item {
 
 const PaginaCriacaoBoletim: React.FC = () => {
 
-    const [indicadores, setIndicadores] = useState<Indicador[]>([]);
-    const [modalIndicadores, setModalIndicadores] = useState<{
-        show: boolean,
-        editIndex: number | null
-    }>({ show: false, editIndex: null });
-
-    const closeModalIndicadores = () => {
-        setModalIndicadores({
-           show: false,
-           editIndex: null
-        })
-    }
-
-    const openModalIndicadores = (index: number | null) => {
-        setModalIndicadores({
-            show: true,
-            editIndex: index
-        })
-    }
-
-    const salvarIndicador = (indicador : Indicador, index: number | null) => {
-        console.log(indicador, index);
-        setIndicadores((prevIndicadores) => {
-            const newIndicadores = [...prevIndicadores];
-            if (index !== null && index >= 0 && index < newIndicadores.length) {
-                newIndicadores[index] = indicador;
-            } else {
-                newIndicadores.push(indicador);
-            }
-            return newIndicadores;
-        });
-    }
-    const deleteIndicador = (index: number) => {
-        indicadores.splice(index, 1);
-        setIndicadores([...indicadores]);
-    };
-
-
     type ContentType = 'artigo' | 'curso' | 'noticia' | 'video'| 'evento';
 
     const contentTypeMap: Record<string, ContentType> = {
