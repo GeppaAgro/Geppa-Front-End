@@ -5,6 +5,9 @@ import LoadingOverlay from "../Utils/LoadingOverlay/LoadingOverlay.tsx";
 import {Button, Dropdown, Modal, Table} from "react-bootstrap";
 import CampoTextoSimplesModal from "./ComponentesModal/CampoTextoSimplesModal.tsx";
 import CampoValorMonetarioModal from "./ComponentesModal/CampoValorMonetarioModal.tsx";
+import {MensagensValidacao} from "../../../Domain/Enums/MensagensValidacao.ts";
+import axiosClient from "../../../Domain/Services/AxiosClient.ts";
+import {AxiosError, AxiosResponse} from "axios";
 
 type ModalIndicadores = {
     abrir: boolean;
@@ -22,21 +25,66 @@ const ModalIndicadores: React.FC<ModalIndicadores> = ({abrir, fechar, salvar, in
 
     useEffect(() => {
         if(indicador){
-            setProduto(indicador.produto)
+            setProduto(indicador.nome)
             setUnidadeMedida(indicador.unidadeMedida)
             setValor(indicador.valor)
         }
     }, [indicador]);
 
-    const salvarIndicador = () => {
+    const salvarIndicador = async () => {
         setIsLoading(true);
-        const indicador: Indicador = new Indicador(produto, unidadeMedida, valor);
-        setTentouSalvar(true)
-        salvar(indicador)
-        fechar()
-        limpar()
+        const indicador: Indicador = new Indicador(produto.trim(), unidadeMedida, valor);
+        const validationResult = await validar(indicador);
+
+        if (validationResult.success) {
+            salvar(indicador);
+            fechar();
+            limpar();
+        } else {
+            setErrosValidacao(validationResult.errors);
+            setTentouSalvar(true);
+        }
         setIsLoading(false);
-    }
+    };
+    const validar = async (indicador: Indicador): Promise<{ success: boolean; errors: { [key: string]: string } }> => {
+        try {
+            const response = await axiosClient.post('/indicadores/validar', indicador);
+            return handleResponse(response);
+        } catch (error) {
+            const axiosError = error as AxiosError;
+            return handleError(axiosError.response as AxiosResponse);
+        }
+    };
+
+    const handleResponse = (response: AxiosResponse): { success: boolean; errors: { [key: string]: string } } => {
+        if (response.status >= 200 && response.status < 300) {
+            return { success: true, errors: {} };
+        }
+        return {
+            success: false,
+            errors: { mensagem: MensagensValidacao.IMPOSSIVEL_REALIZAR_VALIDACAO },
+        };
+    };
+
+    const handleError = (response: AxiosResponse): { success: boolean; errors: { [key: string]: string } } => {
+        if (response.status === 400) {
+            if (response.data.errosValidacao) {
+                return {
+                    success: false,
+                    errors: response.data.errosValidacao,
+                };
+            }
+            return {
+                success: false,
+                errors: { mensagem: response.data.mensagem },
+            };
+        }
+
+        return {
+            success: false,
+            errors: { mensagem: MensagensValidacao.IMPOSSIVEL_REALIZAR_VALIDACAO },
+        };
+    };
     const cancelar =() => {
         fechar()
         limpar()
@@ -46,6 +94,8 @@ const ModalIndicadores: React.FC<ModalIndicadores> = ({abrir, fechar, salvar, in
         setProduto('')
         setValor(0)
         setUnidadeMedida(UnidadeMedida.KILOGRAMA)
+        setTentouSalvar(false)
+        setErrosValidacao({})
     }
 
 
@@ -73,7 +123,7 @@ const ModalIndicadores: React.FC<ModalIndicadores> = ({abrir, fechar, salvar, in
                                                              label=""
                                                              texto={produto}
                                                              salvarTexto={setProduto}
-                                                             erro={errosValidacao?.titulo}
+                                                             erro={errosValidacao?.nome}
                                                              tentouSalvar={tentouSalvar}/></td>
                                 <td> <Dropdown>
                                     <Dropdown.Toggle variant="success" id="dropdown-basic">
@@ -91,6 +141,7 @@ const ModalIndicadores: React.FC<ModalIndicadores> = ({abrir, fechar, salvar, in
                                                               valor={valor}
                                                               checkBox={false}
                                                               salvarValor={setValor}
+                                                              erro={errosValidacao?.valor}
                                                               tentouSalvar={tentouSalvar}/></td>
                             </tr>
                         </tbody>

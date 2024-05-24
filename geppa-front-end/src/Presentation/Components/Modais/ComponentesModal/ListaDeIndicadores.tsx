@@ -67,7 +67,7 @@ const ListaDeIndicadores: React.FC = () => {
                 <tbody>
                 {indicadores.map((indicador, index) => (
                     <tr key={index} className="text-center align-middle">
-                        <td>{indicador.produto}</td>
+                        <td>{indicador.nome}</td>
                         <td>{indicador.unidadeMedida}</td>
                         <td>
                             <div className="px-2 d-flex justify-content-between">
