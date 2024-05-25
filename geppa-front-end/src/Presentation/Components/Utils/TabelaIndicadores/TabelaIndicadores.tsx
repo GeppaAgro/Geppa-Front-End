@@ -1,33 +1,39 @@
 import {Table} from "react-bootstrap";
 import cores from "../Cores.tsx";
 import './tabelaIndicadores.css';
+import {Indicador} from "../../../../Domain/TypesConteudos/Indicador.ts";
+import {useEffect, useState} from "react";
 
-const TabelaIndicadores = () => {
-    const produtos = [
-        { nome: 'Boi Gordo', unidade: '@(arroba)', valor: '296,00' },
-        { nome: 'Frango vivo', unidade: 'Kg', valor: '5,50' },
-        { nome: 'Suíno', unidade: '@(arroba)', valor: '130,00' },
-        { nome: 'Ovos Brancos', unidade: 'Cartela com  30 ovos', valor: '135,00' },
-        { nome: 'Milho Seco', unidade: 'saca(60Kg)', valor: '83,00' },
-        { nome: 'Farelo de Soja', unidade: 'tonelada', valor: '1070,42' },
-    ];
+interface PropsTabelaIndicadores {
+    indicadores : Indicador[];
+}
+const TabelaIndicadores:React.FC<PropsTabelaIndicadores>  = ({indicadores}) => {
+
+    const [listaIndicadores, setListaIndicadores] = useState<Indicador[]>([])
+
+    useEffect(() => {
+        setListaIndicadores(indicadores)
+    }, [indicadores]);
 
     return (
         <>
             <Table striped bordered className='text-center'>
                 <thead>
                 <tr>
-                    <th>Produto</th>
-                    <th>Unidade de medida</th>
-                    <th>Valor (R$)</th>
+                    <th className="col-4">Produto</th>
+                    <th className="col-4">Unidade de medida</th>
+                    <th className="col-4">Valor</th>
                 </tr>
                 </thead>
                 <tbody>
-                {produtos.map((produto, index) => (
-                        <tr key={index}>
-                        <td>{produto.nome}</td>
-                        <td>{produto.unidade}</td>
-                        <td>{produto.valor}</td>
+                {listaIndicadores.map((indicador, index) => (
+                    <tr key={index}>
+                        <td className="">{indicador.nome}</td>
+                        <td className="">{indicador.unidadeMedida}</td>
+                        <td className="d-flex justify-content-between">
+                            <span className="ps-sm-5">R$</span>
+                            <span className=" pe-sm-5">{indicador.valor?.toFixed(2)}</span>
+                        </td>
                     </tr>
                 ))}
                 </tbody>

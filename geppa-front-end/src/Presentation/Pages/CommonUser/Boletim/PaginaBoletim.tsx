@@ -13,6 +13,7 @@ import CardEventoBoletim from "../../../Components/ComponentesBoletim/CardEvento
 import CardNoticiaBoletim from "../../../Components/ComponentesBoletim/CardNoticiasBoletim.tsx";
 import AxiosClient from "../../../../Domain/Services/AxiosClient.ts";
 import {PaginaBoletimSkeleton} from "../../../Components/Skeleton/PaginaBoletimSkeleton.tsx";
+import {Indicador} from "../../../../Domain/TypesConteudos/Indicador.ts";
 
 export default function PaginaBoletim() {
     const {edicao} = useParams<{ edicao: string }>()
@@ -24,6 +25,7 @@ export default function PaginaBoletim() {
     const [eventos, setEventos] = useState<Evento[]>([]);
     const [noticias, setNoticias] = useState<Noticia[]>([]);
     const [videos, setVideos] = useState<Video[]>([]);
+    const [indicadores, setIndicadores] = useState<Indicador[]> ([])
     const [loadingBoletim, setLoadingBoletim] = useState<boolean>(true);
 
 
@@ -38,6 +40,7 @@ export default function PaginaBoletim() {
                 setEventos(response.data.dados.eventos)
                 setNoticias(response.data.dados.noticias)
                 setVideos(response.data.dados.videos)
+                setIndicadores(response.data.dados.indicadores)
                 setLoadingBoletim(false)
             } catch (error) {
                 console.log("Boletim não encontrado")
@@ -151,12 +154,15 @@ export default function PaginaBoletim() {
                             }
                         </Container>
                     )}
+                    {
+                        indicadores.length > 0 && (
+                            <Container className="text-center my-5 ">
+                                <TabelaIndicadores indicadores={indicadores}/>
+                            </Container>
+                        )
+                    }
 
 
-                    <Container className="text-center my-5 ">
-                        <h2 className="fs-4 fw-bold">Indicadores</h2>
-                        <TabelaIndicadores/>
-                    </Container>
                 </>
             )}
         </>
