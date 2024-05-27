@@ -2,7 +2,7 @@ import {Table} from "react-bootstrap";
 import cores from "../Cores.tsx";
 import './tabelaIndicadores.css';
 import {Indicador} from "../../../../Domain/TypesConteudos/Indicador.ts";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 
 interface PropsTabelaIndicadores {
     indicadores : Indicador[];

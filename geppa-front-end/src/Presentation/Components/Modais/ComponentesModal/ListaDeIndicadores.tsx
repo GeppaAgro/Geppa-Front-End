@@ -4,7 +4,7 @@ import {useState} from "react";
 import ModalIndicadores from "../ModalIndicadores.tsx";
 import "./StylesComponentesModal/StyleListaDeIndicadores.css"
 
-const ListaDeIndicadores: React.FC = () => {
+const ListaDeIndicadores: React.FC<{ indicadoresIniciais?: Indicador[], onUpdate: (indicadores: Indicador[]) => void }> = ({ indicadoresIniciais, onUpdate }) => {
 
     const [indicadores, setIndicadores] = useState<Indicador[]>([]);
     const [modalIndicadores, setModalIndicadores] = useState<{
@@ -26,21 +26,25 @@ const ListaDeIndicadores: React.FC = () => {
         })
     }
 
-    const salvarIndicador = (indicador : Indicador, index: number | null) => {
-        console.log(indicador, index);
+    const salvarIndicador = (indicador: Indicador, index: number | null) => {
         setIndicadores((prevIndicadores) => {
             const newIndicadores = [...prevIndicadores];
-            if (index !== null && index >= 0 && index < newIndicadores.length) {
+            if (index!== null && index >= 0 && index < newIndicadores.length) {
                 newIndicadores[index] = indicador;
             } else {
                 newIndicadores.push(indicador);
             }
+            onUpdate(newIndicadores); // Passa os novos indicadores diretamente para o callback onUpdate
             return newIndicadores;
         });
-    }
+    };
+
     const deleteIndicador = (index: number) => {
-        indicadores.splice(index, 1);
-        setIndicadores([...indicadores]);
+        setIndicadores((prevIndicadores) => {
+            const newIndicadores = prevIndicadores.filter((_, i) => i!== index);
+            onUpdate(newIndicadores); // Atualiza o estado do componente pai
+            return newIndicadores;
+        });
     };
 
     return  (
