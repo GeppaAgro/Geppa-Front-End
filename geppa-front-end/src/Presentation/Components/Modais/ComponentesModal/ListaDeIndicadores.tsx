@@ -34,7 +34,7 @@ const ListaDeIndicadores: React.FC<{ indicadoresIniciais?: Indicador[], onUpdate
             } else {
                 newIndicadores.push(indicador);
             }
-            onUpdate(newIndicadores); // Passa os novos indicadores diretamente para o callback onUpdate
+            onUpdate(newIndicadores);
             return newIndicadores;
         });
     };
@@ -42,7 +42,7 @@ const ListaDeIndicadores: React.FC<{ indicadoresIniciais?: Indicador[], onUpdate
     const deleteIndicador = (index: number) => {
         setIndicadores((prevIndicadores) => {
             const newIndicadores = prevIndicadores.filter((_, i) => i!== index);
-            onUpdate(newIndicadores); // Atualiza o estado do componente pai
+            onUpdate(newIndicadores);
             return newIndicadores;
         });
     };
