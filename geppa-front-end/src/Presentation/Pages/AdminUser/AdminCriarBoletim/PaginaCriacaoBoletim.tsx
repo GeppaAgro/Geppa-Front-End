@@ -9,13 +9,39 @@ import ModalEvento from "../../../Components/Modais/ModalEvento.tsx";
 import "./PaginaCriacaoBoletim.css"
 import Logo from '../../../../Data/Images/Logos/Logo.png'
 import ListaDeIndicadores from "../../../Components/Modais/ComponentesModal/ListaDeIndicadores.tsx";
+import axiosClient from "../../../../Domain/Services/AxiosClient.ts";
+import React, {useEffect, useState} from "react";
+import {Indicador} from "../../../../Domain/TypesConteudos/Indicador.ts";
+import {BoletimSubmit} from "../../../../Data/ApiTypes/BoletimSubmit.ts";
+import {render} from "@react-email/render";
+import Email from "../../../Components/Email/Email.tsx";
+import {BoletimEmail} from "../../../../Data/ApiTypes/TypeBoletimEmail.ts";
+import { useNavigate} from "react-router-dom";
+import LoadingOverlay from "../../../Components/Utils/LoadingOverlay/LoadingOverlay.tsx";
+import CustomToast from "../../../Components/Utils/CustomToast.tsx";
+
 
 interface Item {
     id: string | number;
     titulo: string;
 }
 
+
 const PaginaCriacaoBoletim: React.FC = () => {
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState<boolean>(false)
+
+    const [toast, setToast] = useState<{ message: string; isSuccess: boolean } | null>(null);
+
+    useEffect(() => {
+        if (toast) {
+            const timer = setTimeout(() => {
+                setToast(null);
+            }, 6000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [toast]);
 
     type ContentType = 'artigo' | 'curso' | 'noticia' | 'video'| 'evento';
 
@@ -25,6 +51,12 @@ const PaginaCriacaoBoletim: React.FC = () => {
         noticias: 'noticia',
         videos: 'video',
         eventos: 'evento'
+    };
+
+    const [indicadores, setIndicadores] = useState<Indicador[]>([])
+
+    const atualizarIndicadores = (novosIndicadores : Indicador[] ) => {
+        setIndicadores(novosIndicadores);
     };
 
     const getContentType = (type: 'artigos' | 'cursos' | 'noticias' | 'videos' | 'eventos'): ContentType => {
@@ -63,22 +95,62 @@ const PaginaCriacaoBoletim: React.FC = () => {
 
     };
 
-    const publicarBoletim = () => {
+    const publicarBoletim = async () => {
+        const boletim: BoletimSubmit = {
+            artigos: items.artigos,
+            cursos: items.cursos,
+            eventos: items.eventos,
+            noticias: items.noticias,
+            videos: items.videos,
+            indicadores: indicadores
+        };
+
         const confirmacao = window.confirm('Deseja realmente enviar?');
-        if (confirmacao) {
-            console.log('Enviar');
+        if (!confirmacao) return;
+        setLoading(true)
+        try {
+            const response = await axiosClient.post('/boletins', boletim);
+            if (response.data.status === 201) {
+                await enviarNewsLetter(await renderizarEmail(response.data.dados))
+                navigate(`/boletim/${response.data.dados.edicao}`);
+                setToast({
+                    message: `Boletim cadastrado com sucesso`,
+                    isSuccess: true,
+                });
+            }
+        } catch (error) {
+            setToast({
+                message: `Falha ao cadastrar boletim, tente novamente em alguns instantes`,
+                isSuccess: false,
+            });
         }
+        setLoading(false)
+
     };
 
-    const deletarBoletim = () => {
+    const enviarNewsLetter = async (html : string) => {
+
+        return await axiosClient.post(`/newsletters/publicar`, {body: html})
+    }
+
+    const renderizarEmail = async (boletim: BoletimEmail) => {
+        return render(
+            <Email boletim={boletim}/>, {
+                pretty: true
+            }
+        )
+    }
+
+    const cancelarBoletim = () => {
         const confirmacao = window.confirm('Deseja realmente deletar?');
         if (confirmacao) {
-            console.log('Deletar');
+            console.log("Deu ruim");
         }
     };
 
 
     return (
+        <>
         <Container className="pagina-criar-boletim p-5">
             <div className="d-flex justify-content-center mb-2">
                 <span className="fs-1 fw-semibold">Cadastrar Boletim</span>
@@ -160,14 +232,23 @@ const PaginaCriacaoBoletim: React.FC = () => {
 
 
 
-            <ListaDeIndicadores/>
+            <ListaDeIndicadores indicadoresIniciais={indicadores} onUpdate={atualizarIndicadores}/>
 
             <div className="d-flex flex-row gap-4 justify-content-end mb-5">
-                <Button onClick={deletarBoletim} className="" variant="danger">Cancelar</Button>
+                <Button onClick={cancelarBoletim} className="" variant="danger">Cancelar</Button>
                 <Button onClick={publicarBoletim} className="btn-modal" >Publicar</Button>
             </div>
 
         </Container>
+            {
+                loading && (
+                    <LoadingOverlay/>
+                )
+            }
+            {toast && <CustomToast show={!!toast} message={toast.message} isSuccess={toast.isSuccess}/>}
+
+        </>
+
     );
 };
 

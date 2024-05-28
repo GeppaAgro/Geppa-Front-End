@@ -1,14 +1,15 @@
 import {Link, Section, Text} from "@react-email/components"
 import cores from "../Utils/Cores.tsx"
+import {useState} from "react";
 
 interface ConteudoEmailProps {
     titulo: string
     texto: string
     link: string
     duracao?: number
-    dataPublicacao?: Date
+    dataPublicacao?: string
     video?: boolean
-    dataInicio?: Date
+    dataInicio?: string
     local?: string
 }
 
@@ -17,6 +18,7 @@ export const ConteudoEmail: React.FC<ConteudoEmailProps> = ({
                                                                 video, duracao,
                                                                 dataInicio, local, dataPublicacao
                                                             }) => {
+
     return (
         <>
             <Section style={sectionConteudo}>
@@ -30,7 +32,7 @@ export const ConteudoEmail: React.FC<ConteudoEmailProps> = ({
                 )}
                 {dataInicio && (
                     <Text style={detalhesConteudo}>
-                        Data de início: {dataInicio.toLocaleDateString()}
+                        Data de início: {dataInicio}
                     </Text>
                 )}
                 {local && (
@@ -40,7 +42,7 @@ export const ConteudoEmail: React.FC<ConteudoEmailProps> = ({
                 )}
                 {dataPublicacao && (
                     <Text style={detalhesConteudo}>
-                        Publicado em: {dataPublicacao.toLocaleDateString()}
+                        Publicado em: {dataPublicacao}
                     </Text>
                 )}
                 <Text style={text}>

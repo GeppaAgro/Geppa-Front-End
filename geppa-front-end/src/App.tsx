@@ -15,7 +15,7 @@ import PaginaNaoEncontrada from './Presentation/Pages/CommonUser/NotFound/Pagina
 import {PaginaLogin} from './Presentation/Pages/AdminUser/Login/PaginaLogin.tsx';
 import PaginaInicial from './Presentation/Pages/CommonUser/Inicial/PaginaInicial.tsx';
 import ListagemTags from "./Presentation/Pages/AdminUser/Tags/ListagemTags.tsx";
-import PaginaCriacaoBoletim from "./Presentation/Pages/AdminUser/Testes/PaginaCriacaoBoletim.tsx";
+import PaginaCriacaoBoletim from "./Presentation/Pages/AdminUser/AdminCriarBoletim/PaginaCriacaoBoletim.tsx";
 
 function AdminRoutes() {
     return (
