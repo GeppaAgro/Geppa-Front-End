@@ -1,5 +1,5 @@
 import {Indicador} from "../../../../Domain/TypesConteudos/Indicador.ts";
-import {Table} from "react-bootstrap";
+import {Button, Table} from "react-bootstrap";
 import {useState} from "react";
 import ModalIndicadores from "../ModalIndicadores.tsx";
 import "./StylesComponentesModal/StyleListaDeIndicadores.css"
@@ -34,7 +34,7 @@ const ListaDeIndicadores: React.FC<{ indicadoresIniciais?: Indicador[], onUpdate
             } else {
                 newIndicadores.push(indicador);
             }
-            onUpdate(newIndicadores); // Passa os novos indicadores diretamente para o callback onUpdate
+            onUpdate(newIndicadores);
             return newIndicadores;
         });
     };
@@ -42,7 +42,7 @@ const ListaDeIndicadores: React.FC<{ indicadoresIniciais?: Indicador[], onUpdate
     const deleteIndicador = (index: number) => {
         setIndicadores((prevIndicadores) => {
             const newIndicadores = prevIndicadores.filter((_, i) => i!== index);
-            onUpdate(newIndicadores); // Atualiza o estado do componente pai
+            onUpdate(newIndicadores);
             return newIndicadores;
         });
     };
@@ -50,22 +50,24 @@ const ListaDeIndicadores: React.FC<{ indicadoresIniciais?: Indicador[], onUpdate
     return  (
         <>
             <ModalIndicadores
-            abrir={modalIndicadores.show}
-            fechar={closeModalIndicadores}
-            salvar={(indicador: Indicador) => salvarIndicador(indicador, modalIndicadores.editIndex)}
-            indicador={modalIndicadores.editIndex !== null ? indicadores[modalIndicadores.editIndex] : undefined}/>
+                abrir={modalIndicadores.show}
+                fechar={closeModalIndicadores}
+                salvar={(indicador: Indicador) => salvarIndicador(indicador, modalIndicadores.editIndex)}
+                indicador={modalIndicadores.editIndex !== null ? indicadores[modalIndicadores.editIndex] : undefined}/>
 
-
+            <div className="d-flex justify-content-between">
+                <span className="fw-bold fs-5">Indicadores</span>
+                <Button onClick={openModalIndicadores} className="btn-adicionar-indicador fw-bold fs-6 px-4">Adicionar Indicador
+                </Button>
+            </div>
 
             <Table className="table mt-2">
                 <thead>
                 <tr className="text-center align-middle ">
-                    <th >Produto</th>
+                    <th>Produto</th>
                     <th>Unidade de Medida</th>
                     <th>Preço</th>
-                    <th >
-                        <button onClick={openModalIndicadores} className="btn-adicionar-indicador fw-bold fs-6">Adicionar</button>
-                    </th>
+                    <th>Ações</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -83,7 +85,7 @@ const ListaDeIndicadores: React.FC<{ indicadoresIniciais?: Indicador[], onUpdate
                             <div className="px-3 d-flex justify-content-between">
                                 <button
                                     onClick={() => openModalIndicadores(index)}
-                                    className="ri-edit-fill col-6 icone-edit-delete" />
+                                    className="ri-edit-fill col-6 icone-edit-delete"/>
 
                                 <button
                                     onClick={() => deleteIndicador(index)}

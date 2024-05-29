@@ -19,6 +19,8 @@ import {BoletimEmail} from "../../../../Data/ApiTypes/TypeBoletimEmail.ts";
 import { useNavigate} from "react-router-dom";
 import LoadingOverlay from "../../../Components/Utils/LoadingOverlay/LoadingOverlay.tsx";
 import CustomToast from "../../../Components/Utils/CustomToast.tsx";
+import {AxiosError, AxiosResponse} from "axios";
+
 
 
 interface Item {
@@ -107,7 +109,7 @@ const PaginaCriacaoBoletim: React.FC = () => {
 
         const confirmacao = window.confirm('Deseja realmente enviar?');
         if (!confirmacao) return;
-        setLoading(true)
+            setLoading(true)
         try {
             const response = await axiosClient.post('/boletins', boletim);
             if (response.data.status === 201) {
@@ -119,13 +121,23 @@ const PaginaCriacaoBoletim: React.FC = () => {
                 });
             }
         } catch (error) {
-            setToast({
-                message: `Falha ao cadastrar boletim, tente novamente em alguns instantes`,
-                isSuccess: false,
-            });
+            if (error as AxiosError) {
+                const axiosError = error.response as AxiosResponse;
+                if (axiosError.data.errosValidacao) {
+                    const validationErrors = Object.values(axiosError.data.errosValidacao).join(', ');
+                    setToast({
+                        message: validationErrors,
+                        isSuccess: false,
+                    });
+                }
+            } else {
+                setToast({
+                    message: `Ocorreu um erro inesperado, por favor tente novamente mais tarde.`,
+                    isSuccess: false,
+                });
+            }
         }
-        setLoading(false)
-
+        setLoading(false);
     };
 
     const enviarNewsLetter = async (html : string) => {

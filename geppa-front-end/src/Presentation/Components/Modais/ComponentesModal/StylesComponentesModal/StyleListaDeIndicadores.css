@@ -1,13 +1,14 @@
 .btn-adicionar-indicador{
-    width: 100%;
-    height: 100%;
-    background-color: transparent;
+
+    background-color: #84a147;
     color: white;
     border: none;
     transition: background-color 0.3s ease;
 
 }
-
+.btn-adicionar-indicador:hover{
+    background-color: #3a5012;
+}
 .btn-adicionar-indicador:active{
     background-color: #3a5012;
 }
