@@ -53,5 +53,5 @@ export const useItemsAndModal = () => {
         });
     };
 
-    return {items, modal, openModal, closeModal, saveItem, deleteItem};
+    return {items,   modal, setItems, openModal, closeModal, saveItem, deleteItem};
 };

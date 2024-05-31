@@ -36,8 +36,8 @@ const ModalEvento: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, event
             setDescricao(evento.descricao);
             setLink(evento.link);
             setTags(evento.tags);
-            setDataHoraInicio(evento.dataHoraInicio);
-            setDataHoraFim(evento.dataHoraFim);
+            setDataHoraInicio(new Date(evento.dataHoraInicio || ''));
+            setDataHoraFim(new Date(evento.dataHoraFim || ''));
             setLocal(evento.local);
             setPreco(evento.preco);
         }

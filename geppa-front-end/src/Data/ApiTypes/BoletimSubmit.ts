@@ -6,6 +6,7 @@ import {Video} from "../../Domain/TypesConteudos/Conteudos/Video.ts";
 import {Indicador} from "../../Domain/TypesConteudos/Indicador.ts";
 
 export type BoletimSubmit = {
+    edicao: string | null,
     artigos: Artigo[] | null
     cursos: Curso[] | null
     eventos: Evento[] | null

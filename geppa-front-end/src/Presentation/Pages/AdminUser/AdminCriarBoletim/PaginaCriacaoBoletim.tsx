@@ -7,7 +7,6 @@ import ModalVideo from "../../../Components/Modais/ModalVideo.tsx";
 import {useItemsAndModal} from "../../../../Domain/Hooks/useItemsAndModal.ts";
 import ModalEvento from "../../../Components/Modais/ModalEvento.tsx";
 import "./PaginaCriacaoBoletim.css"
-import Logo from '../../../../Data/Images/Logos/Logo.png'
 import ListaDeIndicadores from "../../../Components/Modais/ComponentesModal/ListaDeIndicadores.tsx";
 import axiosClient from "../../../../Domain/Services/AxiosClient.ts";
 import React, {useEffect, useState} from "react";
@@ -16,9 +15,10 @@ import {BoletimSubmit} from "../../../../Data/ApiTypes/BoletimSubmit.ts";
 import {render} from "@react-email/render";
 import Email from "../../../Components/Email/Email.tsx";
 import {BoletimEmail} from "../../../../Data/ApiTypes/TypeBoletimEmail.ts";
-import { useNavigate} from "react-router-dom";
+import { useNavigate, useParams} from "react-router-dom";
 import LoadingOverlay from "../../../Components/Utils/LoadingOverlay/LoadingOverlay.tsx";
 import CustomToast from "../../../Components/Utils/CustomToast.tsx";
+import {AxiosError, AxiosResponse} from "axios";
 
 
 interface Item {
@@ -28,6 +28,29 @@ interface Item {
 
 
 const PaginaCriacaoBoletim: React.FC = () => {
+    const edicao = useParams()
+
+    const buscarBoletim = async () => {
+        try {
+            const resp = await axiosClient.get(`boletins/${edicao.edicao}`)
+            setItems({
+                artigos: resp.data.dados.artigos || [],
+                cursos: resp.data.dados.cursos || [],
+                eventos: resp.data.dados.eventos || [],
+                noticias: resp.data.dados.noticias || [],
+                videos: resp.data.dados.videos || [],
+            });
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(() => {
+        if (edicao.edicao) {
+            buscarBoletim()
+        }
+    }, []);
+
     const navigate = useNavigate();
     const [loading, setLoading] = useState<boolean>(false)
 
@@ -63,7 +86,7 @@ const PaginaCriacaoBoletim: React.FC = () => {
         return contentTypeMap[type];
     };
 
-    const {items, modal, openModal, closeModal, saveItem, deleteItem} = useItemsAndModal();
+    const {items, setItems, modal, openModal, closeModal, saveItem, deleteItem} = useItemsAndModal();
     const renderList = (type: 'artigos' | 'cursos' | 'noticias' | 'videos' | 'eventos', items: Item[]) => {
         return (
             <ul>
@@ -95,19 +118,21 @@ const PaginaCriacaoBoletim: React.FC = () => {
 
     };
 
-    const publicarBoletim = async () => {
-        const boletim: BoletimSubmit = {
-            artigos: items.artigos,
-            cursos: items.cursos,
-            eventos: items.eventos,
-            noticias: items.noticias,
-            videos: items.videos,
-            indicadores: indicadores
-        };
 
-        const confirmacao = window.confirm('Deseja realmente enviar?');
-        if (!confirmacao) return;
-        setLoading(true)
+    const atualizarBoletim = async (boletim: BoletimSubmit) => {
+        try{
+            const response = await axiosClient.put(`/boletins/${edicao.edicao}`, boletim)
+            console.log(response)
+        }catch (error) {
+            setToast({
+                message: `Falha ao salvar boletim, tente novamente em alguns instantes`,
+                isSuccess: false,
+            });
+        }
+    }
+
+    const publicarNovoBoletim = async (boletim: BoletimSubmit) => {
+        console.log(boletim)
         try {
             const response = await axiosClient.post('/boletins', boletim);
             if (response.data.status === 201) {
@@ -119,13 +144,46 @@ const PaginaCriacaoBoletim: React.FC = () => {
                 });
             }
         } catch (error) {
-            setToast({
-                message: `Falha ao cadastrar boletim, tente novamente em alguns instantes`,
-                isSuccess: false,
-            });
+            if (error as AxiosError) {
+                const axiosError = error.response as AxiosResponse;
+                if (axiosError.data.errosValidacao) {
+                    const validationErrors = Object.values(axiosError.data.errosValidacao).join(', ');
+                    setToast({
+                        message: validationErrors,
+                        isSuccess: false,
+                    });
+                }
+            } else {
+                setToast({
+                    message: `Ocorreu um erro inesperado, por favor tente novamente mais tarde.`,
+                    isSuccess: false,
+                });
+            }
         }
-        setLoading(false)
+    }
 
+    const publicarBoletim =  () => {
+        const boletim: BoletimSubmit = {
+            edicao: edicao.edicao || null,
+            artigos: items.artigos,
+            cursos: items.cursos,
+            eventos: items.eventos,
+            noticias: items.noticias,
+            videos: items.videos,
+            indicadores: indicadores
+        };
+        const confirmacao = window.confirm('Deseja realmente enviar?');
+        if (!confirmacao) return;
+        setLoading(true)
+
+        if (edicao.edicao) {
+            atualizarBoletim(boletim)
+        } else {
+            publicarNovoBoletim(boletim)
+        }
+
+
+        setLoading(false)
     };
 
     const enviarNewsLetter = async (html : string) => {
@@ -151,32 +209,12 @@ const PaginaCriacaoBoletim: React.FC = () => {
 
     return (
         <>
-        <Container className="pagina-criar-boletim p-5">
-            <div className="d-flex justify-content-center mb-2">
-                <span className="fs-1 fw-semibold">Cadastrar Boletim</span>
+            <div className="d-flex justify-content-center my-5 fw-bold fs-2">
+                {
+                    edicao.edicao ? (<span>Editar Boletim {edicao.edicao}</span>)
+                        : (<span>Criar Boletim</span>)
+                }
             </div>
-
-            <Container
-                className="col-8 px-5 d-none d-xl-flex align-items-center container-lista-conteudos mb-3 justify-content-between flex-row">
-                <div className=" my-3 col-8">
-                    <div className="d-flex justify-content-center mb-2">
-                        <span className="fs-5 fw-semibold">
-                        Como cadastrar boletins
-                        </span>
-                    </div>
-
-                    <ul>
-                        <li>Clique no botão "+" para adicionar o tipo de conteudo</li>
-                        <li>Clique em salvar</li>
-                        <li>Logo após clique em "Publicar" no final da pagina e confirme a ação</li>
-                        <li>Pronto, seu novo boletim foi cadastrado e publicado em poucos passos</li>
-                    </ul>
-                </div>
-                <div className="imagem col-4 d-flex justify-content-center">
-                    <img className="imagem-cadastro-boletim" src={Logo} alt="Logo-geppa"/>
-                </div>
-            </Container>
-
             {modal.show && (
                 <>
                     {modal.type === 'artigo' && (
@@ -236,10 +274,14 @@ const PaginaCriacaoBoletim: React.FC = () => {
 
             <div className="d-flex flex-row gap-4 justify-content-end mb-5">
                 <Button onClick={cancelarBoletim} className="" variant="danger">Cancelar</Button>
-                <Button onClick={publicarBoletim} className="btn-modal" >Publicar</Button>
+                {
+                    edicao.edicao ? (<Button onClick={publicarBoletim} className="btn-modal" >Editar boletim</Button> )
+                    : (<Button onClick={publicarBoletim} className="btn-modal" >Publicar</Button>)
+                }
+
             </div>
 
-        </Container>
+
             {
                 loading && (
                     <LoadingOverlay/>
