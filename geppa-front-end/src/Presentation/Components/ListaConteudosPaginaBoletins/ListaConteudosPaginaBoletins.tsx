@@ -3,7 +3,6 @@ import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import AxiosClient from "../../../Domain/Services/AxiosClient.ts";
 import {LinhaSkeleton} from "../Skeleton/LinhaSkeleton.tsx";
-import {Badge} from "react-bootstrap";
 
 interface Conteudo {
     dataPublicacao: number;
@@ -15,7 +14,7 @@ interface Conteudo {
 }
 
 export default function ListaConteudosPaginaBoletins() {
-    const sizeConteudos = 10
+    const sizeConteudos = 12
 
     const [conteudos, setConteudos] = useState<Conteudo[]>([]);
     const [loadingConteudos, setLoadingConteudos] = useState<boolean>(true);
@@ -36,7 +35,7 @@ export default function ListaConteudosPaginaBoletins() {
     }, []);
 
     return (
-        <>
+        <div>
             <h5>Últimos conteúdos</h5>
             {loadingConteudos ? (
                 <>
@@ -47,26 +46,28 @@ export default function ListaConteudosPaginaBoletins() {
                     ))}
                 </>
             ) : (
-                <>
+                <div>
                     {
                         conteudos.map(
                             (conteudo) =>
                                 (
-                                    <div key={conteudo.id} className="containerConteudosSimplificado gap-4 align-items-center d-flex flex-row justify-content-between">
+                                    <div key={conteudo.id} className="containerConteudosSimplificado gap-4  d-flex flex-row justify-content-between align-items-center">
                                         <Link to={conteudo.link} className="fs-6 fw-semibold ">
                                             {conteudo.titulo}
                                         </Link>
-                                        <div>
-                                            <Badge className="fs-6 bg-secondary">{conteudo.tipo}</Badge>
+                                        <div className="col-3 ">
+                                            <p className="fs-6 fw-semibold px-2 text-center badge-ultimos-conteudos rounded align-items-center m-0">
+                                                {conteudo.tipo}
+                                            </p>
                                         </div>
 
                                     </div>
                                 )
                         )
                     }
-                </>
+                </div>
             )}
 
-        </>
+        </div>
     )
 }

@@ -21,3 +21,9 @@
     text-overflow: ellipsis;
 
 }
+
+.badge-ultimos-conteudos{
+    background-color: var(--VerdeOliva);
+    color: white;
+    width: 100%;
+}
