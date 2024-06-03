@@ -3,7 +3,6 @@ import {BrowserRouter as Router, Route, Routes, Navigate} from 'react-router-dom
 import Header from './Presentation/Components/Header/Header.tsx';
 import Footer from './Presentation/Components/Footer/Footer.tsx';
 import Sidebar from './Presentation/Components/Sidebar/Sidebar.tsx';
-import AdminInicial from './Presentation/Pages/AdminUser/AdminInicial/AdminInicial.tsx';
 import AdminBoletim from './Presentation/Pages/AdminUser/AdminBoletim/AdminBoletim.tsx';
 import AdminAlunos from './Presentation/Pages/AdminUser/AdminAlunos/AdminAlunos.tsx';
 import PaginaListaBoletins from './Presentation/Pages/CommonUser/ListaDeBoletins/PaginaListaBoletins.tsx';
@@ -23,8 +22,7 @@ function AdminRoutes() {
             <Sidebar/>
             <div style={{marginLeft: '280px'}}>
                 <Routes>
-                    <Route path="/admin" element={<AdminInicial/>}/>
-                    <Route path="boletins" element={<AdminBoletim/>}/>
+                    <Route path="/" element={<AdminBoletim/>}/>
                     <Route path="criar-boletins" element={<PaginaCriacaoBoletim/>}/>
                     <Route path="aluno" element={<AdminAlunos/>}/>
                     <Route path="tags" element={<ListagemTags/>}/>

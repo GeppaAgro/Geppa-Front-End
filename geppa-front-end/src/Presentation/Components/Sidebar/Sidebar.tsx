@@ -16,15 +16,9 @@ const Sidebar: React.FC = () => {
                     </NavLink>
                 </li>
                 <div className={"ps-3"}>
-                    <li className="nav-item">
-                        <NavLink to="/admin" className="nav-link" aria-label="Inicial">
-                            <i className="ri-home-fill pe-2"></i>
-                            <span>Inicial</span>
-                        </NavLink>
-                    </li>
 
                     <li className="nav-item">
-                        <NavLink to="/admin/boletins" className="nav-link" aria-label="Boletins">
+                        <NavLink to="/admin/" className="nav-link" aria-label="Boletins">
                             <i className="ri-article-fill pe-2"></i>
                             <span>Boletins</span>
                         </NavLink>
