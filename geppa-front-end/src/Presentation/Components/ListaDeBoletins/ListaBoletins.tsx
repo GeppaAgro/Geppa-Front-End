@@ -6,6 +6,7 @@ import {TypeFiltro} from "../../../Data/ApiTypes/TypeFiltro.ts";
 import {Filtros} from "../Filters/FiltrosListagem/Filtros.tsx";
 import AxiosClient from "../../../Domain/Services/AxiosClient.ts";
 import {LinhaSkeleton} from "../Skeleton/LinhaSkeleton.tsx";
+import Paginacao from "../Paginacao/Paginacao.tsx";
 
 export default function ListaBoletins() {
     const [consultaBoletim, setConsultaBoletim] = useState<ConsultaBoletim | null>(null);
@@ -13,6 +14,7 @@ export default function ListaBoletins() {
     const [filtroType, setFiltroType] = useState<TypeFiltro | null>(null);
     const [loadingBoletim, setLoadingBoletim] = useState<boolean>(true);
     const [errorMessage, setErrorMessage] = useState('');
+    const [totalPages, setTotalPages] = useState(0);
 
     const tamanhoPagina = 12;
 
@@ -23,8 +25,8 @@ export default function ListaBoletins() {
             try {
                 const response = await AxiosClient.get(
                     `/boletins?page=${paginaAtual}` +
-                    `&sort=dataPublicacao,desc` +
-                    `&size=${tamanhoPagina}` +
+                        `&sort=dataPublicacao,desc` +
+                        `&size=${tamanhoPagina}` +
                     (filtroType ?
                         `&dataMinima=${filtroType.dataMinima}` +
                         `&dataMaxima=${filtroType.dataMaxima}` : '')
@@ -40,6 +42,8 @@ export default function ListaBoletins() {
                 }
                 setConsultaBoletim(response.data);
                 setLoadingBoletim(false)
+                console.log(response)
+                setTotalPages(response.data.totalPaginas);
             } catch (error) {
                 setErrorMessage("Ocorreu um erro ao buscar boletins. Por favor, tente novamente mais tarde.")
                 setLoadingBoletim(false);
@@ -47,46 +51,19 @@ export default function ListaBoletins() {
         };
 
         buscarBoletins();
+
     }, [filtroType, paginaAtual]);
 
-    const carregarProximaPagina = () => {
-        if (consultaBoletim && consultaBoletim._links && consultaBoletim._links.proximaPagina) {
-            setLoadingBoletim(true)
-            setPaginaAtual(consultaBoletim.paginaAtual + 1);
-        } else {
-            console.error('linksPaginacaoBoletim.paginaAtual está vazio ou indefinido.');
-        }
-    };
-    const carregarPaginaAnterior = () => {
-        if (consultaBoletim && consultaBoletim._links && consultaBoletim._links.paginaAnterior) {
-            setLoadingBoletim(true)
-            setPaginaAtual(consultaBoletim.paginaAtual - 1);
-        } else {
-            console.error('linksPaginacaoBoletim.paginaAnterior está vazio ou indefinido.');
-        }
-    };
-
-    const carregarPrimeiraPagina = () => {
-        if (consultaBoletim && consultaBoletim.paginaAtual > 0) {
-            setLoadingBoletim(true)
-            setPaginaAtual(0);
-        }
-    };
-
-    const carregarUltimaPagina = () => {
-        console.log("teste")
-        if (consultaBoletim) {
-            setLoadingBoletim(true)
-            console.log(consultaBoletim.totalPaginas - 1)
-            setPaginaAtual(consultaBoletim.totalPaginas - 1);
-        }
-    };
 
     const handleFilterSubmit = (dataMinima: string, dataMaxima: string) => {
         setErrorMessage('');
         setLoadingBoletim(true)
         setFiltroType({dataMinima, dataMaxima})
         setPaginaAtual(0);
+    };
+
+    const handlePageChange = (page: number) => {
+        setPaginaAtual(page);
     };
 
     return (
@@ -154,52 +131,7 @@ export default function ListaBoletins() {
                                 </tbody>
                             </table>
                             {consultaBoletim && (
-                                <div className="d-flex justify-content-between">
-                                    <div className="paginationButtons">
-                                        <ul className="pagination">
-                                            <li className="page-item d-flex align-items-stretch">
-                                                <button
-                                                    className={`page-link fs-4 ${!consultaBoletim._links || !consultaBoletim._links.paginaAnterior ? 'd-none' : ''}`}
-                                                    onClick={carregarPrimeiraPagina}>
-                                                    <i className="ri-skip-left-line"></i>
-                                                </button>
-                                            </li>
-                                            <li className="page-item d-flex align-items-stretch">
-                                                <button
-                                                    className={`page-link fs-4 ${!consultaBoletim._links || !consultaBoletim._links.paginaAnterior ? 'd-none' : ''}`}
-                                                    onClick={carregarPaginaAnterior}
-                                                    disabled={!consultaBoletim._links || !consultaBoletim._links.paginaAnterior}>
-                                                    {consultaBoletim.paginaAtual}
-                                                </button>
-                                            </li>
-                                            <li className="page-item d-flex align-items-stretch disabled">
-                                            <span className='page-link fs-4'>
-                                                {consultaBoletim.paginaAtual + 1}
-                                            </span>
-                                            </li>
-                                            <li className="page-item d-flex align-items-stretch">
-                                                <button
-                                                    className={`page-link fs-4 ${!consultaBoletim._links || !consultaBoletim._links.proximaPagina ? 'd-none' : ''}`}
-                                                    disabled={!consultaBoletim._links || !consultaBoletim._links.proximaPagina}
-                                                    onClick={carregarProximaPagina}>
-                                                    {consultaBoletim.paginaAtual + 2}
-                                                </button>
-                                            </li>
-                                            <li className="page-item d-flex align-items-stretch">
-                                                <button
-                                                    className={`page-link fs-4 ${!consultaBoletim._links || !consultaBoletim._links.proximaPagina ? 'd-none' : ''}`}
-                                                    onClick={carregarUltimaPagina}>
-                                                    <i className="ri-skip-right-line"></i>
-                                                </button>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div className="indicePaginacao ms-3 ">
-                                <span className="fs-5">
-                                    Página {consultaBoletim.paginaAtual + 1} de {consultaBoletim.totalPaginas}
-                                </span>
-                                    </div>
-                                </div>
+                                <Paginacao currentPage={paginaAtual} totalPages={totalPages} onPageChange={handlePageChange}/>
                             )}
                         </>
                     )}
