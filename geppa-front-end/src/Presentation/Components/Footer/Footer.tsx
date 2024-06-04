@@ -63,8 +63,8 @@ const Footer: React.FC = () => {
                             </li>
                         </ul>
                     </Col>
-
-                    <Col md={7} className="offset-md-1 mb-3">
+                    <Col md={2}/>
+                    <Col md={5} className="offset-md-1 mb-3">
                         <InscricaoNewslleter></InscricaoNewslleter>
                     </Col>
                 </Row>

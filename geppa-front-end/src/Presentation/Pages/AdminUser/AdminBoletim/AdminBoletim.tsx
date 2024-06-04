@@ -77,15 +77,6 @@ export default function AdminListaBoletins() {
                                         </td>
 
                                         <td className="text-center align-middle">
-
-                                            {/*TODO: Implementar edição de boletim*/}
-                                            {/*<CadastroTag buttonText={"Editar"}*/}
-                                            {/*             iconClass={"ri-pencil-fill"}*/}
-                                            {/*             fetchTags={fetchTags}*/}
-                                            {/*             classNameBtn={"text-primary-emphasis fw-medium border-0"}*/}
-                                            {/*             tag={tag}*/}
-                                            {/*             colorBtn={cores.transparente}*/}
-                                            {/*/>*/}
                                             <EditButton edicao={boletim.edicao} />
                                             <DeleteBoletim boletim={boletim} fetchBoletins={fetchBoletins}/>
                                         </td>
