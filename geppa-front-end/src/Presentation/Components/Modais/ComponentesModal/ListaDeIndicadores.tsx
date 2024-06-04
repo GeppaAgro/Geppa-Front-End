@@ -1,35 +1,39 @@
+import React, {useEffect, useState} from "react";
 import {Indicador} from "../../../../Domain/TypesConteudos/Indicador.ts";
 import {Button, Table} from "react-bootstrap";
-import {useState} from "react";
 import ModalIndicadores from "../ModalIndicadores.tsx";
-import "./StylesComponentesModal/StyleListaDeIndicadores.css"
+import "./StylesComponentesModal/StyleListaDeIndicadores.css";
 
-const ListaDeIndicadores: React.FC<{ indicadoresIniciais?: Indicador[], onUpdate: (indicadores: Indicador[]) => void }> = ({ indicadoresIniciais, onUpdate }) => {
+const ListaDeIndicadores: React.FC<{ indicadoresIniciais?: Indicador[], onUpdate: (indicadores: Indicador[]) => void }> = ({ indicadoresIniciais = [], onUpdate }) => {
 
-    const [indicadores, setIndicadores] = useState<Indicador[]>([]);
+    const [indicadores, setIndicadores] = useState<Indicador[]>(indicadoresIniciais);
     const [modalIndicadores, setModalIndicadores] = useState<{
         show: boolean,
         editIndex: number | null
     }>({ show: false, editIndex: null });
 
+    useEffect(() => {
+        setIndicadores(indicadoresIniciais);
+    }, [indicadoresIniciais]);
+
     const closeModalIndicadores = () => {
         setModalIndicadores({
             show: false,
             editIndex: null
-        })
+        });
     }
 
     const openModalIndicadores = (index: number | null) => {
         setModalIndicadores({
             show: true,
             editIndex: index
-        })
+        });
     }
 
     const salvarIndicador = (indicador: Indicador, index: number | null) => {
         setIndicadores((prevIndicadores) => {
             const newIndicadores = [...prevIndicadores];
-            if (index!== null && index >= 0 && index < newIndicadores.length) {
+            if (index !== null && index >= 0 && index < newIndicadores.length) {
                 newIndicadores[index] = indicador;
             } else {
                 newIndicadores.push(indicador);
@@ -41,13 +45,13 @@ const ListaDeIndicadores: React.FC<{ indicadoresIniciais?: Indicador[], onUpdate
 
     const deleteIndicador = (index: number) => {
         setIndicadores((prevIndicadores) => {
-            const newIndicadores = prevIndicadores.filter((_, i) => i!== index);
+            const newIndicadores = prevIndicadores.filter((_, i) => i !== index);
             onUpdate(newIndicadores);
             return newIndicadores;
         });
     };
 
-    return  (
+    return (
         <>
             <ModalIndicadores
                 abrir={modalIndicadores.show}
@@ -98,7 +102,7 @@ const ListaDeIndicadores: React.FC<{ indicadoresIniciais?: Indicador[], onUpdate
             </Table>
         </>
 
-    )
+    );
 }
 
-export default ListaDeIndicadores
+export default ListaDeIndicadores;

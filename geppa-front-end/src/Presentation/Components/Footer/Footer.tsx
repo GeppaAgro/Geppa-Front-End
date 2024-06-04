@@ -38,17 +38,17 @@ const Footer: React.FC = () => {
                         </ul>
                     </Col>
 
-                    <Col xs={6} md={2} className="mb-2">
-                        <NavLink to="/indicadores">
-                            <h5>Indicadores</h5>
-                        </NavLink>
-                        <ul className="nav flex-column">
-                            <li className="nav-item mb-2"><NavLink to="/" className="nav-link p-0 ">Dashboards</NavLink>
-                            </li>
-                            <li className="nav-item mb-2"><NavLink to="/" className="nav-link p-0 ">Tabelas</NavLink>
-                            </li>
-                        </ul>
-                    </Col>
+                    {/*<Col xs={6} md={2} className="mb-2">*/}
+                    {/*    <NavLink to="/indicadores">*/}
+                    {/*        <h5>Indicadores</h5>*/}
+                    {/*    </NavLink>*/}
+                    {/*    <ul className="nav flex-column">*/}
+                    {/*        <li className="nav-item mb-2"><NavLink to="/" className="nav-link p-0 ">Dashboards</NavLink>*/}
+                    {/*        </li>*/}
+                    {/*        <li className="nav-item mb-2"><NavLink to="/" className="nav-link p-0 ">Tabelas</NavLink>*/}
+                    {/*        </li>*/}
+                    {/*    </ul>*/}
+                    {/*</Col>*/}
 
                     <Col xs={6} md={2} className="mb-2">
                         <NavLink to="/">
@@ -63,7 +63,7 @@ const Footer: React.FC = () => {
                             </li>
                         </ul>
                     </Col>
-
+                    <Col md={2}/>
                     <Col md={5} className="offset-md-1 mb-3">
                         <InscricaoNewslleter></InscricaoNewslleter>
                     </Col>

@@ -7,7 +7,6 @@ import ModalVideo from "../../../Components/Modais/ModalVideo.tsx";
 import {useItemsAndModal} from "../../../../Domain/Hooks/useItemsAndModal.ts";
 import ModalEvento from "../../../Components/Modais/ModalEvento.tsx";
 import "./PaginaCriacaoBoletim.css"
-import Logo from '../../../../Data/Images/Logos/Logo.png'
 import ListaDeIndicadores from "../../../Components/Modais/ComponentesModal/ListaDeIndicadores.tsx";
 import axiosClient from "../../../../Domain/Services/AxiosClient.ts";
 import React, {useEffect, useState} from "react";
@@ -16,11 +15,12 @@ import {BoletimSubmit} from "../../../../Data/ApiTypes/BoletimSubmit.ts";
 import {render} from "@react-email/render";
 import Email from "../../../Components/Email/Email.tsx";
 import {BoletimEmail} from "../../../../Data/ApiTypes/TypeBoletimEmail.ts";
-import { useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import LoadingOverlay from "../../../Components/Utils/LoadingOverlay/LoadingOverlay.tsx";
 import CustomToast from "../../../Components/Utils/CustomToast.tsx";
 import {AxiosError, AxiosResponse} from "axios";
-
+import ConfirmModal from "../../../Components/Modais/ModalConfirm.tsx";
+import ModalComponent from "../../../Components/Modais/ModalCancel.tsx";
 
 
 interface Item {
@@ -30,6 +30,30 @@ interface Item {
 
 
 const PaginaCriacaoBoletim: React.FC = () => {
+    const edicao = useParams()
+
+    const buscarBoletim = async () => {
+        try {
+            const resp = await axiosClient.get(`boletins/${edicao.edicao}`)
+            setItems({
+                artigos: resp.data.dados.artigos || [],
+                cursos: resp.data.dados.cursos || [],
+                eventos: resp.data.dados.eventos || [],
+                noticias: resp.data.dados.noticias || [],
+                videos: resp.data.dados.videos || [],
+            });
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(() => {
+        if (edicao.edicao) {
+            buscarBoletim()
+        }
+    }, []);
+
     const navigate = useNavigate();
     const [loading, setLoading] = useState<boolean>(false)
 
@@ -45,7 +69,7 @@ const PaginaCriacaoBoletim: React.FC = () => {
         }
     }, [toast]);
 
-    type ContentType = 'artigo' | 'curso' | 'noticia' | 'video'| 'evento';
+    type ContentType = 'artigo' | 'curso' | 'noticia' | 'video' | 'evento';
 
     const contentTypeMap: Record<string, ContentType> = {
         artigos: 'artigo',
@@ -57,7 +81,7 @@ const PaginaCriacaoBoletim: React.FC = () => {
 
     const [indicadores, setIndicadores] = useState<Indicador[]>([])
 
-    const atualizarIndicadores = (novosIndicadores : Indicador[] ) => {
+    const atualizarIndicadores = (novosIndicadores: Indicador[]) => {
         setIndicadores(novosIndicadores);
     };
 
@@ -65,7 +89,7 @@ const PaginaCriacaoBoletim: React.FC = () => {
         return contentTypeMap[type];
     };
 
-    const {items, modal, openModal, closeModal, saveItem, deleteItem} = useItemsAndModal();
+    const {items, setItems, modal, openModal, closeModal, saveItem, deleteItem} = useItemsAndModal();
     const renderList = (type: 'artigos' | 'cursos' | 'noticias' | 'videos' | 'eventos', items: Item[]) => {
         return (
             <ul>
@@ -76,40 +100,44 @@ const PaginaCriacaoBoletim: React.FC = () => {
                             +
                         </Button>
                     </div>
-                {items.map((item, index) => (
-                    <li key={item.id} className="mb-3 list-unstyled">
-                        <div className="lista-conteudos d-flex col align-items-center justify-content-between  ">
-                            <span className="fw-semibold">{item.titulo}</span>
-                            <div className="d-flex flex-row gap-2 gap-sm-3">
-                                <Button className="btn-edit-delete" variant="2" onClick={() => openModal(getContentType(type), index)}>
-                                    <i className="ri-edit-fill"/>
-                                </Button>
-                                <Button className="btn-edit-delete" variant="2" onClick={() => deleteItem(type, index)}>
-                                    <i className="ri-eraser-fill"/>
-                                </Button>
+                    {items.map((item, index) => (
+                        <li key={item.id} className="mb-3 list-unstyled">
+                            <div className="lista-conteudos d-flex col align-items-center justify-content-between  ">
+                                <span className="fw-semibold">{item.titulo}</span>
+                                <div className="d-flex flex-row gap-2 gap-sm-3">
+                                    <Button className="btn-edit-delete" variant="2"
+                                            onClick={() => openModal(getContentType(type), index)}>
+                                        <i className="ri-edit-fill"/>
+                                    </Button>
+                                    <Button className="btn-edit-delete" variant="2"
+                                            onClick={() => deleteItem(type, index)}>
+                                        <i className="ri-eraser-fill"/>
+                                    </Button>
+                                </div>
                             </div>
-                        </div>
-                    </li>
-                ))}
+                        </li>
+                    ))}
                 </Container>
             </ul>
         );
 
     };
 
-    const publicarBoletim = async () => {
-        const boletim: BoletimSubmit = {
-            artigos: items.artigos,
-            cursos: items.cursos,
-            eventos: items.eventos,
-            noticias: items.noticias,
-            videos: items.videos,
-            indicadores: indicadores
-        };
 
-        const confirmacao = window.confirm('Deseja realmente enviar?');
-        if (!confirmacao) return;
-            setLoading(true)
+    const atualizarBoletim = async (boletim: BoletimSubmit) => {
+        try {
+            const response = await axiosClient.put(`/boletins/${edicao.edicao}`, boletim)
+            console.log(response)
+        } catch (error) {
+            setToast({
+                message: `Falha ao salvar boletim, tente novamente em alguns instantes`,
+                isSuccess: false,
+            });
+        }
+    }
+
+    const publicarNovoBoletim = async (boletim: BoletimSubmit) => {
+        console.log(boletim)
         try {
             const response = await axiosClient.post('/boletins', boletim);
             if (response.data.status === 201) {
@@ -137,14 +165,31 @@ const PaginaCriacaoBoletim: React.FC = () => {
                 });
             }
         }
-        setLoading(false);
+    }
+
+    const publicarBoletim = () => {
+        const boletim: BoletimSubmit = {
+            edicao: edicao.edicao || null,
+            artigos: items.artigos,
+            cursos: items.cursos,
+            eventos: items.eventos,
+            noticias: items.noticias,
+            videos: items.videos,
+            indicadores: indicadores
+        };
+        setLoading(true)
+        if (edicao.edicao) {
+            atualizarBoletim(boletim)
+        } else {
+            publicarNovoBoletim(boletim)
+        }
+        setLoading(false)
     };
 
-    const enviarNewsLetter = async (html : string) => {
+    const enviarNewsLetter = async (html: string) => {
 
         return await axiosClient.post(`/newsletters/publicar`, {body: html})
     }
-
     const renderizarEmail = async (boletim: BoletimEmail) => {
         return render(
             <Email boletim={boletim}/>, {
@@ -153,42 +198,44 @@ const PaginaCriacaoBoletim: React.FC = () => {
         )
     }
 
-    const cancelarBoletim = () => {
-        const confirmacao = window.confirm('Deseja realmente deletar?');
-        if (confirmacao) {
-            console.log("Deu ruim");
+    const [showConfirmModal, setShowConfirmModal] = useState<boolean>(false);
+
+    const handleOpenConfirmModal = () => {
+        setShowConfirmModal(true);
+    };
+
+    const handleCloseConfirmModal = () => {
+        setShowConfirmModal(false);
+    };
+
+    const handleModalResult = (confirmed: boolean) => {
+        if (confirmed) {
+            handleCloseConfirmModal()
+            publicarBoletim()
+        } else {
+            console.log("Publicação do boletim cancelada.");
         }
+    };
+
+
+    const [showCancel, setShowCancel] = useState(false);
+
+    const handleOpenCancel = () => setShowCancel(true);
+    const handleCloseCancel = () => setShowCancel(false);
+
+    const cancelarBoletim = () => {
+        navigate(`/admin`)
     };
 
 
     return (
         <>
-        <Container className="pagina-criar-boletim p-5">
-            <div className="d-flex justify-content-center mb-2">
-                <span className="fs-1 fw-semibold">Cadastrar Boletim</span>
+            <div className="d-flex justify-content-center my-5 fw-bold fs-2">
+                {
+                    edicao.edicao ? (<span>Editar Boletim {edicao.edicao}</span>)
+                        : (<span>Criar Boletim</span>)
+                }
             </div>
-
-            <Container
-                className="col-8 px-5 d-none d-xl-flex align-items-center container-lista-conteudos mb-3 justify-content-between flex-row">
-                <div className=" my-3 col-8">
-                    <div className="d-flex justify-content-center mb-2">
-                        <span className="fs-5 fw-semibold">
-                        Como cadastrar boletins
-                        </span>
-                    </div>
-
-                    <ul>
-                        <li>Clique no botão "+" para adicionar o tipo de conteudo</li>
-                        <li>Clique em salvar</li>
-                        <li>Logo após clique em "Publicar" no final da pagina e confirme a ação</li>
-                        <li>Pronto, seu novo boletim foi cadastrado e publicado em poucos passos</li>
-                    </ul>
-                </div>
-                <div className="imagem col-4 d-flex justify-content-center">
-                    <img className="imagem-cadastro-boletim" src={Logo} alt="Logo-geppa"/>
-                </div>
-            </Container>
-
             {modal.show && (
                 <>
                     {modal.type === 'artigo' && (
@@ -242,16 +289,37 @@ const PaginaCriacaoBoletim: React.FC = () => {
             {renderList('noticias', items.noticias)}
             {renderList('videos', items.videos)}
 
-
-
             <ListaDeIndicadores indicadoresIniciais={indicadores} onUpdate={atualizarIndicadores}/>
 
             <div className="d-flex flex-row gap-4 justify-content-end mb-5">
-                <Button onClick={cancelarBoletim} className="" variant="danger">Cancelar</Button>
-                <Button onClick={publicarBoletim} className="btn-modal" >Publicar</Button>
-            </div>
+                <Button onClick={handleOpenCancel} className="" variant="danger">Cancelar</Button>
+                {
+                    edicao.edicao ? (
+                            <Button onClick={handleOpenConfirmModal} className="btn-modal">Editar boletim</Button>)
+                        : (<Button onClick={handleOpenConfirmModal} className="btn-modal">Publicar</Button>)
+                }
 
-        </Container>
+            </div>
+            {
+                <ConfirmModal
+                    show={showConfirmModal}
+                    title="Confirmação de Publicação"
+                    message="Tem certeza que deseja publicar este boletim?"
+                    onConfirm={publicarBoletim}
+                    onCancel={handleCloseConfirmModal}
+                    onResult={handleModalResult}
+                />
+            }
+            {
+                <ModalComponent
+                    show={showCancel}
+                    handleClose={handleCloseCancel}
+                    onConfirm={cancelarBoletim}
+                    title="Finalizar"
+                    message="Tudo o que voce criou até aqui para este boletim será excluido , deseja continuar"
+                />
+            }
+
             {
                 loading && (
                     <LoadingOverlay/>
