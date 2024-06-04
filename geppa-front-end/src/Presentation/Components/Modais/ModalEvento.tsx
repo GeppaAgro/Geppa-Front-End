@@ -14,8 +14,10 @@ import {mapperMensagensValidacaoConteudo} from "../../../Domain/mappers/MapperMe
 import LoadingOverlay from "../Utils/LoadingOverlay/LoadingOverlay.tsx";
 import CampoValorMonetarioModal from "./ComponentesModal/CampoValorMonetarioModal.tsx";
 import CampoHoraModal from "./ComponentesModal/CampoHoraModal.tsx";
+import AxiosClient from "../../../Domain/Services/AxiosClient.ts";
 
 const ModalEvento: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, evento}) => {
+    const [id, setId] = useState<string | null>('')
 
     const [titulo, setTitulo] = useState<string>('')
     const [descricao, setDescricao] = useState<string>('')
@@ -25,19 +27,19 @@ const ModalEvento: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, event
     const [dataHoraFim, setDataHoraFim] = useState<Date | null>(null)
     const [local, setLocal] = useState<string>('')
     const [preco, setPreco] = useState<number | null>(0)
-
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [errosValidacao, setErrosValidacao] = useState<{ [key: string]: string }>()
     const [tentouSalvar, setTentouSalvar] = useState(false);
 
     useEffect(() => {
         if (evento) {
+            setId(evento.id)
             setTitulo(evento.titulo);
             setDescricao(evento.descricao);
             setLink(evento.link);
             setTags(evento.tags);
-            setDataHoraInicio(evento.dataHoraInicio);
-            setDataHoraFim(evento.dataHoraFim);
+            setDataHoraInicio(new Date(evento.dataHoraInicio || ''));
+            setDataHoraFim(new Date(evento.dataHoraFim || ''));
             setLocal(evento.local);
             setPreco(evento.preco);
         }
@@ -51,9 +53,16 @@ const ModalEvento: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, event
         setTentouSalvar(true);
 
         if (isValid) {
-            salvar(evento);
-            fechar();
-            limpar();
+            if (id) {
+                await atualizar(evento)
+                fechar();
+                limpar();
+            } else {
+                salvar(evento);
+                fechar();
+                limpar();
+            }
+
         }
         setIsLoading(false);
     };
@@ -68,6 +77,10 @@ const ModalEvento: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, event
         console.log(errosValidacao)
         return false
     };
+
+    const atualizar = async (eve: Evento)=> {
+        await AxiosClient.put(`/eventos/${id}`, eve)
+    }
 
     const cancelar = () => {
         fechar()

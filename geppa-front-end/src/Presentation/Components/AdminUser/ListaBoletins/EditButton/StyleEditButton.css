@@ -1,0 +1,18 @@
+.btn-edit-admin{
+    background-color: transparent;
+    border: none;
+}
+
+.btn-edit-admin:hover{
+    background-color: transparent;
+    border: none;
+}
+
+.btn-edit-admin:active{
+    background-color: transparent;
+    border: 1px solid var(--VerdeOliva)
+}
+.btn-edit-admin a{
+    color: var(--VerdeOliva);
+}
+

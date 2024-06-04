@@ -1,35 +1,39 @@
+import React, {useEffect, useState} from "react";
 import {Indicador} from "../../../../Domain/TypesConteudos/Indicador.ts";
-import {Table} from "react-bootstrap";
-import {useState} from "react";
+import {Button, Table} from "react-bootstrap";
 import ModalIndicadores from "../ModalIndicadores.tsx";
-import "./StylesComponentesModal/StyleListaDeIndicadores.css"
+import "./StylesComponentesModal/StyleListaDeIndicadores.css";
 
-const ListaDeIndicadores: React.FC<{ indicadoresIniciais?: Indicador[], onUpdate: (indicadores: Indicador[]) => void }> = ({ indicadoresIniciais, onUpdate }) => {
+const ListaDeIndicadores: React.FC<{ indicadoresIniciais?: Indicador[], onUpdate: (indicadores: Indicador[]) => void }> = ({ indicadoresIniciais = [], onUpdate }) => {
 
-    const [indicadores, setIndicadores] = useState<Indicador[]>([]);
+    const [indicadores, setIndicadores] = useState<Indicador[]>(indicadoresIniciais);
     const [modalIndicadores, setModalIndicadores] = useState<{
         show: boolean,
         editIndex: number | null
     }>({ show: false, editIndex: null });
 
+    useEffect(() => {
+        setIndicadores(indicadoresIniciais);
+    }, [indicadoresIniciais]);
+
     const closeModalIndicadores = () => {
         setModalIndicadores({
             show: false,
             editIndex: null
-        })
+        });
     }
 
     const openModalIndicadores = (index: number | null) => {
         setModalIndicadores({
             show: true,
             editIndex: index
-        })
+        });
     }
 
     const salvarIndicador = (indicador: Indicador, index: number | null) => {
         setIndicadores((prevIndicadores) => {
             const newIndicadores = [...prevIndicadores];
-            if (index!== null && index >= 0 && index < newIndicadores.length) {
+            if (index !== null && index >= 0 && index < newIndicadores.length) {
                 newIndicadores[index] = indicador;
             } else {
                 newIndicadores.push(indicador);
@@ -41,31 +45,33 @@ const ListaDeIndicadores: React.FC<{ indicadoresIniciais?: Indicador[], onUpdate
 
     const deleteIndicador = (index: number) => {
         setIndicadores((prevIndicadores) => {
-            const newIndicadores = prevIndicadores.filter((_, i) => i!== index);
+            const newIndicadores = prevIndicadores.filter((_, i) => i !== index);
             onUpdate(newIndicadores);
             return newIndicadores;
         });
     };
 
-    return  (
+    return (
         <>
             <ModalIndicadores
-            abrir={modalIndicadores.show}
-            fechar={closeModalIndicadores}
-            salvar={(indicador: Indicador) => salvarIndicador(indicador, modalIndicadores.editIndex)}
-            indicador={modalIndicadores.editIndex !== null ? indicadores[modalIndicadores.editIndex] : undefined}/>
+                abrir={modalIndicadores.show}
+                fechar={closeModalIndicadores}
+                salvar={(indicador: Indicador) => salvarIndicador(indicador, modalIndicadores.editIndex)}
+                indicador={modalIndicadores.editIndex !== null ? indicadores[modalIndicadores.editIndex] : undefined}/>
 
-
+            <div className="d-flex justify-content-between">
+                <span className="fw-bold fs-5">Indicadores</span>
+                <Button onClick={openModalIndicadores} className="btn-adicionar-indicador fw-bold fs-6 px-4">Adicionar Indicador
+                </Button>
+            </div>
 
             <Table className="table mt-2">
                 <thead>
                 <tr className="text-center align-middle ">
-                    <th >Produto</th>
+                    <th>Produto</th>
                     <th>Unidade de Medida</th>
                     <th>Preço</th>
-                    <th >
-                        <button onClick={openModalIndicadores} className="btn-adicionar-indicador fw-bold fs-6">Adicionar</button>
-                    </th>
+                    <th>Ações</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -83,7 +89,7 @@ const ListaDeIndicadores: React.FC<{ indicadoresIniciais?: Indicador[], onUpdate
                             <div className="px-3 d-flex justify-content-between">
                                 <button
                                     onClick={() => openModalIndicadores(index)}
-                                    className="ri-edit-fill col-6 icone-edit-delete" />
+                                    className="ri-edit-fill col-6 icone-edit-delete"/>
 
                                 <button
                                     onClick={() => deleteIndicador(index)}
@@ -96,7 +102,7 @@ const ListaDeIndicadores: React.FC<{ indicadoresIniciais?: Indicador[], onUpdate
             </Table>
         </>
 
-    )
+    );
 }
 
-export default ListaDeIndicadores
+export default ListaDeIndicadores;

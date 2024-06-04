@@ -14,4 +14,5 @@ export enum MensagensValidacao {
     AUTORES_SIZE_MINIMO = 'Deve haver pelo menos um autor',
     AUTORES_NOME_OBRIGATORIO = 'O nome do autor é obrigatório',
     AUTORES_NOME_MINIMO_CARACTERES = 'O nome do autor deve ter pelo menos 3 caracteres',
+    ERRO_PUBLICAR_BOLETIM = 'Não foi possivel publicar o boletim, verifique a conexao com o servidor'
 }
