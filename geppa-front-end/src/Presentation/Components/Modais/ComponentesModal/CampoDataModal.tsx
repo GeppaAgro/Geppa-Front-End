@@ -14,7 +14,7 @@ const CampoDataModal: React.FC<CampoDataProps> = ({ label, valor, salvarData, er
 
     useEffect(() => {
         if (valor) {
-            setDataLocal(valor);
+            setDataLocal(new Date(valor));
         }
     }, [valor]);
 

@@ -29,6 +29,7 @@ function AdminRoutes() {
                     <Route path="criar-boletins" element={<PaginaCriacaoBoletim/>}/>
                     <Route path="aluno" element={<AdminAlunos/>}/>
                     <Route path="tags" element={<ListagemTags/>}/>
+                    <Route path="boletins/:edicao" element={<PaginaCriacaoBoletim/>}/>
                 </Routes>
             </div>
         </>

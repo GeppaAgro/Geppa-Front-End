@@ -8,6 +8,7 @@ import DeleteBoletim from "../../../Components/AdminUser/ListaBoletins/DeleteBol
 import {TypeFiltro} from "../../../../Data/ApiTypes/TypeFiltro.ts";
 import {Filtros} from "../../../Components/Filters/FiltrosListagem/Filtros.tsx";
 import AxiosClient from "../../../../Domain/Services/AxiosClient.ts";
+import EditButton from "../../../Components/AdminUser/ListaBoletins/EditButton/EditButton.tsx";
 
 
 export default function AdminListaBoletins() {
@@ -87,7 +88,7 @@ export default function AdminListaBoletins() {
                                             {/*             tag={tag}*/}
                                             {/*             colorBtn={cores.transparente}*/}
                                             {/*/>*/}
-                                            <span className={'px-1'}/>
+                                            <EditButton edicao={boletim.edicao} />
                                             <DeleteBoletim boletim={boletim} fetchBoletins={fetchBoletins}/>
                                         </td>
                                     </tr>
