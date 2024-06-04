@@ -15,7 +15,7 @@ import {BoletimSubmit} from "../../../../Data/ApiTypes/BoletimSubmit.ts";
 import {render} from "@react-email/render";
 import Email from "../../../Components/Email/Email.tsx";
 import {BoletimEmail} from "../../../../Data/ApiTypes/TypeBoletimEmail.ts";
-import { useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import LoadingOverlay from "../../../Components/Utils/LoadingOverlay/LoadingOverlay.tsx";
 import CustomToast from "../../../Components/Utils/CustomToast.tsx";
 import {AxiosError, AxiosResponse} from "axios";
@@ -69,7 +69,7 @@ const PaginaCriacaoBoletim: React.FC = () => {
         }
     }, [toast]);
 
-    type ContentType = 'artigo' | 'curso' | 'noticia' | 'video'| 'evento';
+    type ContentType = 'artigo' | 'curso' | 'noticia' | 'video' | 'evento';
 
     const contentTypeMap: Record<string, ContentType> = {
         artigos: 'artigo',
@@ -81,7 +81,7 @@ const PaginaCriacaoBoletim: React.FC = () => {
 
     const [indicadores, setIndicadores] = useState<Indicador[]>([])
 
-    const atualizarIndicadores = (novosIndicadores : Indicador[] ) => {
+    const atualizarIndicadores = (novosIndicadores: Indicador[]) => {
         setIndicadores(novosIndicadores);
     };
 
@@ -100,21 +100,23 @@ const PaginaCriacaoBoletim: React.FC = () => {
                             +
                         </Button>
                     </div>
-                {items.map((item, index) => (
-                    <li key={item.id} className="mb-3 list-unstyled">
-                        <div className="lista-conteudos d-flex col align-items-center justify-content-between  ">
-                            <span className="fw-semibold">{item.titulo}</span>
-                            <div className="d-flex flex-row gap-2 gap-sm-3">
-                                <Button className="btn-edit-delete" variant="2" onClick={() => openModal(getContentType(type), index)}>
-                                    <i className="ri-edit-fill"/>
-                                </Button>
-                                <Button className="btn-edit-delete" variant="2" onClick={() => deleteItem(type, index)}>
-                                    <i className="ri-eraser-fill"/>
-                                </Button>
+                    {items.map((item, index) => (
+                        <li key={item.id} className="mb-3 list-unstyled">
+                            <div className="lista-conteudos d-flex col align-items-center justify-content-between  ">
+                                <span className="fw-semibold">{item.titulo}</span>
+                                <div className="d-flex flex-row gap-2 gap-sm-3">
+                                    <Button className="btn-edit-delete" variant="2"
+                                            onClick={() => openModal(getContentType(type), index)}>
+                                        <i className="ri-edit-fill"/>
+                                    </Button>
+                                    <Button className="btn-edit-delete" variant="2"
+                                            onClick={() => deleteItem(type, index)}>
+                                        <i className="ri-eraser-fill"/>
+                                    </Button>
+                                </div>
                             </div>
-                        </div>
-                    </li>
-                ))}
+                        </li>
+                    ))}
                 </Container>
             </ul>
         );
@@ -123,10 +125,10 @@ const PaginaCriacaoBoletim: React.FC = () => {
 
 
     const atualizarBoletim = async (boletim: BoletimSubmit) => {
-        try{
+        try {
             const response = await axiosClient.put(`/boletins/${edicao.edicao}`, boletim)
             console.log(response)
-        }catch (error) {
+        } catch (error) {
             setToast({
                 message: `Falha ao salvar boletim, tente novamente em alguns instantes`,
                 isSuccess: false,
@@ -165,7 +167,7 @@ const PaginaCriacaoBoletim: React.FC = () => {
         }
     }
 
-    const publicarBoletim =  () => {
+    const publicarBoletim = () => {
         const boletim: BoletimSubmit = {
             edicao: edicao.edicao || null,
             artigos: items.artigos,
@@ -184,7 +186,7 @@ const PaginaCriacaoBoletim: React.FC = () => {
         setLoading(false)
     };
 
-    const enviarNewsLetter = async (html : string) => {
+    const enviarNewsLetter = async (html: string) => {
 
         return await axiosClient.post(`/newsletters/publicar`, {body: html})
     }
@@ -292,8 +294,9 @@ const PaginaCriacaoBoletim: React.FC = () => {
             <div className="d-flex flex-row gap-4 justify-content-end mb-5">
                 <Button onClick={handleOpenCancel} className="" variant="danger">Cancelar</Button>
                 {
-                    edicao.edicao ? (<Button onClick={handleOpenConfirmModal} className="btn-modal" >Editar boletim</Button> )
-                    : (<Button onClick={handleOpenConfirmModal} className="btn-modal" >Publicar</Button>)
+                    edicao.edicao ? (
+                            <Button onClick={handleOpenConfirmModal} className="btn-modal">Editar boletim</Button>)
+                        : (<Button onClick={handleOpenConfirmModal} className="btn-modal">Publicar</Button>)
                 }
 
             </div>
@@ -305,7 +308,7 @@ const PaginaCriacaoBoletim: React.FC = () => {
                     onConfirm={publicarBoletim}
                     onCancel={handleCloseConfirmModal}
                     onResult={handleModalResult}
-                    />
+                />
             }
             {
                 <ModalComponent
