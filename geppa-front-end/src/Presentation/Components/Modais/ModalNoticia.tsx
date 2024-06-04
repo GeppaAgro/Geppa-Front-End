@@ -12,9 +12,11 @@ import {ValidarConteudoService} from "../../../Domain/Services/ValidarConteudoSe
 import {TipoConteudo} from "../../../Domain/Enums/TipoConteudo.ts";
 import {mapperMensagensValidacaoConteudo} from "../../../Domain/mappers/MapperMensagensValidacao.ts";
 import LoadingOverlay from "../Utils/LoadingOverlay/LoadingOverlay.tsx";
+import AxiosClient from "../../../Domain/Services/AxiosClient.ts";
 
 
 const ModalNoticia: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, noticia}) => {
+    const [id, setId] = useState<string | null>('')
     const [titulo, setTitulo] = useState<string>('')
     const [descricao, setDescricao] = useState<string>('')
     const [link, setLink] = useState<string>('')
@@ -27,12 +29,14 @@ const ModalNoticia: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, noti
 
     useEffect(() => {
         if (noticia) {
+            setId(noticia.id)
             setTitulo(noticia.titulo)
             setDescricao(noticia.descricao)
             setLink(noticia.link)
             setDataPublicacao(noticia.dataPublicacao)
             setTags(noticia.tags || []);
         }
+
     }, [noticia]);
 
     const handleNoticia = async () => {
@@ -40,11 +44,17 @@ const ModalNoticia: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, noti
         const noticia: Noticia = new Noticia(titulo, descricao, link, tags, dataPublicacao)
         const isValid = await validar(noticia);
         setTentouSalvar(true);
-
         if (isValid) {
-            salvar(noticia);
-            fechar();
-            limpar();
+            if (id) {
+                 await atualizar(noticia)
+                fechar();
+                limpar();
+            } else {
+                salvar(noticia);
+                fechar();
+                limpar();
+            }
+
         }
         setIsLoading(false);
     };
@@ -58,6 +68,10 @@ const ModalNoticia: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, noti
         setErrosValidacao(errosValidacao)
         return false
     };
+
+    const atualizar = async (not: Noticia)=> {
+         await AxiosClient.put(`/noticias/${id}`, not)
+    }
 
     const cancelar = () => {
         fechar()

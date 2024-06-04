@@ -42,6 +42,7 @@ const PaginaCriacaoBoletim: React.FC = () => {
                 noticias: resp.data.dados.noticias || [],
                 videos: resp.data.dados.videos || [],
             });
+
         } catch (error) {
             console.log(error)
         }
