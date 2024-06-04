@@ -7,8 +7,9 @@ import CardNoticiaBoletim from "../../../Components/ComponentesBoletim/CardNotic
 import CardVideoBoletim from "../../../Components/ComponentesBoletim/CardVideoBoletim.tsx";
 import {Artigo, Curso, Evento, Noticia, Video} from "../../../../Domain/TypesConteudos/TypesConteudos.ts";
 import CardEventoBoletim from "../../../Components/ComponentesBoletim/CardEventoBoletim.tsx";
-import AxiosClient from "../../../../Data/Services/AxiosClient.ts";
+import AxiosClient from "../../../../Domain/Services/AxiosClient.ts";
 import {ConteudoSkeleton} from "../../../Components/Skeleton/ConteudoSkeleton.tsx";
+import Paginacao from "../../../Components/Paginacao/Paginacao.tsx";
 
 export default function PaginaListaConteudos() {
     const {filtro} = useParams<{ filtro: string }>();
@@ -96,6 +97,10 @@ export default function PaginaListaConteudos() {
         };
         buscarConteudo()
     }, [filtroSelecionado, urlConteudo]);
+
+    const handlePageChange = (page: number) => {
+        setNumeroPagina(page);
+    };
 
     const renderizarConteudoSelecionado = () => {
         switch (filtroSelecionado) {
@@ -199,32 +204,11 @@ export default function PaginaListaConteudos() {
                 ) : (
                     <>
                         {renderizarConteudoSelecionado()}
-
-                        <ul className="pagination justify-content-center">
-                            <li className="page-item">
-                                <button disabled={numeroPagina <= 0}
-                                        className="page-link"
-                                        onClick={() => {
-                                            setNumeroPagina(numeroPagina - 1)
-                                            setLoadingConteudos(true)
-                                        }}>
-                                    &laquo;
-                                </button>
-                            </li>
-                            <li className="page-item">
-                                <button className="page-link">{numeroPagina + 1}</button>
-                            </li>
-                            <li className="page-item">
-                                <button disabled={numeroPagina + 1 >= qtdPaginas}
-                                        className="page-link"
-                                        onClick={() => {
-                                            setNumeroPagina(numeroPagina + 1);
-                                            setLoadingConteudos(true);
-                                        }}>
-                                    &raquo;
-                                </button>
-                            </li>
-                        </ul>
+                        <Paginacao
+                            currentPage={numeroPagina}
+                            totalPages={qtdPaginas}
+                            onPageChange={handlePageChange}
+                        />
                     </>
                 )}
             </Container>

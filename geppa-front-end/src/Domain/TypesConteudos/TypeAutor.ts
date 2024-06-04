@@ -1,4 +1,9 @@
-export type Autor = {
-    id : string;
+export class Autor {
+    id : string
     nome: string;
+
+    constructor(id: string, nome: string) {
+        this.id = id;
+        this.nome = nome;
+    }
 }

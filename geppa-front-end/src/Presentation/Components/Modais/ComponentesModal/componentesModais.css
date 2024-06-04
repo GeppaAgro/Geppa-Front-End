@@ -1,0 +1,21 @@
+.lista-tags-buscaTag {
+    transition: background-color 0.2s ease, font-weight 0.3s ease; /* Adicionando transição suave */
+}
+
+.lista-tags-buscaTag:hover {
+    background-color: var(--VerdeOliva);
+    font-weight: bold;
+    cursor: pointer;
+    color: white;
+}
+
+.tag {
+    background-color: var(--VerdeOliva);
+    color: white;
+}
+
+.lista-tags{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}

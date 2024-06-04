@@ -1,16 +1,15 @@
 import "./StyleCardBoletim.css"
 import {Container} from "react-bootstrap";
 import {Link} from "react-router-dom";
-import {useState} from "react";
-import {Video} from "../../../Domain/TypesConteudos/TypeVideo.ts";
+import {Video} from "../../../Domain/TypesConteudos/Conteudos/Video.ts";
 
 const CardVideoBoletim: React.FC <{video : Video}> = ({video}) => {
 
-    const [videoVisivel, setVideoVisivel] = useState(false);
+    // const [videoVisivel, setVideoVisivel] = useState(false);
 
-    const mostrarVideo = () => {
-        setVideoVisivel(!videoVisivel);
-    };
+    // const mostrarVideo = () => {
+    //     setVideoVisivel(!videoVisivel);
+    // };
 
     return(
         <Container className="card-boletim p-5 mt-1 mb-3 d-flex flex-column justify-content-start ">
@@ -35,31 +34,38 @@ const CardVideoBoletim: React.FC <{video : Video}> = ({video}) => {
                         ))
                     }
                 </div>
-                {
-                    !video.youtube ? (
-                        <div className="link-boletim mt-3 mt-md-0 card-boletim-btn p-3 ">
-                            <Link to={video.link} className="fs-6 fw-bold ">
-                                Visitar Video
-                            </Link>
-                        </div>
-                    ) : (
-                        <div className="link-boletim mt-3 mt-md-0">
-                            <button
-                                className="btn-abrir-video-boletim py-2 px-4 fw-semibold fs-6"
-                                onClick={mostrarVideo}>
-                                Assistir video <i className="ri-arrow-down-s-line"/>
-                            </button>
-                        </div>
-                    )
-                }
+
+                <div className="link-boletim mt-3 mt-md-0 card-boletim-btn p-3 ">
+                    <Link to={video.link} className="fs-6 fw-bold ">
+                        Visitar Video
+                    </Link>
+                </div>
+            {/*    {*/}
+            {/*        !video.youtube ? (*/}
+            {/*            <div className="link-boletim mt-3 mt-md-0 card-boletim-btn p-3 ">*/}
+            {/*                <Link to={video.link} className="fs-6 fw-bold ">*/}
+            {/*                    Visitar Video*/}
+            {/*                </Link>*/}
+            {/*            </div>*/}
+            {/*        ) : (*/}
+            {/*            <div className="link-boletim mt-3 mt-md-0">*/}
+            {/*                <button*/}
+            {/*                    className="btn-abrir-video-boletim py-2 px-4 fw-semibold fs-6"*/}
+            {/*                    onClick={mostrarVideo}>*/}
+            {/*                    Assistir video <i className="ri-arrow-down-s-line"/>*/}
+            {/*                </button>*/}
+            {/*            </div>*/}
+            {/*        )*/}
+            {/*    }*/}
+            {/*</div>*/}
+            {/*{*/}
+            {/*    videoVisivel && (*/}
+            {/*        video.youtube && (*/}
+            {/*            <video src="#" className="object-fit-contain video-boletim"/>*/}
+            {/*        )*/}
+            {/*    )*/}
+            {/*}*/}
             </div>
-            {
-                videoVisivel &&(
-                    video.youtube && (
-                        <video src="#" className="object-fit-contain video-boletim"/>
-                    )
-                )
-            }
         </Container>
     )
 }

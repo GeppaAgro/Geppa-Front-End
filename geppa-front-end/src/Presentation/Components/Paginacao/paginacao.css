@@ -1,0 +1,18 @@
+.page-item {
+    color: var(--MarromEscuro);
+}
+
+.page-item span:hover {
+    background-color: transparent;
+    border: 0;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--VerdeOliva);
+    color: white;
+    border-color: var(--MarromTerra);
+}
+
+.pagination .page-item .page-link {
+    color: var(--MarromEscuro);
+}

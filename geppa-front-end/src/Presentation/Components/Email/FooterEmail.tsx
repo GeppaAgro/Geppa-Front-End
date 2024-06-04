@@ -24,7 +24,7 @@ export const FooterEmail = () => {
                 <Section>
                     <Row>
                         <Column width={100} align={"center"}>
-                            <Link target={'_blank'} href={"#"} style={linkFooter}>
+                            <Link target={'_blank'} href={"link-cancelamento-inscricao"} style={linkFooter}>
                                 Cancelar inscrição
                             </Link>
                         </Column>
