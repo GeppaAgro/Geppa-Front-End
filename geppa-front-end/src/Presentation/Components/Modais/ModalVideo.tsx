@@ -11,8 +11,11 @@ import CampoTextoSimplesModal from "./ComponentesModal/CampoTextoSimplesModal.ts
 import CampoTextAreaModal from "./ComponentesModal/CampoTextAreaModal.tsx";
 import BuscadorDeTag from "./ComponentesModal/BuscadorDeTag.tsx";
 import ListagemTagsModal from "./ComponentesModal/ListagemTagsModal.tsx";
+import AxiosClient from "../../../Domain/Services/AxiosClient.ts";
 
 const ModalArtigo: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, video}) => {
+    const [id, setId] = useState<string | null>('')
+
     const [titulo, setTitulo] = useState<string>('')
     const [descricao, setDescricao] = useState<string>('')
     const [link, setLink] = useState<string>('')
@@ -24,6 +27,7 @@ const ModalArtigo: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, video
 
     useEffect(() => {
         if (video) {
+            setId(video.id)
             setTitulo(video.titulo)
             setDescricao(video.descricao)
             setLink(video.link)
@@ -38,9 +42,15 @@ const ModalArtigo: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, video
         const isValid = await validar(video);
         setTentouSalvar(true);
         if (isValid) {
-            salvar(video);
-            fechar();
-            limpar();
+            if (id) {
+                await atualizar(video)
+                fechar();
+                limpar();
+            } else {
+                salvar(video);
+                fechar();
+                limpar();
+            }
         }
         setIsLoading(false);
     };
@@ -55,7 +65,9 @@ const ModalArtigo: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, video
         setErrosValidacao(errosValidacao)
         return false
     };
-
+    const atualizar = async (vid: Video)=> {
+        await AxiosClient.put(`/videos/${id}`, vid)
+    }
 
     const cancelar = () => {
         fechar()

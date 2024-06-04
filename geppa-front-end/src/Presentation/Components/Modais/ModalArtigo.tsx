@@ -15,9 +15,10 @@ import {ValidarConteudoService} from "../../../Domain/Services/ValidarConteudoSe
 import {TipoConteudo} from "../../../Domain/Enums/TipoConteudo.ts";
 import {mapperMensagensValidacaoConteudo} from "../../../Domain/mappers/MapperMensagensValidacao.ts";
 import LoadingOverlay from "../Utils/LoadingOverlay/LoadingOverlay.tsx";
+import AxiosClient from "../../../Domain/Services/AxiosClient.ts";
 
 const ModalArtigo: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, artigo}) => {
-
+    const [id, setId] = useState<string | null>('')
     const [titulo, setTitulo] = useState<string>('')
     const [descricao, setDescricao] = useState<string>('')
     const [link, setLink] = useState<string>('')
@@ -32,6 +33,7 @@ const ModalArtigo: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, artig
 
     useEffect(() => {
         if (artigo) {
+            setId(artigo.id)
             setTitulo(artigo.titulo)
             setDescricao(artigo.descricao)
             setLink(artigo.link)
@@ -49,14 +51,23 @@ const ModalArtigo: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, artig
         setTentouSalvar(true);
 
         if (isValid) {
-            salvar(artigo);
-            fechar();
-            limpar();
+            if (id) {
+                await atualizar(artigo)
+                fechar();
+                limpar();
+            } else {
+                salvar(artigo);
+                fechar();
+                limpar();
+            }
         }
         setIsLoading(false);
     };
 
 
+        const atualizar = async (art: Artigo)=> {
+            await AxiosClient.put(`/artigos/${id}`, art)
+        }
     const validar = async (artigo: Artigo): Promise<boolean> => {
         const artigoParaValidar = {
             ...artigo,
