@@ -16,7 +16,6 @@ export default function AdminListaBoletins() {
     const [currentPage, setCurrentPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
     const [filtroType, setFiltroType] = useState<TypeFiltro | null>(null);
-    // const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         fetchBoletins();
@@ -39,8 +38,7 @@ export default function AdminListaBoletins() {
     };
 
     const handleFilterSubmit = (dataMinima: string, dataMaxima: string) => {
-        // setErrorMessage('');
-        // setLoadingBoletim(true)
+
         setFiltroType({dataMinima, dataMaxima})
         setCurrentPage(0);
     };
@@ -79,15 +77,6 @@ export default function AdminListaBoletins() {
                                         </td>
 
                                         <td className="text-center align-middle">
-
-                                            {/*TODO: Implementar edição de boletim*/}
-                                            {/*<CadastroTag buttonText={"Editar"}*/}
-                                            {/*             iconClass={"ri-pencil-fill"}*/}
-                                            {/*             fetchTags={fetchTags}*/}
-                                            {/*             classNameBtn={"text-primary-emphasis fw-medium border-0"}*/}
-                                            {/*             tag={tag}*/}
-                                            {/*             colorBtn={cores.transparente}*/}
-                                            {/*/>*/}
                                             <EditButton edicao={boletim.edicao} />
                                             <DeleteBoletim boletim={boletim} fetchBoletins={fetchBoletins}/>
                                         </td>

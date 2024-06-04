@@ -19,6 +19,8 @@ import { useNavigate, useParams} from "react-router-dom";
 import LoadingOverlay from "../../../Components/Utils/LoadingOverlay/LoadingOverlay.tsx";
 import CustomToast from "../../../Components/Utils/CustomToast.tsx";
 import {AxiosError, AxiosResponse} from "axios";
+import ConfirmModal from "../../../Components/Modais/ModalConfirm.tsx";
+import ModalComponent from "../../../Components/Modais/ModalCancel.tsx";
 
 
 interface Item {
@@ -40,6 +42,7 @@ const PaginaCriacaoBoletim: React.FC = () => {
                 noticias: resp.data.dados.noticias || [],
                 videos: resp.data.dados.videos || [],
             });
+
         } catch (error) {
             console.log(error)
         }
@@ -172,17 +175,12 @@ const PaginaCriacaoBoletim: React.FC = () => {
             videos: items.videos,
             indicadores: indicadores
         };
-        const confirmacao = window.confirm('Deseja realmente enviar?');
-        if (!confirmacao) return;
         setLoading(true)
-
         if (edicao.edicao) {
             atualizarBoletim(boletim)
         } else {
             publicarNovoBoletim(boletim)
         }
-
-
         setLoading(false)
     };
 
@@ -190,7 +188,6 @@ const PaginaCriacaoBoletim: React.FC = () => {
 
         return await axiosClient.post(`/newsletters/publicar`, {body: html})
     }
-
     const renderizarEmail = async (boletim: BoletimEmail) => {
         return render(
             <Email boletim={boletim}/>, {
@@ -199,11 +196,33 @@ const PaginaCriacaoBoletim: React.FC = () => {
         )
     }
 
-    const cancelarBoletim = () => {
-        const confirmacao = window.confirm('Deseja realmente deletar?');
-        if (confirmacao) {
-            console.log("Deu ruim");
+    const [showConfirmModal, setShowConfirmModal] = useState<boolean>(false);
+
+    const handleOpenConfirmModal = () => {
+        setShowConfirmModal(true);
+    };
+
+    const handleCloseConfirmModal = () => {
+        setShowConfirmModal(false);
+    };
+
+    const handleModalResult = (confirmed: boolean) => {
+        if (confirmed) {
+            handleCloseConfirmModal()
+            publicarBoletim()
+        } else {
+            console.log("Publicação do boletim cancelada.");
         }
+    };
+
+
+    const [showCancel, setShowCancel] = useState(false);
+
+    const handleOpenCancel = () => setShowCancel(true);
+    const handleCloseCancel = () => setShowCancel(false);
+
+    const cancelarBoletim = () => {
+        navigate(`/admin`)
     };
 
 
@@ -268,19 +287,35 @@ const PaginaCriacaoBoletim: React.FC = () => {
             {renderList('noticias', items.noticias)}
             {renderList('videos', items.videos)}
 
-
-
             <ListaDeIndicadores indicadoresIniciais={indicadores} onUpdate={atualizarIndicadores}/>
 
             <div className="d-flex flex-row gap-4 justify-content-end mb-5">
-                <Button onClick={cancelarBoletim} className="" variant="danger">Cancelar</Button>
+                <Button onClick={handleOpenCancel} className="" variant="danger">Cancelar</Button>
                 {
-                    edicao.edicao ? (<Button onClick={publicarBoletim} className="btn-modal" >Editar boletim</Button> )
-                    : (<Button onClick={publicarBoletim} className="btn-modal" >Publicar</Button>)
+                    edicao.edicao ? (<Button onClick={handleOpenConfirmModal} className="btn-modal" >Editar boletim</Button> )
+                    : (<Button onClick={handleOpenConfirmModal} className="btn-modal" >Publicar</Button>)
                 }
 
             </div>
-
+            {
+                <ConfirmModal
+                    show={showConfirmModal}
+                    title="Confirmação de Publicação"
+                    message="Tem certeza que deseja publicar este boletim?"
+                    onConfirm={publicarBoletim}
+                    onCancel={handleCloseConfirmModal}
+                    onResult={handleModalResult}
+                    />
+            }
+            {
+                <ModalComponent
+                    show={showCancel}
+                    handleClose={handleCloseCancel}
+                    onConfirm={cancelarBoletim}
+                    title="Finalizar"
+                    message="Tudo o que voce criou até aqui para este boletim será excluido , deseja continuar"
+                />
+            }
 
             {
                 loading && (

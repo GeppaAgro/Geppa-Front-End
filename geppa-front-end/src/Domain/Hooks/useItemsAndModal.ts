@@ -22,6 +22,7 @@ export const useItemsAndModal = () => {
 
     const openModal = (type: 'artigo' | 'curso' | 'noticia' | 'video' | 'evento' , editIndex: number | null = null) => {
         setModal({type, show: true, editIndex});
+        console.log(items.noticias)
     };
 
     const closeModal = () => {
@@ -53,5 +54,5 @@ export const useItemsAndModal = () => {
         });
     };
 
-    return {items,   modal, setItems, openModal, closeModal, saveItem, deleteItem};
+    return {items, modal, setItems, openModal, closeModal, saveItem, deleteItem};
 };

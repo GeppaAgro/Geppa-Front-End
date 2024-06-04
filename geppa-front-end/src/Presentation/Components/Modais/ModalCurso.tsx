@@ -14,6 +14,7 @@ import {Curso} from "../../../Domain/TypesConteudos/Conteudos/Curso.ts";
 import {Tag} from "../../../Domain/TypesConteudos/TypeTag.ts";
 import CampoValorMonetarioModal from "./ComponentesModal/CampoValorMonetarioModal.tsx";
 import CampoNumerico from "./ComponentesModal/CampoNumerico.tsx";
+import AxiosClient from "../../../Domain/Services/AxiosClient.ts";
 
 const ModalCurso: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, curso}) => {
     const [titulo, setTitulo] = useState<string>('')
@@ -26,10 +27,12 @@ const ModalCurso: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, curso}
     const [errosValidacao, setErrosValidacao] = useState<{ [key: string]: string }>()
     const [tentouSalvar, setTentouSalvar] = useState(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [id, setId] = useState<string | null>('')
 
 
     useEffect(() => {
         if (curso) {
+            setId(curso.id)
             setTitulo(curso.titulo)
             setDescricao(curso.descricao)
             setLink(curso.link)
@@ -48,9 +51,15 @@ const ModalCurso: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, curso}
         setTentouSalvar(true);
 
         if (isValid) {
-            salvar(curso);
-            fechar();
-            limpar();
+            if (id) {
+                await atualizar(curso)
+                fechar();
+                limpar();
+            } else {
+                salvar(curso);
+                fechar();
+                limpar();
+            }
         }
         setIsLoading(false);
     };
@@ -64,6 +73,9 @@ const ModalCurso: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, curso}
         setErrosValidacao(errosValidacao)
         return false
     };
+    const atualizar = async (cur: Curso)=> {
+        await AxiosClient.put(`/cursos/${id}`, cur)
+    }
 
     const cancelar = () => {
         fechar()
