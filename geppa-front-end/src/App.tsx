@@ -47,7 +47,7 @@ function UserRoutes() {
                 <Route path="sobre" element={<PaginaSobre/>}/>
                 <Route path="boletim/:edicao" element={<PaginaBoletim/>}/>
                 <Route path="*" element={<PaginaNaoEncontrada/>}/>
-                <Route path={"cancelar-inscricao-newsletter/:email"} element={<PaginaUnsubscribeNewsletter/>}/>
+                <Route path={"cancelamento-inscricao/:email"} element={<PaginaUnsubscribeNewsletter/>}/>
             </Routes>
             <Footer/>
         </>
