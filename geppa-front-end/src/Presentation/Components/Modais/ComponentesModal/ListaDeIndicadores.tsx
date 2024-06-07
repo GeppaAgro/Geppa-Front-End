@@ -52,14 +52,14 @@ const ListaDeIndicadores: React.FC<{ indicadoresIniciais?: Indicador[], onUpdate
     };
 
     return (
-        <>
+        <div className='mx-md-5 '>
             <ModalIndicadores
                 abrir={modalIndicadores.show}
                 fechar={closeModalIndicadores}
                 salvar={(indicador: Indicador) => salvarIndicador(indicador, modalIndicadores.editIndex)}
                 indicador={modalIndicadores.editIndex !== null ? indicadores[modalIndicadores.editIndex] : undefined}/>
 
-            <div className="d-flex justify-content-between align-items-center ps-sm-5">
+            <div className="d-flex justify-content-between align-items-center">
                 <span className="fw-bold fs-5">Indicadores</span>
                 <button onClick={openModalIndicadores} className="btn-adicionar-indicador fw-bold fs-6 py-2 px-3 rounded">Adicionar Indicador
                 </button>
@@ -100,7 +100,7 @@ const ListaDeIndicadores: React.FC<{ indicadoresIniciais?: Indicador[], onUpdate
                 ))}
                 </tbody>
             </Table>
-        </>
+        </div>
 
     );
 }
