@@ -26,7 +26,7 @@ const UltimosConteudos: React.FC<{tipo: string, conteudoGenerico: TypeConteudoGe
                         <Col key={conteudo.id} lg={6} xl={6} className={`mb-4 ${index % 2 === 0 ? "mb-lg-0" : ""}`}>
                             <CardUltimoConteudo
                                 descricao={conteudo.descricao}
-                                dataPublicacao={conteudo.dataCadastro.toString()}
+                                dataPublicacao={new Date(conteudo.dataCadastro)}
                             />
                         </Col>
                     ))}
