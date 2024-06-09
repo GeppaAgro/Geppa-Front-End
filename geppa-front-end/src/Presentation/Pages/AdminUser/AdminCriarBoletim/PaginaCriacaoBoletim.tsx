@@ -92,13 +92,14 @@ const PaginaCriacaoBoletim: React.FC = () => {
     const {items, setItems, modal, openModal, closeModal, saveItem, deleteItem} = useItemsAndModal();
     const renderList = (type: 'artigos' | 'cursos' | 'noticias' | 'videos' | 'eventos', items: Item[]) => {
         return (
-            <ul>
+            <ul className="mx-md-5">
                 <Container className="container-lista-conteudos px-sm-5">
                     <div className="d-flex flex-row justify-content-between align-items-center mb-2">
                         <span className="fw-bold fs-5 ">{type.charAt(0).toUpperCase() + type.slice(1)}</span>
-                        <Button className="btn-modal fw-semibold" onClick={() => openModal(getContentType(type), null)}>
+                        {!edicao.edicao  && (<Button className="btn-modal fw-semibold" onClick={() => openModal(getContentType(type), null)}>
                             +
-                        </Button>
+                        </Button>)}
+
                     </div>
                     {items.map((item, index) => (
                         <li key={item.id} className="mb-3 list-unstyled">
@@ -291,7 +292,7 @@ const PaginaCriacaoBoletim: React.FC = () => {
 
             <ListaDeIndicadores indicadoresIniciais={indicadores} onUpdate={atualizarIndicadores}/>
 
-            <div className="d-flex flex-row gap-4 justify-content-end mb-5">
+            {!edicao.edicao && (<div className="d-flex flex-row gap-4 justify-content-end mb-5 mx-md-5">
                 <Button onClick={handleOpenCancel} className="" variant="danger">Cancelar</Button>
                 {
                     edicao.edicao ? (
@@ -299,7 +300,7 @@ const PaginaCriacaoBoletim: React.FC = () => {
                         : (<Button onClick={handleOpenConfirmModal} className="btn-modal">Publicar</Button>)
                 }
 
-            </div>
+            </div>)}
             {
                 <ConfirmModal
                     show={showConfirmModal}

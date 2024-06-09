@@ -9,15 +9,18 @@ import {TypeFiltro} from "../../../../Data/ApiTypes/TypeFiltro.ts";
 import {Filtros} from "../../../Components/Filters/FiltrosListagem/Filtros.tsx";
 import AxiosClient from "../../../../Domain/Services/AxiosClient.ts";
 import EditButton from "../../../Components/AdminUser/ListaBoletins/EditButton/EditButton.tsx";
+import {LinhaSkeleton} from "../../../Components/Skeleton/LinhaSkeleton.tsx";
 
 
 export default function AdminListaBoletins() {
+    const [loadingBoletim, setLoadingBoletim] = useState<boolean>(true);
     const [boletins, setBoletins] = useState<Boletim[]>([]);
     const [currentPage, setCurrentPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
     const [filtroType, setFiltroType] = useState<TypeFiltro | null>(null);
 
     useEffect(() => {
+        setLoadingBoletim(true)
         fetchBoletins();
     }, [filtroType, currentPage]);
 
@@ -32,8 +35,12 @@ export default function AdminListaBoletins() {
             setTotalPages(response.data.totalPaginas);
             setCurrentPage(response.data.paginaAtual || 0);
             setBoletins(response.data.dados)
+            setLoadingBoletim(false)
+
         } catch (error) {
             console.error("Erro ao buscar boletins:", error);
+            setLoadingBoletim(false)
+
         }
     };
 
@@ -67,24 +74,45 @@ export default function AdminListaBoletins() {
                             </tr>
                             </thead>
                             <tbody>
-                            {boletins.length > 0 ? (
-                                boletins.map((boletim, index) => (
-                                    <tr key={boletim.id}>
-                                        <td className={"align-middle"}>{index + 1}</td>
-                                        <td className={"align-middle"}>{boletim.edicao}</td>
-                                        <td className={"align-middle ps-3"}>
-                                            {new Date(boletim.dataPublicacao).toLocaleDateString('pt-BR', {timeZone: 'UTC'})}
-                                        </td>
+                            {loadingBoletim ? (
+                                <>
+                                    {Array.from({length: 8}).map((_, index) => (
+                                        <tr key={index} className="linha-tabela-boletim fs-4">
+                                            <td>
+                                                <LinhaSkeleton/>
+                                            </td>
+                                            <td>
+                                                <LinhaSkeleton/>
+                                            </td>
+                                            <td>
+                                                <LinhaSkeleton/>
+                                            </td>
+                                            <td>
+                                                <LinhaSkeleton/>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </>
+                            ) : (
+                                boletins.length > 0 ? (
+                                        boletins.map((boletim, index) => (
+                                            <tr key={boletim.id}>
+                                                <td className={"align-middle"}>{index + 1}</td>
+                                                <td className={"align-middle"}>{boletim.edicao}</td>
+                                                <td className={"align-middle ps-3"}>
+                                                    {new Date(boletim.dataPublicacao).toLocaleDateString('pt-BR', {timeZone: 'UTC'})}
+                                                </td>
 
-                                        <td className="text-center align-middle">
-                                            <EditButton edicao={boletim.edicao} />
-                                            <DeleteBoletim boletim={boletim} fetchBoletins={fetchBoletins}/>
-                                        </td>
-                                    </tr>
-                                ))) : (
-                                <tr>
-                                    <td colSpan={3} className="text-center">Nenhuma tag encontrada.</td>
-                                </tr>
+                                                <td className="text-center align-middle">
+                                                    <EditButton edicao={boletim.edicao} />
+                                                    <DeleteBoletim boletim={boletim} fetchBoletins={fetchBoletins}/>
+                                                </td>
+                                            </tr>
+                                        ))) : (
+                                        <tr>
+                                            <td colSpan={3} className="text-center">Nenhuma tag encontrada.</td>
+                                        </tr>
+                                    )
                             )}
                             </tbody>
                         </Table>

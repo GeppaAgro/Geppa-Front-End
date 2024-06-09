@@ -22,6 +22,7 @@ export default function ListaBoletins() {
 
 
         const buscarBoletins = async () => {
+            setLoadingBoletim(true)
             try {
                 const response = await AxiosClient.get(
                     `/boletins?page=${paginaAtual}` +
