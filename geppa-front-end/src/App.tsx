@@ -15,6 +15,7 @@ import {PaginaLogin} from './Presentation/Pages/AdminUser/Login/PaginaLogin.tsx'
 import PaginaInicial from './Presentation/Pages/CommonUser/Inicial/PaginaInicial.tsx';
 import ListagemTags from "./Presentation/Pages/AdminUser/Tags/ListagemTags.tsx";
 import PaginaCriacaoBoletim from "./Presentation/Pages/AdminUser/AdminCriarBoletim/PaginaCriacaoBoletim.tsx";
+import PaginaUnsubscribeNewsletter from "./Presentation/Pages/CommonUser/Newsletter/PaginaUnsubscribeNewsletter.tsx";
 
 function AdminRoutes() {
     return (
@@ -45,6 +46,7 @@ function UserRoutes() {
                 <Route path="sobre" element={<PaginaSobre/>}/>
                 <Route path="boletim/:edicao" element={<PaginaBoletim/>}/>
                 <Route path="*" element={<PaginaNaoEncontrada/>}/>
+                <Route path={"cancelamento-inscricao/:email"} element={<PaginaUnsubscribeNewsletter/>}/>
             </Routes>
             <Footer/>
         </>
