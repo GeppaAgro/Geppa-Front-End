@@ -9,8 +9,21 @@ const axiosClient: AxiosInstance = axios.create({
     }
 });
 
-axiosClient.interceptors.response.use();
 
+axiosClient.interceptors.request.use(async config => {
+    const token = getToken();
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+});
+
+function getToken() {
+    return localStorage.getItem('accessToken');
+}
+
+
+axiosClient.interceptors.response.use();
 
 
 export default axiosClient;
