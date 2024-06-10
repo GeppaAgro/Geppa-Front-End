@@ -36,6 +36,7 @@ export default function PaginaListaConteudos() {
 
     useEffect(() => {
         const buscarConteudo = async () => {
+            setLoadingConteudos(true)
             try {
                 switch (filtroSelecionado.toLowerCase()) {
                     case 'artigos':
