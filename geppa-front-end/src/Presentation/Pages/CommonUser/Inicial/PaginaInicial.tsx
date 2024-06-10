@@ -27,7 +27,6 @@ export default function PaginaInicial() {
                 setVideos(res.data.dados.Video)
                 setLoadingUltimosConteudos(false);
             } catch (error) {
-                console.log("Algo deu errado:", error);
                 setLoadingUltimosConteudos(false);
             }
         }
