@@ -11,6 +11,7 @@ import AxiosClient from "../../../../Domain/Services/AxiosClient.ts";
 import {ConteudoSkeleton} from "../../../Components/Skeleton/ConteudoSkeleton.tsx";
 import Paginacao from "../../../Components/Paginacao/Paginacao.tsx";
 import BuscadorTag from "../../../Components/Modais/ComponentesModal/BuscadorDeTag.tsx";
+import cores from "../../../Components/Utils/Cores.tsx";
 
 export default function PaginaListaConteudos() {
     const {filtro} = useParams<{ filtro: string }>();
@@ -223,7 +224,9 @@ export default function PaginaListaConteudos() {
                         <div className="d-flex justify-content-between gap-1">
                             <div className="d-flex flex-row gap-1 ">
                                 {tags.map((tag, index) => (
-                                    <Button className="d-flex justify-content-between gap-2 align-items-center" variant="secondary" onClick={() => removeTag(index)} key={tag.id}>
+                                    <Button className="d-flex justify-content-between gap-2 align-items-center"
+                                            style={{backgroundColor: cores.verdeOliva}}
+                                            variant="secondary" onClick={() => removeTag(index)} key={tag.id}>
                                         <span>{tag.nome}</span>
                                         <i className="ri-delete-bin-2-line"/>
                                     </Button>
