@@ -1,23 +1,23 @@
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {Container} from "react-bootstrap";
+import {Button, Container} from "react-bootstrap";
 import CardArtigoBoletim from "../../../Components/ComponentesBoletim/CardArtigoBoletim.tsx";
 import CardCursoBoletim from "../../../Components/ComponentesBoletim/CardCursoBoletim.tsx";
 import CardNoticiaBoletim from "../../../Components/ComponentesBoletim/CardNoticiasBoletim.tsx";
 import CardVideoBoletim from "../../../Components/ComponentesBoletim/CardVideoBoletim.tsx";
-import {Artigo, Curso, Evento, Noticia, Video} from "../../../../Domain/TypesConteudos/TypesConteudos.ts";
+import {Artigo, Curso, Evento, Noticia, Tag, Video} from "../../../../Domain/TypesConteudos/TypesConteudos.ts";
 import CardEventoBoletim from "../../../Components/ComponentesBoletim/CardEventoBoletim.tsx";
 import AxiosClient from "../../../../Domain/Services/AxiosClient.ts";
 import {ConteudoSkeleton} from "../../../Components/Skeleton/ConteudoSkeleton.tsx";
 import Paginacao from "../../../Components/Paginacao/Paginacao.tsx";
+import BuscadorTag from "../../../Components/Modais/ComponentesModal/BuscadorDeTag.tsx";
+import cores from "../../../Components/Utils/Cores.tsx";
 
 export default function PaginaListaConteudos() {
     const {filtro} = useParams<{ filtro: string }>();
     const [filtroSelecionado, setFiltroSelecionado] = useState<string>(filtro || 'artigos');
-
     const [numeroPagina, setNumeroPagina] = useState<number>(0)
     const [qtdPaginas, setQtdPaginas] = useState<number>(1)
-
     const [artigos, setArtigos] = useState<Artigo[]>([]);
     const [cursos, setCursos] = useState<Curso[]>([]);
     const [eventos, setEventos] = useState<Evento[]>([]);
@@ -25,7 +25,8 @@ export default function PaginaListaConteudos() {
     const [videos, setVideos] = useState<Video[]>([]);
     const [loadingConteudos, setLoadingConteudos] = useState<boolean>(true);
 
-    const urlConteudo = `/${filtroSelecionado}?page=${numeroPagina}&sort=titulo,desc&size=5`;
+    const [tags, setTags] = useState<Tag[]>([])
+    const urlConteudo = `/${filtroSelecionado}?page=${numeroPagina}&sort=titulo,desc&size=5&tags=${tags.map(tag => tag.nome).join(",")}`;
 
     const trocarFiltro = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setLoadingConteudos(true)
@@ -45,8 +46,11 @@ export default function PaginaListaConteudos() {
                             setArtigos(response.data.dados)
                             setQtdPaginas(response.data.totalPaginas)
                             setLoadingConteudos(false)
+                            setErroMensagem(``)
                         } catch (error) {
                             console.log("tipo de conteudo nao encontrado")
+                            setLoadingConteudos(false)
+                            setErroMensagem(`${filtroSelecionado} não encontrado com essa tag`)
                         }
                         break;
                     case 'cursos':
@@ -55,8 +59,11 @@ export default function PaginaListaConteudos() {
                             setCursos(response.data.dados)
                             setQtdPaginas(response.data.totalPaginas)
                             setLoadingConteudos(false)
+                            setErroMensagem(``)
                         } catch (error) {
                             console.log("tipo de conteudo nao encontrado")
+                            setLoadingConteudos(false)
+                            setErroMensagem(`${filtroSelecionado} não encontrado com essa tag`)
                         }
                         break;
                     case 'eventos':
@@ -65,8 +72,11 @@ export default function PaginaListaConteudos() {
                             setEventos(response.data.dados)
                             setQtdPaginas(response.data.totalPaginas)
                             setLoadingConteudos(false)
+                            setErroMensagem(``)
                         } catch (error) {
                             console.log("tipo de conteudo nao encontrado")
+                            setLoadingConteudos(false)
+                            setErroMensagem(`${filtroSelecionado} não encontrado com essa tag`)
                         }
                         break;
                     case 'noticias':
@@ -75,8 +85,11 @@ export default function PaginaListaConteudos() {
                             setNoticias(response.data.dados)
                             setQtdPaginas(response.data.totalPaginas)
                             setLoadingConteudos(false)
+                            setErroMensagem(``)
                         } catch (error) {
                             console.log("tipo de conteudo nao encontrado")
+                            setLoadingConteudos(false)
+                            setErroMensagem(`${filtroSelecionado} não encontrado com essa tag`)
                         }
                         break;
                     case 'videos':
@@ -85,8 +98,11 @@ export default function PaginaListaConteudos() {
                             setVideos(response.data.dados)
                             setQtdPaginas(response.data.totalPaginas)
                             setLoadingConteudos(false)
+                            setErroMensagem(``)
                         } catch (error) {
                             console.log("tipo de conteudo nao encontrado")
+                            setLoadingConteudos(false)
+                            setErroMensagem(`${filtroSelecionado} não encontrado com essa tag`)
                         }
                         break;
                     default:
@@ -94,6 +110,7 @@ export default function PaginaListaConteudos() {
                 }
             } catch (error) {
                 console.log("tipo de conteudo nao encontrado")
+                setLoadingConteudos(false)
             }
         };
         buscarConteudo()
@@ -172,6 +189,20 @@ export default function PaginaListaConteudos() {
         }
     }
 
+    const [erroMensagem, setErroMensagem] = useState<string>(``)
+    const addTag = (newTag: Tag) => {
+        const tagExists = tags.some(tag => tag.nome === newTag.nome);
+        if (!tagExists && tags.length <3) {
+            setTags([...tags, newTag]);
+        }
+    };
+    const removeTag = (index: number) => {
+        setTags(tags.filter((_, i) => i !== index));
+    };
+    const clearTags = () => {
+        setTags([]);
+    };
+
     return (
         <>
             <Container className="container">
@@ -188,6 +219,20 @@ export default function PaginaListaConteudos() {
                                 <option value="noticias">Notícias</option>
                                 <option value="videos">Vídeo</option>
                             </select>
+                        </div>
+                        <BuscadorTag label="Buscar por tag" salvarTag={addTag} erro={erroMensagem} tentouSalvar={false}/>
+                        <div className="d-flex justify-content-between gap-1">
+                            <div className="d-flex flex-row gap-1 ">
+                                {tags.map((tag, index) => (
+                                    <Button className="d-flex justify-content-between gap-2 align-items-center"
+                                            style={{backgroundColor: cores.verdeOliva}}
+                                            variant="secondary" onClick={() => removeTag(index)} key={tag.id}>
+                                        <span>{tag.nome}</span>
+                                        <i className="ri-delete-bin-2-line"/>
+                                    </Button>
+                                ))}
+                            </div>
+                            <Button variant="light" onClick={clearTags}><i className="ri-filter-off-line"></i></Button>
                         </div>
                     </div>
                 </div>
