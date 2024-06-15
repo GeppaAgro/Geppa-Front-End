@@ -1,10 +1,21 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom';
+import {NavLink, useNavigate} from 'react-router-dom';
 import {Image} from "react-bootstrap";
 import LogoHorizontalBranca from "../../../Data/Images/Logos/LogoHorizontalBranca.png";
 import './sidebar.css';
 
 const Sidebar: React.FC = () => {
+
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+
+        navigate('/login');
+    };
+
+
     return (
         <>
             <ul className="navbar-nav bg-gradient-primary sidebar sidebar-dark">
@@ -41,10 +52,15 @@ const Sidebar: React.FC = () => {
 
                 <hr className="sidebar-divider mt-auto mx-3"/>
                 <li className="nav-item ps-3">
-                    <NavLink to="/login" className="nav-link" aria-label="Sair">
+                    <button
+                        onClick={handleLogout}
+                        className="nav-link"
+                        aria-label="Sair"
+                        style={{backgroundColor: 'transparent', border: 'none', padding: '0'}}
+                    >
                         <i className="ri-logout-box-line pe-2"></i>
                         <span>Sair</span>
-                    </NavLink>
+                    </button>
                 </li>
             </ul>
         </>

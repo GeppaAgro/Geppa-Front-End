@@ -1,5 +1,5 @@
 import './App.css';
-import {BrowserRouter as Router, Route, Routes, Navigate} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Routes, Navigate, useLocation} from 'react-router-dom';
 import Header from './Presentation/Components/Header/Header.tsx';
 import Footer from './Presentation/Components/Footer/Footer.tsx';
 import Sidebar from './Presentation/Components/Sidebar/Sidebar.tsx';
@@ -18,6 +18,13 @@ import PaginaCriacaoBoletim from "./Presentation/Pages/AdminUser/AdminCriarBolet
 import PaginaUnsubscribeNewsletter from "./Presentation/Pages/CommonUser/Newsletter/PaginaUnsubscribeNewsletter.tsx";
 
 function AdminRoutes() {
+    const location = useLocation();
+    const isLoggedIn = !!localStorage.getItem('accessToken');
+
+    if (!isLoggedIn) {
+        return <Navigate to="/login" state={{from: location}} replace/>;
+    }
+
     return (
         <>
             <Sidebar/>
@@ -54,17 +61,11 @@ function UserRoutes() {
 }
 
 function App() {
-    const isLoggedIn = true;
-
     return (
         <Router>
             <Routes>
                 <Route path="/login" element={<PaginaLogin/>}/>
-                {isLoggedIn ? (
-                    <Route path="admin/*" element={<AdminRoutes/>}/>
-                ) : (
-                    <Navigate to="/login"/>
-                )}
+                <Route path="admin/*" element={<AdminRoutes/>}/>
                 <Route path="/*" element={<UserRoutes/>}/>
             </Routes>
         </Router>
