@@ -76,7 +76,12 @@ const ListagemTags: React.FC = () => {
                         <CadastroTag buttonText={"Nova Tag"}
                                      iconClass={"ri-add-line"}
                                      fetchTags={fetchTags}
-                                     classNameBtn={"mb-3 border-0"}/>
+                                     classNameBtn={"mb-3 border-0"}
+                                     onShow={() => {
+                                     }}
+                                     onHide={() => {
+                                     }}
+                        />
 
                         <Table striped hover>
                             <thead>
@@ -100,6 +105,10 @@ const ListagemTags: React.FC = () => {
                                                          classNameBtn={"text-primary-emphasis fw-medium border-0"}
                                                          tag={tag}
                                                          colorBtn={cores.transparente}
+                                                         onShow={() => {
+                                                         }}
+                                                         onHide={() => {
+                                                         }}
                                             />
                                             <span className={'px-1'}/>
                                             <DeleteTag tag={tag} fetchTags={fetchTags}/>
