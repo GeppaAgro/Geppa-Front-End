@@ -42,6 +42,7 @@ const PaginaCriacaoBoletim: React.FC = () => {
                 noticias: resp.data.dados.noticias || [],
                 videos: resp.data.dados.videos || [],
             });
+            setIndicadores(resp.data.dados.indicadores)
 
         } catch (error) {
             console.log(error)
@@ -292,7 +293,7 @@ const PaginaCriacaoBoletim: React.FC = () => {
             {renderList('noticias', items.noticias)}
             {renderList('videos', items.videos)}
 
-            <ListaDeIndicadores indicadoresIniciais={indicadores} onUpdate={atualizarIndicadores}/>
+            <ListaDeIndicadores indicadoresIniciais={indicadores} onUpdate={atualizarIndicadores} edicao={!!edicao.edicao}/>
 
             {!edicao.edicao && (<div className="d-flex flex-row gap-4 justify-content-end mb-5 mx-md-5">
                 <Button onClick={handleOpenCancel} className="" variant="danger">Cancelar</Button>
