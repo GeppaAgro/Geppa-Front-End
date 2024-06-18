@@ -1,6 +1,6 @@
 import {ModalConteudoProps} from "../../../Domain/TypesConteudos/TypeModaisProps.ts";
 import {Button, Modal} from "react-bootstrap";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Tag} from "../../../Domain/TypesConteudos/TypeTag.ts";
 import {Autor} from "../../../Domain/TypesConteudos/TypeAutor.ts";
 import ListagemTagsModal from "./ComponentesModal/ListagemTagsModal.tsx";
@@ -16,6 +16,7 @@ import {TipoConteudo} from "../../../Domain/Enums/TipoConteudo.ts";
 import {mapperMensagensValidacaoConteudo} from "../../../Domain/mappers/MapperMensagensValidacao.ts";
 import LoadingOverlay from "../Utils/LoadingOverlay/LoadingOverlay.tsx";
 import AxiosClient from "../../../Domain/Services/AxiosClient.ts";
+import CadastroTag from "../Tags/CadastroTag/CadastroTag.tsx";
 
 const ModalArtigo: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, artigo}) => {
     const [id, setId] = useState<string | null>('')
@@ -29,6 +30,7 @@ const ModalArtigo: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, artig
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [errosValidacao, setErrosValidacao] = useState<{ [key: string]: string }>()
     const [tentouSalvar, setTentouSalvar] = useState(false);
+    const [showCadastroTag, setShowCadastroTag] = useState(false);
 
 
     useEffect(() => {
@@ -127,7 +129,7 @@ const ModalArtigo: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, artig
     return (
         <>
             {isLoading && <LoadingOverlay/>}
-            <Modal show={abrir} onHide={cancelar} backdrop="static">
+            <Modal className={showCadastroTag ? "modal-backdrop" : ""} show={abrir} onHide={cancelar} backdrop="static">
                 <Modal.Header>
                     <Modal.Title>{artigo ? 'Editar artigo' : 'Adicionar Artigo'}</Modal.Title>
                 </Modal.Header>
@@ -168,6 +170,13 @@ const ModalArtigo: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, artig
                                            errosValidacao={errosValidacao}/>
 
                         <hr/>
+
+                        <CadastroTag buttonText={"Nova Tag"}
+                                     iconClass={"ri-add-line"}
+                                     fetchTags={() => {}}
+                                     classNameBtn={"mb-3 border-0"}
+                                     onShow={() => setShowCadastroTag(true)}
+                                     onHide={() => setShowCadastroTag(false)}/>
 
                         <BuscadorDeTag label="Selecione suas tags"
                                        salvarTag={adicionarTag}

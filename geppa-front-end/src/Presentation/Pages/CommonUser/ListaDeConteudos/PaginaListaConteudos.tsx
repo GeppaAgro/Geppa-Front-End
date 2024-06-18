@@ -48,7 +48,6 @@ export default function PaginaListaConteudos() {
                             setLoadingConteudos(false)
                             setErroMensagem(``)
                         } catch (error) {
-                            console.log("tipo de conteudo nao encontrado")
                             setLoadingConteudos(false)
                             setErroMensagem(`${filtroSelecionado} não encontrado com essa tag`)
                         }
@@ -61,7 +60,6 @@ export default function PaginaListaConteudos() {
                             setLoadingConteudos(false)
                             setErroMensagem(``)
                         } catch (error) {
-                            console.log("tipo de conteudo nao encontrado")
                             setLoadingConteudos(false)
                             setErroMensagem(`${filtroSelecionado} não encontrado com essa tag`)
                         }
@@ -74,7 +72,6 @@ export default function PaginaListaConteudos() {
                             setLoadingConteudos(false)
                             setErroMensagem(``)
                         } catch (error) {
-                            console.log("tipo de conteudo nao encontrado")
                             setLoadingConteudos(false)
                             setErroMensagem(`${filtroSelecionado} não encontrado com essa tag`)
                         }
@@ -87,7 +84,6 @@ export default function PaginaListaConteudos() {
                             setLoadingConteudos(false)
                             setErroMensagem(``)
                         } catch (error) {
-                            console.log("tipo de conteudo nao encontrado")
                             setLoadingConteudos(false)
                             setErroMensagem(`${filtroSelecionado} não encontrado com essa tag`)
                         }
@@ -100,7 +96,6 @@ export default function PaginaListaConteudos() {
                             setLoadingConteudos(false)
                             setErroMensagem(``)
                         } catch (error) {
-                            console.log("tipo de conteudo nao encontrado")
                             setLoadingConteudos(false)
                             setErroMensagem(`${filtroSelecionado} não encontrado com essa tag`)
                         }
@@ -109,7 +104,6 @@ export default function PaginaListaConteudos() {
                         null;
                 }
             } catch (error) {
-                console.log("tipo de conteudo nao encontrado")
                 setLoadingConteudos(false)
             }
         };

@@ -127,8 +127,7 @@ const PaginaCriacaoBoletim: React.FC = () => {
 
     const atualizarBoletim = async (boletim: BoletimSubmit) => {
         try {
-            const response = await axiosClient.put(`/boletins/${edicao.edicao}`, boletim)
-            console.log(response)
+           await axiosClient.put(`/boletins/${edicao.edicao}`, boletim)
         } catch (error) {
             setToast({
                 message: `Falha ao salvar boletim, tente novamente em alguns instantes`,
@@ -138,7 +137,6 @@ const PaginaCriacaoBoletim: React.FC = () => {
     }
 
     const publicarNovoBoletim = async (boletim: BoletimSubmit) => {
-        console.log(boletim)
         try {
             const response = await axiosClient.post('/boletins', boletim);
             if (response.data.status === 201) {
@@ -156,6 +154,11 @@ const PaginaCriacaoBoletim: React.FC = () => {
                     const validationErrors = Object.values(axiosError.data.errosValidacao).join(', ');
                     setToast({
                         message: validationErrors,
+                        isSuccess: false,
+                    });
+                }else{
+                    setToast({
+                        message: `Ocorreu um erro inesperado, por favor tente novamente mais tarde.`,
                         isSuccess: false,
                     });
                 }
@@ -212,7 +215,6 @@ const PaginaCriacaoBoletim: React.FC = () => {
     const handleModalResult = (confirmed: boolean) => {
         if (confirmed) {
             handleCloseConfirmModal()
-            publicarBoletim()
         } else {
             console.log("Publicação do boletim cancelada.");
         }
