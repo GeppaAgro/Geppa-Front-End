@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button, Modal} from "react-bootstrap";
 import {ModalConteudoProps} from "../../../Domain/TypesConteudos/TypeModaisProps.ts";
 import BuscadorDeTag from "./ComponentesModal/BuscadorDeTag.tsx";
@@ -13,6 +13,7 @@ import {TipoConteudo} from "../../../Domain/Enums/TipoConteudo.ts";
 import {mapperMensagensValidacaoConteudo} from "../../../Domain/mappers/MapperMensagensValidacao.ts";
 import LoadingOverlay from "../Utils/LoadingOverlay/LoadingOverlay.tsx";
 import AxiosClient from "../../../Domain/Services/AxiosClient.ts";
+import CadastroTag from "../Tags/CadastroTag/CadastroTag.tsx";
 
 
 const ModalNoticia: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, noticia}) => {
@@ -25,6 +26,7 @@ const ModalNoticia: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, noti
     const [errosValidacao, setErrosValidacao] = useState<{ [key: string]: string }>()
     const [tentouSalvar, setTentouSalvar] = useState(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [showCadastroTag, setShowCadastroTag] = useState(false);
 
 
     useEffect(() => {
@@ -101,7 +103,7 @@ const ModalNoticia: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, noti
     return (
         <>
             {isLoading && <LoadingOverlay />}
-            <Modal show={abrir} onHide={cancelar} backdrop="static">
+            <Modal className={showCadastroTag ? "modal-backdrop" : ""} show={abrir} onHide={cancelar} backdrop="static">
                 <Modal.Header>
                     <Modal.Title>{noticia ? 'Editar noticia' : 'Adicionar noticia'}</Modal.Title>
                 </Modal.Header>
@@ -132,6 +134,15 @@ const ModalNoticia: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, noti
                                                 erro={errosValidacao?.link}
                                                 tentouSalvar={tentouSalvar}/>
 
+                        <hr/>
+
+                        <CadastroTag buttonText={"Nova Tag"}
+                                     iconClass={"ri-add-line"}
+                                     fetchTags={() => {
+                                     }}
+                                     classNameBtn={"mb-3 border-0"}
+                                     onShow={() => setShowCadastroTag(true)}
+                                     onHide={() => setShowCadastroTag(false)}/>
 
                         <BuscadorDeTag label="Selecione suas tags"
                                        salvarTag={adicionarTag}

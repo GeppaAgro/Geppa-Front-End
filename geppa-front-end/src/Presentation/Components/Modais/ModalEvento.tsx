@@ -1,6 +1,6 @@
 import {ModalConteudoProps} from "../../../Domain/TypesConteudos/TypeModaisProps.ts";
 import {Button, Modal} from "react-bootstrap";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Tag} from "../../../Domain/TypesConteudos/TypeTag.ts";
 import ListagemTagsModal from "./ComponentesModal/ListagemTagsModal.tsx";
 import BuscadorDeTag from "./ComponentesModal/BuscadorDeTag.tsx";
@@ -15,6 +15,7 @@ import LoadingOverlay from "../Utils/LoadingOverlay/LoadingOverlay.tsx";
 import CampoValorMonetarioModal from "./ComponentesModal/CampoValorMonetarioModal.tsx";
 import CampoHoraModal from "./ComponentesModal/CampoHoraModal.tsx";
 import AxiosClient from "../../../Domain/Services/AxiosClient.ts";
+import CadastroTag from "../Tags/CadastroTag/CadastroTag.tsx";
 
 const ModalEvento: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, evento}) => {
     const [id, setId] = useState<string | null>('')
@@ -30,6 +31,7 @@ const ModalEvento: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, event
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [errosValidacao, setErrosValidacao] = useState<{ [key: string]: string }>()
     const [tentouSalvar, setTentouSalvar] = useState(false);
+    const [showCadastroTag, setShowCadastroTag] = useState(false);
 
     useEffect(() => {
         if (evento) {
@@ -77,7 +79,7 @@ const ModalEvento: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, event
         return false
     };
 
-    const atualizar = async (eve: Evento)=> {
+    const atualizar = async (eve: Evento) => {
         await AxiosClient.put(`/eventos/${id}`, eve)
     }
 
@@ -141,7 +143,7 @@ const ModalEvento: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, event
     return (
         <>
             {isLoading && <LoadingOverlay/>}
-            <Modal show={abrir} onHide={cancelar} backdrop="static">
+            <Modal className={showCadastroTag ? "modal-backdrop" : ""} show={abrir} onHide={cancelar} backdrop="static">
                 <Modal.Header>
                     <Modal.Title>{evento ? 'Editar Evento' : 'Adicionar Evento'}</Modal.Title>
                 </Modal.Header>
@@ -199,6 +201,15 @@ const ModalEvento: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, event
                                         salvarHora={salvarHoraFim}
                                         erro={errosValidacao?.dataHoraFim}
                                         tentouSalvar={tentouSalvar}/>
+                        <hr/>
+
+                        <CadastroTag buttonText={"Nova Tag"}
+                                     iconClass={"ri-add-line"}
+                                     fetchTags={() => {
+                                     }}
+                                     classNameBtn={"mb-3 border-0"}
+                                     onShow={() => setShowCadastroTag(true)}
+                                     onHide={() => setShowCadastroTag(false)}/>
 
 
                         <BuscadorDeTag label="Selecione suas tags"

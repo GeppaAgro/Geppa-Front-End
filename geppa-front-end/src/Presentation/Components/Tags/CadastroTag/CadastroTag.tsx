@@ -13,6 +13,8 @@ interface AddTagButtonProps {
     classNameBtn?: string;
     colorBtn?: string;
     fetchTags: () => void;
+    onShow: () => void;
+    onHide: () => void;
 }
 
 interface ResponseError {
@@ -38,6 +40,8 @@ const CadastroTag: React.FC<AddTagButtonProps> = ({
                                                       fetchTags,
                                                       classNameBtn,
                                                       colorBtn = cores.verdeOliva,
+                                                      onShow,
+                                                      onHide
                                                   }) => {
     const [showModal, setShowModal] = useState(false);
     const [tagName, setTagName] = useState('');
@@ -64,7 +68,13 @@ const CadastroTag: React.FC<AddTagButtonProps> = ({
 
     const handleCloseModal = () => {
         setShowModal(false)
+        onHide()
         setErro(null)
+    };
+
+    const handleShowModal = () => {
+        setShowModal(true);
+        onShow();
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -108,7 +118,7 @@ const CadastroTag: React.FC<AddTagButtonProps> = ({
             <Button variant="success"
                     style={{backgroundColor: colorBtn}}
                     className={classNameBtn}
-                    onClick={() => setShowModal(true)}>
+                    onClick={handleShowModal}>
                 {buttonText}
                 {useIcon && <i className={`ps-1 ${iconClass}`}></i>}
             </Button>

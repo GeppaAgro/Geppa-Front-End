@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button, Modal} from "react-bootstrap";
 import {Video} from "../../../Domain/TypesConteudos/Conteudos/Video.ts";
 import {Tag} from "../../../Domain/TypesConteudos/TypeTag.ts";
@@ -12,6 +12,7 @@ import CampoTextAreaModal from "./ComponentesModal/CampoTextAreaModal.tsx";
 import BuscadorDeTag from "./ComponentesModal/BuscadorDeTag.tsx";
 import ListagemTagsModal from "./ComponentesModal/ListagemTagsModal.tsx";
 import AxiosClient from "../../../Domain/Services/AxiosClient.ts";
+import CadastroTag from "../Tags/CadastroTag/CadastroTag.tsx";
 
 const ModalArtigo: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, video}) => {
     const [id, setId] = useState<string | null>('')
@@ -24,6 +25,7 @@ const ModalArtigo: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, video
     const [errosValidacao, setErrosValidacao] = useState<{ [key: string]: string }>()
     const [tentouSalvar, setTentouSalvar] = useState(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [showCadastroTag, setShowCadastroTag] = useState(false);
 
     useEffect(() => {
         if (video) {
@@ -65,7 +67,7 @@ const ModalArtigo: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, video
         setErrosValidacao(errosValidacao)
         return false
     };
-    const atualizar = async (vid: Video)=> {
+    const atualizar = async (vid: Video) => {
         await AxiosClient.put(`/videos/${id}`, vid)
     }
 
@@ -95,7 +97,7 @@ const ModalArtigo: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, video
     return (
         <>
             {isLoading && <LoadingOverlay/>}
-            <Modal show={abrir} onHide={cancelar} backdrop="static">
+            <Modal className={showCadastroTag ? "modal-backdrop" : ""} show={abrir} onHide={cancelar} backdrop="static">
                 <Modal.Header>
                     <Modal.Title>{video ? 'Editar Video' : 'Adicionar Video'}</Modal.Title>
                 </Modal.Header>
@@ -128,6 +130,17 @@ const ModalArtigo: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, video
                                 onChange={(e) => setYoutube(e.target.checked)}
                             />
                         </div>
+
+                        <hr/>
+
+                        <CadastroTag buttonText={"Nova Tag"}
+                                     iconClass={"ri-add-line"}
+                                     fetchTags={() => {
+                                     }}
+                                     classNameBtn={"mb-3 border-0"}
+                                     onShow={() => setShowCadastroTag(true)}
+                                     onHide={() => setShowCadastroTag(false)}/>
+
                         <BuscadorDeTag label="Selecione suas tags"
                                        salvarTag={adicionarTag}
                                        erro={errosValidacao?.tags}
