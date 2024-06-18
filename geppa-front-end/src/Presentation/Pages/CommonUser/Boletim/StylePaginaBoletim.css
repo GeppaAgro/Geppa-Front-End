@@ -1,3 +1,15 @@
 .pagina-boletim-btn-clique-para-mais{
     color: var(--MarromTerra);
 }
+
+@media print {
+    .page-break {
+        page-break-before: always;
+    }
+    .avoid-break {
+        page-break-inside: avoid;
+    }
+    .no-print {
+        display: none;
+    }
+}
