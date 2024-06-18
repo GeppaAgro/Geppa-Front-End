@@ -16,6 +16,7 @@ type ModalIndicadores = {
     indicador?: Indicador
 }
 const ModalIndicadores: React.FC<ModalIndicadores> = ({abrir, fechar, salvar, indicador}) => {
+    const [id, setId] = useState<string>('');
     const [produto, setProduto] = useState<string>('');
     const [unidadeMedida, setUnidadeMedida] = useState <UnidadeMedida>(UnidadeMedida.KILOGRAMA)
     const [valor, setValor] = useState<number | null>(0)
@@ -25,6 +26,9 @@ const ModalIndicadores: React.FC<ModalIndicadores> = ({abrir, fechar, salvar, in
 
     useEffect(() => {
         if(indicador){
+            if (indicador.id){
+                setId(indicador.id)
+            }
             setProduto(indicador.nome)
             setUnidadeMedida(indicador.unidadeMedida)
             setValor(indicador.valor)
@@ -37,15 +41,35 @@ const ModalIndicadores: React.FC<ModalIndicadores> = ({abrir, fechar, salvar, in
         const validationResult = await validar(indicador);
 
         if (validationResult.success) {
-            salvar(indicador);
-            fechar();
-            limpar();
+            if (id) {
+                await atualizar(indicador)
+                salvar(indicador);
+                fechar();
+                limpar();
+            } else {
+                salvar(indicador);
+                fechar();
+                limpar();
+            }
         } else {
             setErrosValidacao(validationResult.errors);
             setTentouSalvar(true);
         }
         setIsLoading(false);
     };
+
+    const atualizar = async (indicador: Indicador) => {
+        try {
+            await axiosClient.put(`/indicadores/${id}`, {
+                nome: indicador.nome,
+                unidadeMedida: indicador.unidadeMedida,
+                valor: indicador.valor
+            })
+        } catch (error){
+            console.log(error)
+        }
+    }
+
     const validar = async (indicador: Indicador): Promise<{ success: boolean; errors: { [key: string]: string } }> => {
         try {
             const response = await axiosClient.post('/indicadores/validar', indicador);
