@@ -28,8 +28,7 @@ const DeleteButton: React.FC<DeleteButtonProps> = ({boletim, fetchBoletins}) => 
 
     const handleDelete = async () => {
         try {
-            const response = await AxiosClient.delete(`/boletins/${boletim.edicao}`);
-            console.log(response.data);
+            await AxiosClient.delete(`/boletins/${boletim.edicao}`);
             handleClose();
             setToast({
                 message: "Boletim excluido com sucesso!",

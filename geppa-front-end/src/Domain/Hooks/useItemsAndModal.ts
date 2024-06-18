@@ -22,7 +22,6 @@ export const useItemsAndModal = () => {
 
     const openModal = (type: 'artigo' | 'curso' | 'noticia' | 'video' | 'evento' , editIndex: number | null = null) => {
         setModal({type, show: true, editIndex});
-        console.log(items.noticias)
     };
 
     const closeModal = () => {

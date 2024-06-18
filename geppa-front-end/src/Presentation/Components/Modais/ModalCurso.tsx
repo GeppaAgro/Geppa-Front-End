@@ -1,5 +1,5 @@
-import { useEffect, useState} from "react";
-import { Button, Modal } from "react-bootstrap";
+import React, {useEffect, useState} from "react";
+import {Button, Modal} from "react-bootstrap";
 import {ModalConteudoProps} from "../../../Domain/TypesConteudos/TypeModaisProps.ts";
 import CampoTextoSimplesModal from "./ComponentesModal/CampoTextoSimplesModal.tsx";
 import {ValidarConteudoService} from "../../../Domain/Services/ValidarConteudoService.ts";
@@ -15,11 +15,12 @@ import {Tag} from "../../../Domain/TypesConteudos/TypeTag.ts";
 import CampoValorMonetarioModal from "./ComponentesModal/CampoValorMonetarioModal.tsx";
 import CampoNumerico from "./ComponentesModal/CampoNumerico.tsx";
 import AxiosClient from "../../../Domain/Services/AxiosClient.ts";
+import CadastroTag from "../Tags/CadastroTag/CadastroTag.tsx";
 
 const ModalCurso: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, curso}) => {
     const [titulo, setTitulo] = useState<string>('')
     const [descricao, setDescricao] = useState<string>('')
-    const [prazoInscricao, setPrazoInscricao] = useState<Date|null>(null)
+    const [prazoInscricao, setPrazoInscricao] = useState<Date | null>(null)
     const [link, setLink] = useState<string>('')
     const [preco, setPreco] = useState<number | null>(0)
     const [duracaoEmHoras, setDuracaoEmHoras] = useState<number>(0)
@@ -28,6 +29,7 @@ const ModalCurso: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, curso}
     const [tentouSalvar, setTentouSalvar] = useState(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [id, setId] = useState<string | null>('')
+    const [showCadastroTag, setShowCadastroTag] = useState(false);
 
 
     useEffect(() => {
@@ -46,7 +48,7 @@ const ModalCurso: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, curso}
     const salvarCurso = async () => {
         setIsLoading(true);
 
-        const curso: Curso = new Curso (titulo, descricao, link, tags, prazoInscricao, preco, duracaoEmHoras)
+        const curso: Curso = new Curso(titulo, descricao, link, tags, prazoInscricao, preco, duracaoEmHoras)
         const isValid = await validar(curso);
         setTentouSalvar(true);
 
@@ -73,7 +75,7 @@ const ModalCurso: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, curso}
         setErrosValidacao(errosValidacao)
         return false
     };
-    const atualizar = async (cur: Curso)=> {
+    const atualizar = async (cur: Curso) => {
         await AxiosClient.put(`/cursos/${id}`, cur)
     }
 
@@ -81,7 +83,7 @@ const ModalCurso: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, curso}
         fechar()
         limpar()
     }
-    const limpar = () =>{
+    const limpar = () => {
         setTitulo('')
         setDescricao('')
         setLink('')
@@ -101,11 +103,11 @@ const ModalCurso: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, curso}
         setTags(novasTags);
     };
 
-    return(
+    return (
         <>
-            {isLoading && <LoadingOverlay />}
+            {isLoading && <LoadingOverlay/>}
 
-            <Modal show={abrir} onHide={cancelar} backdrop="static">
+            <Modal className={showCadastroTag ? "modal-backdrop" : ""} show={abrir} onHide={cancelar} backdrop="static">
                 <Modal.Header>
                     <Modal.Title>{curso ? 'Editar Curso' : 'Adicionar Curso'}</Modal.Title>
                 </Modal.Header>
@@ -147,6 +149,16 @@ const ModalCurso: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, curso}
                             erro={errosValidacao?.duracaoEmHoras}
                             tentouSalvar={tentouSalvar}
                         />
+
+                        <hr/>
+
+                        <CadastroTag buttonText={"Nova Tag"}
+                                     iconClass={"ri-add-line"}
+                                     fetchTags={() => {
+                                     }}
+                                     classNameBtn={"mb-3 border-0"}
+                                     onShow={() => setShowCadastroTag(true)}
+                                     onHide={() => setShowCadastroTag(false)}/>
 
                         <BuscadorDeTag label="Selecione suas tags"
                                        salvarTag={adicionarTag}
