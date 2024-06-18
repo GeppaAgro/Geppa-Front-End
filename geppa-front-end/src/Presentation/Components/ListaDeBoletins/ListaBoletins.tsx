@@ -43,7 +43,6 @@ export default function ListaBoletins() {
                 }
                 setConsultaBoletim(response.data);
                 setLoadingBoletim(false)
-                console.log(response)
                 setTotalPages(response.data.totalPaginas);
             } catch (error) {
                 setErrorMessage("Ocorreu um erro ao buscar boletins. Por favor, tente novamente mais tarde.")

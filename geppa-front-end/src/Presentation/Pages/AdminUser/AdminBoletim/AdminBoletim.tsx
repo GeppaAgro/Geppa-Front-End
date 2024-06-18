@@ -26,7 +26,6 @@ export default function AdminListaBoletins() {
 
     const fetchBoletins = async () => {
         try {
-            console.log()
             const response = await AxiosClient(`/boletins?page=${currentPage}&size=8`
                 +
                 (filtroType ?

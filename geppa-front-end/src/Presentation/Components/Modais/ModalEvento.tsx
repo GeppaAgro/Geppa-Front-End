@@ -74,7 +74,6 @@ const ModalEvento: React.FC<ModalConteudoProps> = ({abrir, fechar, salvar, event
         }
         const errosValidacao = mapperMensagensValidacaoConteudo(result.errors, TipoConteudo.EVENTO)
         setErrosValidacao(errosValidacao)
-        console.log(errosValidacao)
         return false
     };
 
