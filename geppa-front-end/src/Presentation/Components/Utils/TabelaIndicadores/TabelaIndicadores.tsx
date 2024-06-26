@@ -38,16 +38,6 @@ const TabelaIndicadores:React.FC<PropsTabelaIndicadores>  = ({indicadores}) => {
                 ))}
                 </tbody>
             </Table>
-            <div className='d-flex gap-2 justify-content-between fw-semibold'>
-                <p className='m-0'>Data:  01/01/2021</p>
-                <div className='text-end'>
-                    Fonte:
-                    <a href={'https://www.noticiasagricolas.com.br'} target={'_blank'}
-                          style={{color: cores.marromEscuro}}>
-                        Notícias Agrícolas
-                    </a>
-                </div>
-            </div>
         </>
     );
 };

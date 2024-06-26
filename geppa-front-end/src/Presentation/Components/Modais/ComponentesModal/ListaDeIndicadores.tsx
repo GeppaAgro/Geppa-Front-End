@@ -3,6 +3,7 @@ import {Indicador} from "../../../../Domain/TypesConteudos/Indicador.ts";
 import {Table} from "react-bootstrap";
 import ModalIndicadores from "../ModalIndicadores.tsx";
 import "./StylesComponentesModal/StyleListaDeIndicadores.css";
+import AxiosClient from "../../../../Domain/Services/AxiosClient.ts";
 
 interface ListaDeIndicadoresProps {
     indicadoresIniciais?: Indicador[];
@@ -49,7 +50,16 @@ const ListaDeIndicadores: React.FC<ListaDeIndicadoresProps> = ({ indicadoresInic
         });
     };
 
-    const deleteIndicador = (index: number) => {
+    const deleteIndicador = async (index: number) => {
+        const indic : Indicador = indicadores[index]
+        if (indic.id) {
+            try {
+                await AxiosClient.delete(`/indicadores/${indic.id}`)
+            }catch (error){
+                console.log(error)
+                return null;
+            }
+        }
         setIndicadores((prevIndicadores) => {
             const newIndicadores = prevIndicadores.filter((_, i) => i !== index);
             onUpdate(newIndicadores);
@@ -100,14 +110,9 @@ const ListaDeIndicadores: React.FC<ListaDeIndicadoresProps> = ({ indicadoresInic
                                 <button
                                     onClick={() => openModalIndicadores(index)}
                                     className="ri-edit-fill col-6 icone-edit-delete"/>
-
-                                {
-                                    !edicao && (
-                                        <button
-                                            onClick={() => deleteIndicador(index)}
-                                            className=" fw-semibold ri-delete-back-2-line col-6 icone-edit-delete"/>
-                                    )
-                                }
+                                <button
+                                    onClick={() => deleteIndicador(index)}
+                                    className=" fw-semibold ri-delete-back-2-line col-6 icone-edit-delete"/>
                             </div>
                         </td>
                     </tr>
