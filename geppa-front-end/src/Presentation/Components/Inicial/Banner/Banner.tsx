@@ -17,7 +17,7 @@ export const Banner = () => {
                             Animal</h2>
                         <div className="d-grid gap-3 justify-content-center mt-3">
                             <Link className="banner-home__container-link" to={"/boletins"}>Boletins</Link>
-                            <Link className="banner-home__container-link link__maisgeppa " to={"#"}>Mais GEPPA</Link>
+                            <Link className="banner-home__container-link link__maisgeppa "  to={"/sobre"}>Mais GEPPA</Link>
                         </div>
                     </Col>
                     <Col lg={6}>

@@ -2,7 +2,7 @@ import "./StylePaginaBoletim.css";
 import {useEffect, useRef, useState} from "react";
 import CardArtigoBoletim from "../../../Components/ComponentesBoletim/CardArtigoBoletim.tsx";
 import {Container} from "react-bootstrap";
-import {Link, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import CardCursoBoletim from "../../../Components/ComponentesBoletim/CardCursoBoletim.tsx";
 import CardVideoBoletim from "../../../Components/ComponentesBoletim/CardVideoBoletim.tsx";
 import BoletimBanner from "../../../Components/BoletimBanner/BoletimBanner.tsx";
@@ -29,6 +29,9 @@ export default function PaginaBoletim() {
     const [loadingBoletim, setLoadingBoletim] = useState<boolean>(true);
     const componentRef = useRef<HTMLDivElement>(null);
 
+
+    const navigate = useNavigate();
+
     useEffect(() => {
         const buscarBoletim = async () => {
             try {
@@ -42,7 +45,7 @@ export default function PaginaBoletim() {
                 setIndicadores(response.data.dados.indicadores);
                 setLoadingBoletim(false);
             } catch (error) {
-                console.log("Boletim não encontrado");
+                navigate(`/notfound`)
             }
         };
         buscarBoletim();
