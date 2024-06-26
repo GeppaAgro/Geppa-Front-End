@@ -51,15 +51,15 @@ const Footer: React.FC = () => {
                     {/*</Col>*/}
 
                     <Col xs={6} md={2} className="mb-2">
-                        <NavLink to="/">
+                        <NavLink to="https://www.instagram.com/podagro_">
                             <h5>PodAgro</h5>
                         </NavLink>
                         <ul className="nav flex-column">
-                            <li className="nav-item mb-2"><NavLink to="/" className="nav-link p-0 ">Podcast</NavLink>
+                            <li className="nav-item mb-2"><NavLink to="https://linktr.ee/ju.mkt" className="nav-link p-0 ">Linktree</NavLink>
                             </li>
-                            <li className="nav-item mb-2"><NavLink to="/" className="nav-link p-0 ">Instagram</NavLink>
+                            <li className="nav-item mb-2"><NavLink to="https://www.instagram.com/podagro_" className="nav-link p-0 ">Instagram</NavLink>
                             </li>
-                            <li className="nav-item mb-2"><NavLink to="/" className="nav-link p-0 ">Youtube</NavLink>
+                            <li className="nav-item mb-2"><NavLink to="https://www.youtube.com/@podagro" className="nav-link p-0 ">Youtube</NavLink>
                             </li>
                         </ul>
                     </Col>
@@ -92,11 +92,8 @@ const Footer: React.FC = () => {
                         target="_blank" href="https://github.com/FellipeGodoi">Fellipe Godoi</a>.
                     </p>
                     <ul className="list-unstyled d-flex m-1">
-                        <li className="ms-3"><a className="link-dark" href="#">
+                        <li className="ms-3"><a className="link-dark" href="https://www.instagram.com/podagro_">
                             <i className="ri-instagram-line"></i>
-                        </a></li>
-                        <li className="ms-3"><a className="link-dark" href="#">
-                            <i className="ri-linkedin-fill"></i>
                         </a></li>
                     </ul>
                 </div>

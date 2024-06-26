@@ -1,6 +1,5 @@
 import React from "react";
 import {Form} from "react-bootstrap";
-import {NavLink} from "react-router-dom";
 import CustomToast from "./Utils/CustomToast.tsx";
 import {useNewsletterSubscription} from "../../Domain/Hooks/useNewsletterSubscription.ts";
 
@@ -23,7 +22,7 @@ const InscricaoNewslleter: React.FC = () => {
                         required
                     />
                     <div className="d-flex flex-column justify-content-center flex-sm-row gap-2 footer-buttons">
-                        <NavLink to="/sobre" className="btn border-3 fw-semibold">Saiba Mais</NavLink>
+                        {/*<NavLink to="/sobre" className="btn border-3 fw-semibold">Saiba Mais</NavLink>*/}
                         <button className="btn text-white fw-semibold" type="submit" disabled={isSubmitting}>Cadastrar
                         </button>
                     </div>

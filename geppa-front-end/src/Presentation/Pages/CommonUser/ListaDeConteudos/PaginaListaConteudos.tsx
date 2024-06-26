@@ -214,7 +214,7 @@ export default function PaginaListaConteudos() {
                                 <option value="videos">Vídeo</option>
                             </select>
                         </div>
-                        <BuscadorTag label="Buscar por tag" salvarTag={addTag} erro={erroMensagem} tentouSalvar={false}/>
+                        <BuscadorTag label="Buscar por tag (máximo 3) " salvarTag={addTag} erro={erroMensagem} tentouSalvar={false}/>
                         <div className="d-flex justify-content-between gap-1">
                             <div className="d-flex flex-row gap-1 ">
                                 {tags.map((tag, index) => (
