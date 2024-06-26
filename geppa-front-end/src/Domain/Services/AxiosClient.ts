@@ -18,6 +18,17 @@ axiosClient.interceptors.request.use(async config => {
     return config;
 });
 
+axiosClient.interceptors.response.use(
+    response => response,
+    error => {
+        if (error.response && error.response.status === 500) {
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
+        }
+        return Promise.reject(error);
+    }
+);
+
 function getToken() {
     return localStorage.getItem('accessToken');
 }

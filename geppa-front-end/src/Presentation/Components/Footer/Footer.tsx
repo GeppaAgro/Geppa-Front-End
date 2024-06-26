@@ -25,15 +25,15 @@ const Footer: React.FC = () => {
                             <h5>Boletim</h5>
                         </NavLink>
                         <ul className="nav flex-column">
-                            <li className="nav-item mb-2"><NavLink to="/" className="nav-link p-0">Artigos</NavLink>
+                            <li className="nav-item mb-2"><NavLink to="/conteudos/artigos" className="nav-link p-0">Artigos</NavLink>
                             </li>
-                            <li className="nav-item mb-2"><NavLink to="/" className="nav-link p-0 ">Cursos</NavLink>
+                            <li className="nav-item mb-2"><NavLink to="/conteudos/cursos" className="nav-link p-0 ">Cursos</NavLink>
                             </li>
-                            <li className="nav-item mb-2"><NavLink to="/" className="nav-link p-0 ">Eventos</NavLink>
+                            <li className="nav-item mb-2"><NavLink to="/conteudos/eventos" className="nav-link p-0 ">Eventos</NavLink>
                             </li>
-                            <li className="nav-item mb-2"><NavLink to="/" className="nav-link p-0 ">Noticias</NavLink>
+                            <li className="nav-item mb-2"><NavLink to="/conteudos/noticias" className="nav-link p-0 ">Noticias</NavLink>
                             </li>
-                            <li className="nav-item mb-2"><NavLink to="/" className="nav-link p-0 ">Vídeos</NavLink>
+                            <li className="nav-item mb-2"><NavLink to="/conteudos/videos" className="nav-link p-0 ">Vídeos</NavLink>
                             </li>
                         </ul>
                     </Col>
@@ -55,11 +55,11 @@ const Footer: React.FC = () => {
                             <h5>PodAgro</h5>
                         </NavLink>
                         <ul className="nav flex-column">
-                            <li className="nav-item mb-2"><NavLink to="https://linktr.ee/ju.mkt" className="nav-link p-0 ">Linktree</NavLink>
+                            <li className="nav-item mb-2"><NavLink target="_blank" to="https://linktr.ee/ju.mkt" className="nav-link p-0 ">Linktree</NavLink>
                             </li>
-                            <li className="nav-item mb-2"><NavLink to="https://www.instagram.com/podagro_" className="nav-link p-0 ">Instagram</NavLink>
+                            <li className="nav-item mb-2"><NavLink target="_blank" to="https://www.instagram.com/podagro_" className="nav-link p-0 ">Instagram</NavLink>
                             </li>
-                            <li className="nav-item mb-2"><NavLink to="https://www.youtube.com/@podagro" className="nav-link p-0 ">Youtube</NavLink>
+                            <li className="nav-item mb-2"><NavLink target="_blank" to="https://www.youtube.com/@podagro" className="nav-link p-0 ">Youtube</NavLink>
                             </li>
                         </ul>
                     </Col>
